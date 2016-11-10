@@ -1,0 +1,25 @@
+.header {
+    height: 114px;
+    box-shadow: 0 0 5px #bbbbbb inset;
+}
+
+.header > div {
+    margin: 0 auto;
+    text-align: center;
+
+    height: inherit;
+    width: 1170px;
+}
+
+.hlogo {
+    background: url("../resources/gfx/logo.png");
+    background-size: 100% 100%;
+
+    margin: 10px 0;
+
+    height: 94px;
+    width: 362px;
+
+    display: inline-block;
+
+}
