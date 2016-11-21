@@ -1,0 +1,102 @@
+.tagparent {
+    position: relative;
+}
+
+.tagger {
+    padding: 0 .5em;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    background-color: #fbfbfb;
+}
+
+.tagger > * {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.tagger > i {
+    text-align: center;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.tagger > span {
+    flex-grow: 10;
+}
+
+.tagger > span:last-child {
+    text-align: right;
+}
+
+.tagger > span > label {
+    float: left;
+    line-height: 34px;
+    margin: 2px 12px 2px 4px;
+}
+
+.tagger > span > input {
+    width: auto !important;
+    margin: 2px 4px;
+}
+
+.tagger li {
+    cursor: pointer;
+    margin: .5em;
+    padding: .25em .5em .25em .25em;
+    border-radius: 0 .25em .25em 0;
+    position: relative;
+    line-height: 1.5;
+}
+
+.tagger li:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 1em solid transparent;
+    border-right-width: .5em;
+    left: -1.5em;
+    top: 0;
+    position: absolute;
+}
+
+.tagger .x {
+    left: -.5em;
+    padding: .25em .5em .25em .5em;
+    border-radius: .25em .25em .25em .25em;
+    background-color: #a6e1ec;
+    color: #5792bd;
+}
+
+.tagger .selected {
+    background-color: #27626d;
+    color: #e9ecef;
+}
+
+.tagger .selected:before {
+    border-right-color: #27626d;
+}
+
+.tagger .unselected {
+    background-color: #a6e1ec;
+    color: #5792bd;
+}
+
+.tagger .unselected:before {
+    border-right-color: #a6e1ec;
+    color: #5792bd;
+}
+
+div.tagger {
+
+    z-index: 1;
+}
+
+ul.tagger {
+    z-index: 0;
+}

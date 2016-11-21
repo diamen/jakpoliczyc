@@ -1,14 +1,19 @@
 .header {
+    background-color: white;
     height: 114px;
     box-shadow: 0 0 5px #bbbbbb inset;
+    z-index: 1;
+    position: relative;
 }
 
 .header > div {
-    margin: 0 auto;
+    height: 100%;
+    padding: 5px 0;
     text-align: center;
+}
 
-    height: inherit;
-    width: 1170px;
+.header img {
+    max-height: 100%;
 }
 
 .hlogo {

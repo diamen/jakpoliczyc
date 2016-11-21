@@ -11,25 +11,14 @@
     <script src="/libraries/head/head.load.min.js"></script>
     <script src="/scripts/glue.js"></script>
 
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/styles/glue.css"/>
 </head>
 <body>
 
     <header class="header" ng-include="'/views/header.html'"></header>
-
-    <p>
-        Square root of two:
-        <math>
-            <msqrt>
-                <mn>2</mn>
-            </msqrt>
-        </math>
-    </p>
-
-    <postarea style="width: 500px;"></postarea>
-
-    <p>$$\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$$</p>
+    <div ng-include="'/views/tagger.html'"></div>
 
 </body>
 </html>
