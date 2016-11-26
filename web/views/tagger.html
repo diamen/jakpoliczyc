@@ -7,6 +7,6 @@
 
     <ul class="tagger slideable" id="tags">
         <li class="x" ng-click="untickAll()" uib-tooltip="Odnzacz tagi" tooltip-placement="bottom">X</li>
-        <li ng-class="selectedTags[$index] ? 'selected' : 'unselected'" class="selected" ng-click="tick($index)" ng-repeat="tag in tags">{{tag}}</li>
+        <li ng-class="selectedTags[$index] ? 'selected' : 'unselected'" class="selected" ng-click="tick($index)" ng-init="render()" ng-repeat="tag in tags">{{tag}}</li>
     </ul>
 </div>

@@ -1,26 +1,35 @@
 angular.module('jakPoliczycControllers')
-    .controller('tagCtrl', function($scope, $timeout, $sce, $window) {
+    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window, testService) {
 
         var _selected;
         var _expander;
-        var _searcher;
+        var _searcher = new Searcher();
         var _topMover;
 
         $scope.animation = {};
         $scope.animation.expanded = false;
         $scope.animation.expandedText = $sce.trustAsHtml('<div>Zwiń listę tagów</div>');
         $scope.animation.unexpandedText = $sce.trustAsHtml('<div>Rozwiń listę tagów</div>');
+        $scope.tags = [];
+        $scope.selectedTags = [];
 
-        $scope.tags = [ 'Funkcje', 'Algebra', 'Bryły', 'Analiza', 'Geometria', 'Analityka', 'Trygonometria',
-            'Prawdopodobieństwo', 'Kombinatoryka', 'Topologia', 'Stereometria', 'Wielomiany', 'Logarytmy',
-            'Całki', 'Pochodne', 'Tales', 'Pitagoras', 'Równania' ];
+        $http({
+            method: 'GET',
+            url: '/tags'
+        }).then(function success(response) {
+            $scope.tags = response.data;
+            fireEvent($scope.tags, $scope.selectedTags);
+        }, function error() {
+            throw new Error("HTTP error");
+        });
 
-        $timeout(function init() {
-            _topMover = angular.element(document.querySelector('ul.tagger'));
-            moveTop(_topMover);
-            _expander = angular.element(document.querySelector('#expander'));
-            _searcher = new searcher();
-        }, 0);
+        $scope.render = function() {
+            $timeout(function () {
+                _topMover = angular.element(document.querySelector('ul.tagger'));
+                moveTop(_topMover);
+                _expander = angular.element(document.querySelector('#expander'));
+            }, 0);
+        };
 
         $timeout(angular.element($window).bind('resize', function() {
            moveTop(_topMover);
@@ -45,6 +54,8 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.focus = function () {
+            testService.imLolService();
+
             if(!isExpanded())
                 _expander.triggerHandler('click');
         };
@@ -67,11 +78,19 @@ angular.module('jakPoliczycControllers')
 
         $scope.tick = function(index) {
             $scope.selectedTags[index] = !$scope.selectedTags[index];
+            fireEvent($scope.tags, $scope.selectedTags);
         };
 
         ($scope.untickAll = function() {
             $scope.selectedTags = Array($scope.tags.length).fill(false);
+            fireEvent($scope.tags, $scope.selectedTags);
         })();
+
+        function fireEvent(tags, selectedTags) {
+            $scope.$emit('tags-up', tags.filter(function (value, index) {
+                return selectedTags[index];
+            }));
+        }
 
         function moveTop(element) {
             var height = element.prop('offsetHeight');
@@ -82,7 +101,7 @@ angular.module('jakPoliczycControllers')
             return $scope.animation.expanded;
         }
 
-        function searcher() {
+        function Searcher() {
             var index = -1;
 
             var does = function (tag) {

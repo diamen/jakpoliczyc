@@ -15,10 +15,13 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/styles/glue.css"/>
 </head>
-<body>
+<body ng-controller="parentCtrl">
 
     <header class="header" ng-include="'/views/header.html'"></header>
     <div ng-include="'/views/tagger.html'"></div>
+    <div ng-controller="articleCtrl">
+        <div ng-repeat="article in filteredArticles">{{article.title}}</div>
+    </div>
 
 </body>
 </html>
