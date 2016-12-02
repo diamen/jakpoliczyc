@@ -1,12 +1,13 @@
 <div ng-controller="tagCtrl" class="tagparent">
     <div class="tagger">
         <i class="fa fa-home fa-3x" aria-hidden="true" uib-tooltip="Home"></i>
-        <span><label for="tag">Wyszukiwanie po tagach</label><input typeahead-on-select="unfocus()" ng-focus="focus()" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag for tag in tags | filter:$viewValue | limitTo: 5" class="form-control" type="text" id="tag"></span>
-        <i id="expander" slide-toggle="#tags" ng-model="animation.expanded" ng-class="animation.expanded ? 'fa-hand-o-up' : 'fa-hand-o-down'" class="fa fa-2x" aria-hidden="true" uib-tooltip-html="animation.expanded ? animation.expandedText : animation.unexpandedText"></i>
+        <label for="tag">Wyszukiwanie po tagach</label>
+        <input class="form-control" typeahead-on-select="unfocus()" ng-focus="focus()" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag for tag in tags | filter:$viewValue | limitTo: 5" type="text" id="tag">
+        <i id="expander" class="fa fa-2x" invoke="invoke" main-id="#tags" slide-toggle=".slideable" ng-model="animation.expanded" ng-class="animation.expanded ? 'fa-hand-o-up' : 'fa-hand-o-down'" aria-hidden="true" uib-tooltip-html="animation.expanded ? animation.expandedText : animation.unexpandedText"></i>
     </div>
 
     <ul class="tagger slideable" id="tags">
-        <li class="x" ng-click="untickAll()" uib-tooltip="Odnzacz tagi" tooltip-placement="bottom">X</li>
+        <li class="x" ng-click="untickAll()" uib-tooltip="Odznacz tagi" tooltip-placement="bottom">X</li>
         <li ng-class="selectedTags[$index] ? 'selected' : 'unselected'" class="selected" ng-click="tick($index)" ng-init="render()" ng-repeat="tag in tags">{{tag}}</li>
     </ul>
 </div>

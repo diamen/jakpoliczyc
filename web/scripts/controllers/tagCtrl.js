@@ -1,17 +1,20 @@
 angular.module('jakPoliczycControllers')
-    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window, testService) {
+    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window) {
 
         var _selected;
-        var _expander;
         var _searcher = new Searcher();
-        var _topMover;
 
         $scope.animation = {};
         $scope.animation.expanded = false;
-        $scope.animation.expandedText = $sce.trustAsHtml('<div>Zwiń listę tagów</div>');
-        $scope.animation.unexpandedText = $sce.trustAsHtml('<div>Rozwiń listę tagów</div>');
+        $scope.animation.expandedText = $sce.trustAsHtml('<div>Zwiń</div>');
+        $scope.animation.unexpandedText = $sce.trustAsHtml('<div>Rozwiń</div>');
+
         $scope.tags = [];
         $scope.selectedTags = [];
+
+        function expandDirective(arg) {
+            $scope.invoke = angular.isUndefined(arg) ? !$scope.invoke : arg;
+        }
 
         $http({
             method: 'GET',
@@ -25,16 +28,13 @@ angular.module('jakPoliczycControllers')
 
         $scope.render = function() {
             $timeout(function () {
-                _topMover = angular.element(document.querySelector('ul.tagger'));
-                moveTop(_topMover);
-                _expander = angular.element(document.querySelector('#expander'));
+                expandDirective(true);
             }, 0);
         };
 
         $timeout(angular.element($window).bind('resize', function() {
-           moveTop(_topMover);
            $scope.animation.expanded = false;
-           $scope.$apply();
+           expandDirective();
         }), 50);
 
         $scope.ngModelOptionsSelected = function(value) {
@@ -57,7 +57,7 @@ angular.module('jakPoliczycControllers')
             testService.imLolService();
 
             if(!isExpanded())
-                _expander.triggerHandler('click');
+                expandDirective();
         };
 
         $scope.unfocus = function () {
@@ -71,7 +71,7 @@ angular.module('jakPoliczycControllers')
                     index = $scope.selectedTags.indexOf(true);
 
                     if (index === -1)
-                        _expander.triggerHandler('click');
+                        expandDirective();
                 }, 500);
             }
         };
@@ -90,11 +90,6 @@ angular.module('jakPoliczycControllers')
             $scope.$emit('tags-up', tags.filter(function (value, index) {
                 return selectedTags[index];
             }));
-        }
-
-        function moveTop(element) {
-            var height = element.prop('offsetHeight');
-            element.css('top', '-' + height + 'px');
         }
 
         function isExpanded() {

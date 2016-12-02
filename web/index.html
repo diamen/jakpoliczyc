@@ -19,8 +19,10 @@
 
     <header class="header" ng-include="'/views/header.html'"></header>
     <div ng-include="'/views/tagger.html'"></div>
-    <div ng-controller="articleCtrl">
-        <div ng-repeat="article in filteredArticles">{{article.title}}</div>
+        <div style="position: absolute">
+        <div class="slideable" style="position: relative" ng-controller="articleCtrl">
+            <div ng-repeat="article in filteredArticles">{{article.title}}</div>
+        </div>
     </div>
 
 </body>

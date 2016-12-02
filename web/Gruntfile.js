@@ -3,6 +3,8 @@ module.exports = function (grunt) {
     grunt.initConfig({
        pkg: grunt.file.readJSON('package.json'),
 
+       clean: ['sass/build.scss', 'styles/main.css', 'styles/main.css.map'],
+
        concat: {
            dist: {
                src: [
@@ -26,16 +28,17 @@ module.exports = function (grunt) {
        autoprefixer: {
         dist: {
             options: {
-                diff: true
+                diff: false
             },
             src: 'styles/main.css'
         }
        }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-autoprefixer');
 
-    grunt.registerTask('css', ['concat', 'autoprefixer', 'sass']);
+    grunt.registerTask('css', ['clean', 'concat', 'sass', 'autoprefixer']);
 };
