@@ -6,6 +6,7 @@ head.load(
     { file: '/libraries/ui-bootstrap/ui-bootstrap-tpls-2.0.0.min.js' },
     { file: '/libraries/ui-router/angular-ui-router.min.js' },
     { file: '/libraries/angular-mocks/angular-mocks.js' },
+    { file: '/libraries/angular-sanitize/angular-sanitize.js' },
     { file: '/libraries/angular-aop/build/angular-aop.js' },
     { file: '/libraries/underscore/underscore.js' },
 

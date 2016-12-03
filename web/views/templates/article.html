@@ -17,18 +17,26 @@
         <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="Obejrzyj film na youtube"></i>
         <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" uib-tooltip="Ściągnij plik pdf"></i>
     </div>
-    <div class="add">
+    <form novalidate ng-submit="nadd(usercom.author, usercom.content)" name="form" class="add">
         <div class="form-group">
             <label for="commentcontent">Dodaj komentarz</label>
-            <textarea class="form-control" id="commentcontent" placeholder="Treść komentarza" rows="3"></textarea>
+            <textarea name="content" ng-class="noturls(usercom.content) || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.content"
+                      class="form-control" id="commentcontent" placeholder="Treść komentarza" rows="3"
+                      ng-minlength="3" ng-maxlength="500" ng-trim="true" required></textarea>
+            <div ng-show="noturls(usercom.content)" class="jperror">Zakaz wklejania linków!</div>
+            <div ng-show="form.content.$error.maxlength" class="jperror">Przekroczyłeś długość komentarza! Max 500 znaków!</div>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Nazwa użytkownika</span>
-            <input type="text" class="form-control" placeholder="Nazwa użytkownika" aria-describedby="basic-addon1">
+            <input name="username" ng-class="form.content.$error.pattern || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.author"
+                   class="form-control" placeholder="Nazwa użytkownika"
+                   aria-describedby="basic-addon1" ng-minlength="3" ng-maxlength="15" ng-pattern="pattern.user" ng-trim="true" required>
             <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Dodaj</button>
+                <input ng-disabled="form.username.$invalid || form.username.$invalid || noturls(usercom.content) || form.content.$invalid" id="submit" class="btn btn-secondary" type="submit">Dodaj</input>
             </span>
         </div>
-    </div>
+        <div ng-show="form.username.$error.pattern" class="jperror">Zakaz używania znaków specjalnych!</div>
+        <div ng-show="form.username.$error.maxlength" class="jperror">Przekroczyłeś długość! Max 15 znaków!</div>
+    </form>
     <div class="comment" ng-repeat="ncomment in ncomments"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> napisał/a o {{ncomment.date | date: 'HH:mm dd/MM/yyyy'}}:</div>{{ncomment.content}}</div>
 </article>

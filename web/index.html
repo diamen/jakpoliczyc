@@ -21,9 +21,9 @@
     <div ng-include="'/views/tagger.html'"></div>
     <div class="row jpcontainer">
         <div class="col-md-2 fortest slideable"></div>
-        <div class="col-md-10 slideable" style="position: relative" ng-controller="articleCtrl">
-            <jparticle ng-repeat="article in filteredArticles" title="{{article.title}}" author="Małgorzata Kotarska"
-                       date="{{article.date}}" tags="{{article.tags}}" intro="{{article.intro}}" content="{{article.content}}" comments="{{article.comments}}"></jparticle>
+        <div class="col-md-10 slideable" ng-controller="articleCtrl">
+            <jparticle ng-repeat="article in filteredArticles" title="{{article.title}}" author="Małgorzata Kotarska" date="{{article.date}}"
+                       tags="{{article.tags}}" intro="{{article.intro}}" content="{{article.content}}" comments="{{article.comments}}" add="addComment(author, content)"></jparticle>
         </div>
     </div>
 

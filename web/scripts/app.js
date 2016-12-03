@@ -5,6 +5,7 @@ angular.module('jakPoliczycApp',
         'jakPoliczycServices',
 
         'ngMockE2E',
+        'ngSanitize',
 
         'AngularAOP',
         'ui.bootstrap',

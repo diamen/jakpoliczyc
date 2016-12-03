@@ -31,4 +31,8 @@ angular.module('jakPoliczycControllers')
             return filteredArticles;
         };
 
+        $scope.addComment = function (author, content) {
+          console.log(author + ' dodał komentarz o treści: ' + content);
+        };
+
     });
