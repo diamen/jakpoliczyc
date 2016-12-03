@@ -1,0 +1,96 @@
+$artbrdcolor: #cccccc;
+
+.jparticle {
+  margin-bottom: 6px;
+  padding: 5px 15px;
+  background-color: white;
+  border: 1px solid $artbrdcolor;
+}
+
+.jparticle h2 {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.jparticle p {
+  text-indent: 8px;
+}
+
+.jparticle .author, .jparticle .date {
+  font-size: 0.85em;
+}
+
+.jparticle .author {
+
+}
+
+.jparticle .date {
+  float: right;
+}
+
+.jparticle .tags {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.jparticle .tags span:first-child {
+  font-weight: bold;
+}
+
+.jparticle .tags span {
+  text-transform: lowercase;
+  margin-left: 7px;
+  font-size: 0.75em;
+}
+
+.jparticle .intro {
+  font-weight: bold;
+}
+
+.jparticle .intro, .jparticle .content {
+  text-align: justify;
+}
+
+.jparticle .content {
+  word-break: break-all;
+  white-space: pre-line;
+}
+
+.jparticle .footer {
+  font-weight: bold;
+  line-height: 2em;
+  padding: 7px 0;
+  border-top: 1px solid $artbrdcolor;
+}
+
+.jparticle i.fa {
+  float: right;
+  margin-right: 8px;
+}
+
+.jparticle .fa-youtube {
+  color: #c72929;
+}
+
+.jparticle .comment {
+  text-align: justify;
+  margin: 5px 3px;
+  padding: 8px;
+  background-color: whitesmoke;
+}
+
+.jparticle .comment div {
+  border-bottom: 1px solid $artbrdcolor;
+  margin: 2px 12px;
+}
+
+.jparticle .comment span {
+  font-weight: bolder;
+  margin-right: 20px;
+}
+
+.jparticle .add {
+  margin: 5px 3px;
+  padding-bottom: 10px;
+}

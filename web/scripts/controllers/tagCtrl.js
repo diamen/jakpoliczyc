@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window) {
+    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window, testService) {
 
         var _selected;
         var _searcher = new Searcher();

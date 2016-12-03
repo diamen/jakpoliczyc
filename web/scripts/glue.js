@@ -26,9 +26,13 @@ head.load(
 
     /* Directives */
     { file: '/scripts/directives/directive.js' },
+    { file: '/scripts/directives/jparticle.js' },
     { file: '/scripts/directives/mathjaxBind.js' },
     { file: '/scripts/directives/postarea.js' },
     { file: '/scripts/directives/slideable.js' },
-    { file: '/scripts/directives/slideToggle.js' }
+    { file: '/scripts/directives/slideToggle.js' },
 
+    /* Services */
+    { file: '/scripts/services/service.js' },
+    { file: '/scripts/services/parser.js' }
 );

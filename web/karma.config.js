@@ -25,6 +25,7 @@ module.exports = function(config) {
        'scripts/app.js',
        'scripts/aspect.js',
        'scripts/controllers/controller.js',
+       'scripts/services/service.js',
        'scripts/*/*.js',
        'test/*.js'
     ],

@@ -19,9 +19,11 @@
 
     <header class="header" ng-include="'/views/header.html'"></header>
     <div ng-include="'/views/tagger.html'"></div>
-        <div style="position: absolute">
-        <div class="slideable" style="position: relative" ng-controller="articleCtrl">
-            <div ng-repeat="article in filteredArticles">{{article.title}}</div>
+    <div class="row jpcontainer">
+        <div class="col-md-2 fortest slideable"></div>
+        <div class="col-md-10 slideable" style="position: relative" ng-controller="articleCtrl">
+            <jparticle ng-repeat="article in filteredArticles" title="{{article.title}}" author="Małgorzata Kotarska"
+                       date="{{article.date}}" tags="{{article.tags}}" intro="{{article.intro}}" content="{{article.content}}" comments="{{article.comments}}"></jparticle>
         </div>
     </div>
 
