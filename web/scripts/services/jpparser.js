@@ -1,5 +1,5 @@
 angular.module('jakPoliczycServices')
-    .service("parser", [function() {
+    .service("jpparser", [function() {
 
         return {
             parseTextBlock: function (input) {

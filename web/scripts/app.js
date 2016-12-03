@@ -8,6 +8,7 @@ angular.module('jakPoliczycApp',
         'ngSanitize',
 
         'AngularAOP',
+        'sprintf',
         'ui.bootstrap',
         'ui.router'
     ])

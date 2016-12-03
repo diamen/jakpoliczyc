@@ -8,6 +8,8 @@ head.load(
     { file: '/libraries/angular-mocks/angular-mocks.js' },
     { file: '/libraries/angular-sanitize/angular-sanitize.js' },
     { file: '/libraries/angular-aop/build/angular-aop.js' },
+    { file: '/libraries/sprintf-js/src/angular-sprintf.js' },
+    { file: '/libraries/sprintf-js/src/sprintf.js' },
     { file: '/libraries/underscore/underscore.js' },
 
     /* Browser support */
@@ -35,5 +37,6 @@ head.load(
 
     /* Services */
     { file: '/scripts/services/service.js' },
-    { file: '/scripts/services/parser.js' }
+    { file: '/scripts/services/jpparser.js' },
+    { file: '/scripts/services/jpvalidator.js' }
 );

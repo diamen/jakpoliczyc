@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jparticle', ['$sanitize', 'parser', function ($sanitize, parser) {
+    .directive('jparticle', ['$sanitize', 'jpparser', 'jpvalidator', function ($sanitize, jpparser, jpvalidator) {
         return {
             restrict: 'E',
             scope: {
@@ -19,15 +19,11 @@ angular.module('jakPoliczycDirectives')
                 $scope.pattern.content = new RegExp('^((?!http:\/\/)(?!https:\/\/)(?!www\.).)*$', "im");
                 $scope.ncomments = angular.fromJson($scope.comments);
                 $scope.ntags = angular.fromJson($scope.tags);
-                $scope.ncontents = parser.parseTextBlock($scope.content);
+                $scope.ncontents = jpparser.parseTextBlock($scope.content);
+                $scope.noturls = jpvalidator.noturls;
 
                 $scope.nadd = function (author, content) {
                   $scope.add({author: author, content: $sanitize(content)});
-                };
-
-                $scope.noturls = function(value) {
-                    return angular.isDefined(value) ?
-                        (value.includes("www.") || value.includes("http://") || value.includes("https://")) : false;
                 };
             }
         };

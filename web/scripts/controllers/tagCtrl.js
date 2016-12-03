@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window, testService) {
+    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window) {
 
         var _selected;
         var _searcher = new Searcher();
@@ -54,8 +54,6 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.focus = function () {
-            testService.imLolService();
-
             if(!isExpanded())
                 expandDirective();
         };
