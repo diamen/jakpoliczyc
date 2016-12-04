@@ -55,6 +55,10 @@ angular.module('jakPoliczycApp')
                         ]
                     }
                 ]
+            },
+            {
+                "name": "Funkcja liniowa",
+                "submenus": []
             }
         ]
     )

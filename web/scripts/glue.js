@@ -34,6 +34,7 @@ head.load(
     /* Directives */
     { file: '/scripts/directives/directive.js' },
     { file: '/scripts/directives/jpmenu.js' },
+    { file: '/scripts/directives/jpnode.js' },
     { file: '/scripts/directives/jparticle.js' },
     { file: '/scripts/directives/mathjaxBind.js' },
     { file: '/scripts/directives/postarea.js' },
