@@ -9,6 +9,7 @@ head.load(
     { file: '/libraries/angular-sanitize/angular-sanitize.js' },
     { file: '/libraries/angular-aop/build/angular-aop.js' },
     { file: '/libraries/sprintf-js/src/angular-sprintf.js' },
+    { file: '/libraries/angular-ui-tree/dist/angular-ui-tree.js' },
     { file: '/libraries/sprintf-js/src/sprintf.js' },
     { file: '/libraries/underscore/underscore.js' },
 
@@ -17,6 +18,9 @@ head.load(
 
     /* Main */
     { file: '/scripts/app.js' },
+
+    /* Dane testowe */
+    { file: '/scripts/mockdata.js' },
 
     /* Aspect */
     { file: '/scripts/aspect.js' },
@@ -29,6 +33,7 @@ head.load(
 
     /* Directives */
     { file: '/scripts/directives/directive.js' },
+    { file: '/scripts/directives/jpmenu.js' },
     { file: '/scripts/directives/jparticle.js' },
     { file: '/scripts/directives/mathjaxBind.js' },
     { file: '/scripts/directives/postarea.js' },

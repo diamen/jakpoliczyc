@@ -14,13 +14,16 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/styles/main.css"/>
+    <link rel="stylesheet" href="/libraries/angular-ui-tree/dist/angular-ui-tree.css"/>
 </head>
 <body ng-controller="parentCtrl">
 
     <header class="header" ng-include="'/views/header.html'"></header>
     <div ng-include="'/views/tagger.html'"></div>
     <div class="row jpcontainer">
-        <div class="col-md-2 fortest slideable"></div>
+        <div class="col-md-2 fortest slideable">
+            <jpmenu></jpmenu>
+        </div>
         <div class="col-md-10 slideable" ng-controller="articleCtrl">
             <jparticle ng-repeat="article in filteredArticles" title="{{article.title}}" author="Małgorzata Kotarska" date="{{article.date}}"
                        tags="{{article.tags}}" intro="{{article.intro}}" content="{{article.content}}" comments="{{article.comments}}" add="addComment(author, content)"></jparticle>

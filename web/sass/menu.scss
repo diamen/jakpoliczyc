@@ -1,0 +1,30 @@
+.jpmenu {
+  background-color: white;
+}
+
+.jpmenu li, .jpmenu ol {
+  font-size: 0.95em;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  list-style-type: none;
+}
+
+.jpmenu ol {
+  margin-left: 4px;
+  padding-left: 0;
+}
+
+.jpmenu li {
+
+}
+
+.jpmenu .node {
+  margin: 5px 0;
+  padding: 5px;
+  border: 1px solid #dae2ea;
+  color: #7c9eb2;
+}
+
+.jpmenu .hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
