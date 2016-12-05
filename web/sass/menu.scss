@@ -1,3 +1,20 @@
+.jpmenui {
+  cursor: pointer;
+  color: green;
+}
+
+.jpmenutitle {
+  text-align:center;
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.jpmenutitle i {
+  @extend .jpmenui;
+  margin-right: 5px;
+}
+
 .jpmenu {
   background-color: white;
 }
@@ -9,7 +26,6 @@
 }
 
 .jpmenu ol {
-  margin-left: 4px;
   padding-left: 0;
 }
 
@@ -18,6 +34,7 @@
 }
 
 .jpmenu .node {
+  cursor: default;
   margin: 5px 0;
   padding: 5px;
   border: 1px solid #dae2ea;
@@ -27,4 +44,9 @@
 .jpmenu .hidden {
   display: none !important;
   visibility: hidden !important;
+}
+
+.jpmenu i {
+  @extend .jpmenui;
+  font-size: 1.1em;
 }

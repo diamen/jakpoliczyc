@@ -1,5 +1,8 @@
 <div class='node' ui-tree-handle>
-    <button class='btn btn-success btn-xs' data-nodrag ng-click='toggle(this)'>X</button>
+    <i ng-show="item.submenus && item.submenus.length > 0" class="fa"
+       ng-class="collapsed ? 'fa-caret-square-o-down' : 'fa-caret-square-o-up'"
+       aria-hidden="true" data-nodrag ng-click="toggle(this)">
+    </i>
     {{item.name}}
 </div>
 <ol ui-tree-nodes='' ng-model='item.submenus' ng-class='{hidden: collapsed}'>

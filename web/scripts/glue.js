@@ -19,6 +19,9 @@ head.load(
     /* Main */
     { file: '/scripts/app.js' },
 
+    /* Config */
+    { file: '/scripts/config/treeConfig.js' },
+
     /* Dane testowe */
     { file: '/scripts/mockdata.js' },
 
