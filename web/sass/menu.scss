@@ -50,3 +50,11 @@
   @extend .jpmenui;
   font-size: 1.1em;
 }
+
+.jpmenu .click {
+  cursor: pointer;
+}
+
+.jpmenu .selected {
+  background-color: black;
+}

@@ -12,6 +12,10 @@ angular.module('jakPoliczycControllers')
         $scope.tags = [];
         $scope.selectedTags = [];
 
+        $scope.$on('menu-down', function (event, args) {
+            $scope.untickAll();
+        });
+
         function expandDirective(arg) {
             $scope.invoke = angular.isUndefined(arg) ? !$scope.invoke : arg;
         }

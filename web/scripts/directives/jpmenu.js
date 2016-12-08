@@ -8,6 +8,7 @@ angular.module('jakPoliczycDirectives')
             link: function(scope, element) {
                 scope.nitems = angular.fromJson(scope.items);
                 scope.collapsed = true;
+                scope.selected = false;
                 var parentElem = element.find('i');
 
                 scope.toggleAll = function () {
@@ -17,6 +18,19 @@ angular.module('jakPoliczycDirectives')
                   parentElem.toggleClass('fa-caret-square-o-up');
                   scope.collapsed = !scope.collapsed;
                 };
+
+                scope.select = function (that, item) {
+                    if (!(item.submenus && item.submenus.length > 0)) {
+                        var temp = that.selected;
+                        unselectAll();
+                        that.selected = !temp;
+                        that.selected ? scope.$emit('menu-up', item.id) : scope.$emit('menu-up', undefined);
+                    }
+                };
+
+                function unselectAll() {
+                    scope.$broadcast('unselect-down', null);
+                }
             },
             template:
             "<div class='jpmenutitle'>" +
