@@ -1,37 +1,22 @@
 angular.module('jakPoliczycControllers')
-    .controller('articleCtrl', function($scope, $http, jpartfilter) {
+    .controller('articleCtrl', function($scope, $http, $stateParams) {
 
-        $scope.articles = [];
-        $scope.filteredArticles = [];
+        $scope.id = parseInt($stateParams.id, 10);
 
-        $http({
-            method: 'GET',
-            url: '/articles'
-        }).then(function success(response) {
-            $scope.articles = response.data;
-        }, function error() {
-            throw new Error("HTTP error");
-        });
-
-        $scope.$on('tags-down', function (event, args) {
-            $scope.filteredArticles = jpartfilter($scope.articles, 'tags', args);
-        });
-
-        $scope.$on('menu-down', function (event, args) {
-
+        ($scope.init = function (id) {
             $http({
                 method: 'GET',
-                url: '/articles/menuid/' + args
+                url: '/article/id/' + id
             }).then(function success(response) {
-                $scope.articles = response.data;
-                angular.copy($scope.articles, $scope.filteredArticles);
+                $scope.ready = true;
+                $scope.article = response.data;
             }, function error() {
                 throw new Error("HTTP error");
             });
-        });
+        })($scope.id);
 
         $scope.addComment = function (author, content) {
-          console.log(author + ' dodał komentarz o treści: ' + content);
+            console.log(author + ' dodał komentarz o treści: ' + content);
         };
 
     });

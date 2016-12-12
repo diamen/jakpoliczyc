@@ -3,7 +3,7 @@ angular.module('jakPoliczycDirectives')
         return {
             restrict: 'E',
             scope: {},
-            templateUrl: '/views/templates/postarea.html',
+            templateUrl: '/views/templates/jppostarea.html',
             link: function($scope) {
 
                 $scope.preview = function() {

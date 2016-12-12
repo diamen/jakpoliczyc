@@ -1,0 +1,19 @@
+<div class="jplist">
+    <h2>Najnowsze artykuły</h2>
+    <table>
+        <tr>
+            <th>No</th>
+            <th>Rodzaj</th>
+            <th>Tytuł</th>
+            <th>Tagi</th>
+            <th>Data</th>
+        </tr>
+        <tr ng-click="goArticle(article.id)" ng-repeat="article in filteredArticles">
+            <td><strong>{{$index + 1}}</strong></td>
+            <td>[{{getKind(article.kind)}}]</td>
+            <td><strong>{{article.title}}</strong></td>
+            <td><span ng-repeat="tag in article.tags">[{{tag}}] </span></td>
+            <td>{{article.date | date: 'HH:mm dd/MM/yyyy'}}</td>
+        </tr>
+    </table>
+</div>

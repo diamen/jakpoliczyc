@@ -1,3 +1,6 @@
+$bgcolor: #fbfbfb;
+$brdcolor: #a0a0a0;
+
 body {
   font-family: 'Lato', sans-serif;
   background-color: #ececec;
@@ -29,4 +32,10 @@ body {
 .jperror {
   border-color: #ff5522;
   color: #ff5522;
+}
+
+.jpmain {
+  background-color: $bgcolor;
+  border: 1px solid $brdcolor;
+  padding: 10px 5px;
 }

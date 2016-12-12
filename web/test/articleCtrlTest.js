@@ -1,4 +1,4 @@
-describe('articleCtrl', function () {
+describe('articlesCtrl && articleCtrl', function () {
 
     var _mockScope = {};
     var _rootScope = {};
@@ -15,7 +15,7 @@ describe('articleCtrl', function () {
 
         _mockScope = $rootScope.$new();
         _rootScope = $rootScope;
-        _articleController = $controller('articleCtrl', {
+        _articleController = $controller('articlesCtrl', {
             $scope: _mockScope,
             jpartfilter: _jpartfilter
         });
@@ -31,6 +31,29 @@ describe('articleCtrl', function () {
 
         // then
         expect(_jpartfilter).toHaveBeenCalled();
+     });
+
+     it('Próba odpytania funkcji o nieistniejący rodzaj artykułu powinno skutkować wyrzuceniem wyjątku', function () {
+        // given
+         var wrongLetter = 'L';
+
+         // when-then
+         expect(function () {
+             _mockScope.getKind(wrongLetter);
+         }).toThrowError('Podano nieprawidłowy rodzaj artykuły. Dopuszczalne rodzaje to "Z" oraz "T"');
+     });
+
+     it('Odpytanie przy użyciu odpowiedniego skrótu powinno zwrócić prawidłowy rodzaj artykułu', function () {
+        // given
+         var theoryLetter = 'T';
+         var exerciseLetter = 'E';
+
+         // when
+         var theoryResult = _mockScope.getKind(theoryLetter);
+         var exerciseResult = _mockScope.getKind(exerciseLetter);
+
+         // then
+         expect(theoryResult === 'TEORIA' && exerciseResult === 'ZADANIE').toBeTruthy();
      });
 
 });

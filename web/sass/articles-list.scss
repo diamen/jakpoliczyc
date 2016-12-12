@@ -1,0 +1,32 @@
+.jplist {
+  overflow-x: auto;
+
+  h2 {
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+  }
+
+  table th, table td {
+    border: none;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  td:nth-child(2), td:last-child {
+    font-size: 0.8em;
+  }
+
+  td:nth-child(4) {
+    font-size: 0.7em;
+  }
+}

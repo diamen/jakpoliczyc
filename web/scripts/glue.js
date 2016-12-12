@@ -20,6 +20,7 @@ head.load(
     { file: '/scripts/app.js' },
 
     /* Config */
+    { file: '/scripts/config/routersConfig.js' },
     { file: '/scripts/config/treeConfig.js' },
 
     /* Dane testowe */
@@ -32,6 +33,7 @@ head.load(
     { file: '/scripts/controllers/controller.js' },
     { file: '/scripts/controllers/parentCtrl.js' },
     { file: '/scripts/controllers/articleCtrl.js' },
+    { file: '/scripts/controllers/articlesCtrl.js' },
     { file: '/scripts/controllers/tagCtrl.js' },
 
     /* Directives */

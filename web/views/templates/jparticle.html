@@ -1,16 +1,16 @@
 <article class="jparticle">
     <header>
         <div>
-            <span class="author">{{author}}</span>
-            <span class="date">{{date | date: 'HH:mm dd/MM/yyyy'}}</span>
+            <span class="author">{{nauthor}}</span>
+            <span class="date">{{ndate | date: 'HH:mm dd/MM/yyyy'}}</span>
         </div>
-        <h2>{{title}}</h2>
+        <h2>{{ntitle}}</h2>
     </header>
 
     <div class="tags">
         <span ng-hide="angular.isUndefined(ntags) || ntags.length === 0">tagi</span><span ng-repeat="tag in ntags">{{tag}}</span>
     </div>
-    <p class="intro">{{intro}}</p>
+    <p class="intro">{{article.intro}}</p>
     <p class="content" ng-repeat="ncontent in ncontents">{{ncontent}}</p>
     <div class="footer">
         <span>Komentarze [{{ncomments.length}}]</span>

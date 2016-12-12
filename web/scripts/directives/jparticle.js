@@ -3,23 +3,21 @@ angular.module('jakPoliczycDirectives')
         return {
             restrict: 'E',
             scope: {
-                title: '@',
-                author: '@',
-                date: '@',
-                tags: '@',
-                intro: '@',
-                content: '@',
-                comments: '@',
+                article: '@',
                 add: '&'
             },
-            templateUrl: '/views/templates/article.html',
+            templateUrl: '/views/templates/jparticle.html',
             link: function($scope) {
+                $scope.article = angular.fromJson($scope.article);
+                $scope.nauthor = "Małgorzata Kotarska";
+                $scope.ndate = $scope.article.date;
+                $scope.ntitle = $scope.article.title;
                 $scope.pattern = {};
                 $scope.pattern.user = "[a-zA-Z0-9]+";
                 $scope.pattern.content = new RegExp('^((?!http:\/\/)(?!https:\/\/)(?!www\.).)*$', "im");
-                $scope.ncomments = angular.fromJson($scope.comments);
-                $scope.ntags = angular.fromJson($scope.tags);
-                $scope.ncontents = jpparser.parseTextBlock($scope.content);
+                $scope.ncomments = angular.fromJson($scope.article.comments);
+                $scope.ntags = angular.fromJson($scope.article.tags);
+                $scope.ncontents = jpparser.parseTextBlock($scope.article.content);
                 $scope.noturls = jpvalidator.noturls;
 
                 $scope.nadd = function (author, content) {

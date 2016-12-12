@@ -62,7 +62,7 @@ describe('jpartfilter', function () {
         _filteredArticles = _jpartfilter(_mockArticles, 'menuId', [menuId]);
 
         // then
-        expect(_filteredArticles.length).toBe(1);
+        expect(_filteredArticles.length).toBe(2);
     });
 
     it('Przekazanie pustej tablicy wartości filtrujących powinno zwrócić przekazaną kolekcję artykułów', function () {

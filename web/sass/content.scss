@@ -1,6 +1,5 @@
 .jpcontainer {
   @extend .width;
-  height: 1000px;
 }
 
 .jpcontainer > * {
@@ -8,7 +7,7 @@
   margin: 5px 0;
 }
 
-.fortest {
+aside {
   background-color: white;
   padding-left: 5px;
   padding-right: 5px;

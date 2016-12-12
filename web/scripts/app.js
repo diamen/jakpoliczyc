@@ -1,9 +1,5 @@
 angular.module('jakPoliczycApp',
     [
-        'jakPoliczycControllers',
-        'jakPoliczycDirectives',
-        'jakPoliczycServices',
-
         'ngMockE2E',
         'ngSanitize',
 
@@ -11,5 +7,10 @@ angular.module('jakPoliczycApp',
         'sprintf',
         'ui.bootstrap',
         'ui.router',
-        'ui.tree'
+        'ui.tree',
+
+        'jakPoliczycControllers',
+        'jakPoliczycDirectives',
+        'jakPoliczycServices',
+        'jakPoliczycRouters'
     ]);
