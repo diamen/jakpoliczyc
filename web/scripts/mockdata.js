@@ -77,7 +77,7 @@ angular.module('jakPoliczycApp')
         [
             {
                 "id": 1,
-                "kind": "E",
+                "kind": "Z",
                 "title": "Carlson Dalton",
                 "date": 1480167949,
                 "menuId": 11,
@@ -89,7 +89,7 @@ angular.module('jakPoliczycApp')
             },
             {
                 "id": 2,
-                "kind": "E",
+                "kind": "Z",
                 "title": "Wise Watson",
                 "date": 1480167949,
                 "menuId": 11,
@@ -132,7 +132,202 @@ angular.module('jakPoliczycApp')
             },
             {
                 "id": 6,
-                "kind": "E",
+                "kind": "Z",
+                "title": "Stanley Herman",
+                "date": 1480167949,
+                "menuId": 15,
+                "tags": [
+                    "Pitagoras"
+                ]
+            },
+            {
+                "id": 7,
+                "kind": "Z",
+                "title": "Jakieś tam trudne funkcje kwadratowe",
+                "date": 1480167949,
+                "menuId": 11,
+                "tags": [
+                    "Bryły",
+                    "Analiza",
+                    "Równania"
+                ]
+            },
+            {
+                "id": 8,
+                "kind": "Z",
+                "title": "Trygonometria to złooooo",
+                "date": 1480167949,
+                "menuId": 11,
+                "tags": [
+                    "Stereometria",
+                    "Logarytmy",
+                    "Wielomiany"
+                ]
+            },
+            {
+                "id": 9,
+                "kind": "T",
+                "title": "Całki są spoko, wszystko nimi policzysz",
+                "date": 1480167949,
+                "menuId": 13,
+                "tags": [
+                    "Algebra",
+                    "Analiza",
+                    "Całki"
+                ]
+            },
+            {
+                "id": 10,
+                "kind": "T",
+                "title": "Gwendolyn Owen",
+                "date": 1480167949,
+                "menuId": 14,
+                "tags": [
+                    "Funkcje",
+                    "Kombinatoryka"
+                ]
+            },
+            {
+                "id": 11,
+                "kind": "T",
+                "title": "Już mi się nie chce wyświetlać tych tutaj rzeczy",
+                "date": 1480167949,
+                "menuId": 15,
+                "tags": []
+            },
+            {
+                "id": 12,
+                "kind": "Z",
+                "title": "Stanley Herman",
+                "date": 1480167949,
+                "menuId": 15,
+                "tags": [
+                    "Pitagoras"
+                ]
+            },
+            {
+                "id": 13,
+                "kind": "Z",
+                "title": "Carlson Dalton",
+                "date": 1480167949,
+                "menuId": 11,
+                "tags": [
+                    "Bryły",
+                    "Analiza",
+                    "Równania"
+                ]
+            },
+            {
+                "id": 14,
+                "kind": "Z",
+                "title": "Paliwo kosztuje za dużo",
+                "date": 1480167949,
+                "menuId": 11,
+                "tags": [
+                    "Stereometria",
+                    "Logarytmy",
+                    "Wielomiany"
+                ]
+            },
+            {
+                "id": 15,
+                "kind": "T",
+                "title": "Edwina Rosa",
+                "date": 1480167949,
+                "menuId": 13,
+                "tags": [
+                    "Algebra",
+                    "Analiza",
+                    "Całki"
+                ]
+            },
+            {
+                "id": 16,
+                "kind": "T",
+                "title": "Funkcja liniowa pozwala na wszystko",
+                "date": 1480167949,
+                "menuId": 14,
+                "tags": [
+                    "Funkcje",
+                    "Kombinatoryka"
+                ]
+            },
+            {
+                "id": 17,
+                "kind": "T",
+                "title": "Gang Kombinatoryków znowu uderzył",
+                "date": 1480167949,
+                "menuId": 15,
+                "tags": []
+            },
+            {
+                "id": 18,
+                "kind": "Z",
+                "title": "Stanley Herman",
+                "date": 1480167949,
+                "menuId": 15,
+                "tags": [
+                    "Pitagoras"
+                ]
+            },
+            {
+                "id": 19,
+                "kind": "Z",
+                "title": "Carlson Dalton",
+                "date": 1480167949,
+                "menuId": 11,
+                "tags": [
+                    "Bryły",
+                    "Analiza",
+                    "Równania"
+                ]
+            },
+            {
+                "id": 20,
+                "kind": "Z",
+                "title": "Wise Watson",
+                "date": 1480167949,
+                "menuId": 11,
+                "tags": [
+                    "Stereometria",
+                    "Logarytmy",
+                    "Wielomiany"
+                ]
+            },
+            {
+                "id": 21,
+                "kind": "T",
+                "title": "Edwina Rosa",
+                "date": 1480167949,
+                "menuId": 13,
+                "tags": [
+                    "Algebra",
+                    "Analiza",
+                    "Całki"
+                ]
+            },
+            {
+                "id": 22,
+                "kind": "T",
+                "title": "Gwendolyn Owen",
+                "date": 1480167949,
+                "menuId": 14,
+                "tags": [
+                    "Funkcje",
+                    "Kombinatoryka"
+                ]
+            },
+            {
+                "id": 23,
+                "kind": "T",
+                "title": "Puckett Byrd",
+                "date": 1480167949,
+                "menuId": 15,
+                "tags": []
+            },
+            {
+                "id": 24,
+                "kind": "Z",
                 "title": "Stanley Herman",
                 "date": 1480167949,
                 "menuId": 15,
@@ -148,7 +343,7 @@ angular.module('jakPoliczycApp')
         [
             {
                 "id": 1,
-                "kind": "E",
+                "kind": "Z",
                 "title": "Carlson Dalton",
                 "intro": "Non fugiat in elit amet nulla fugiat aliquip enim. Culpa aliquip amet deserunt mollit fugiat in irure esse velit occaecat. Consectetur minim aute enim deserunt in minim ad culpa aliquip duis aliqua.\r\n",
                 "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum libero nibh, et tincidunt lacus malesuada eget. Duis lacus lacus, luctus quis tellus at, viverra condimentum sem. Sed non tellus dolor. Maecenas volutpat scelerisque augue, ac scelerisque eros convallis vitae. Donec volutpat lorem quis commodo fringilla. Cras pretium eu nisl non pellentesque. Cras vehicula nibh diam, vel pharetra lorem eleifend sed.<nl> Suspendisse egestas placerat urna, eu tristique arcu consequat sit amet. Sed rutrum sed leo sed condimentum. Proin ultricies nisl arcu, quis blandit nunc gravida a. Phasellus posuere vestibulum aliquet. Donec nec elit id velit tincidunt pharetra nec in dolor.<nl> In pretium non risus at lacinia. Morbi ornare hendrerit quam, at ultrices libero aliquet quis. Nunc bibendum facilisis metus, sit amet scelerisque ipsum blandit a. In interdum lorem sed dui pharetra, sit amet finibus nulla pulvinar. Duis eget diam lorem. Fusce blandit ipsum ac mollis gravida. Suspendisse ante ante, ornare in rutrum a, hendrerit ut nunc. In sollicitudin et elit ut ultrices. Proin blandit enim suscipit pretium eleifend. Sed scelerisque tellus feugiat mi elementum consectetur. Phasellus quis nunc pharetra, tempus dolor in, vehicula odio. Pellentesque justo elit, varius vel turpis sit amet, laoreet elementum lectus. Nunc convallis, lacus non suscipit congue, dolor nunc iaculis nulla, a molestie nisi libero in urna. Donec arcu ligula, aliquam vitae accumsan ut, cursus ac erat. Maecenas at erat sodales nunc finibus suscipit ut sit amet nisl. Praesent nec ultricies felis. Pellentesque tempor auctor urna sit amet varius. Vestibulum molestie luctus risus non tempor. Quisque nec eros leo. Curabitur pharetra ligula in consectetur pretium. Curabitur pellentesque gravida magna, a vulputate dolor. Fusce quis aliquet mi. Donec hendrerit pellentesque ipsum nec lacinia. Morbi at ultricies augue. Donec rutrum leo sit amet purus blandit ullamcorper. Nam augue lectus, vestibulum sollicitudin suscipit quis, maximus non enim. Curabitur molestie interdum enim in semper. In malesuada lorem ut neque cursus, sit amet consectetur ante vehicula. Nunc hendrerit lorem eget scelerisque suscipit. Etiam tempus nisi sed aliquet venenatis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi nibh libero, ullamcorper at sodales ac, posuere et ipsum. Nunc dictum egestas mattis. Nunc in sollicitudin libero. In hac habitasse platea dictumst. Sed nec tristique augue. Ut nec blandit risus. Vestibulum vitae magna condimentum nunc ultrices molestie non vel velit. Duis bibendum facilisis nisl bibendum lacinia. Quisque maximus nulla quis massa feugiat, vitae auctor mi posuere. In eu justo eget odio fringilla sagittis. Duis luctus eget lorem nec lacinia. Proin eu dapibus orci, id faucibus ante. Aliquam bibendum magna ut libero laoreet interdum. Sed leo est, hendrerit vel nibh nec, pharetra convallis elit. In nibh erat, tempor vel augue id, aliquet lacinia massa. Proin mattis luctus ipsum at interdum. Integer hendrerit lectus sit amet tempus commodo. Cras vel quam lectus. Aenean molestie sagittis nulla, dapibus varius ligula varius at. Donec nisl erat, lobortis quis mi in, faucibus lobortis nisi. Duis sollicitudin felis vitae elit venenatis pharetra. Nulla sed bibendum ante. Nunc eget magna at tortor blandit fringilla sed id leo. Maecenas tristique ut arcu lobortis iaculis. Suspendisse tincidunt nulla nec feugiat viverra. Etiam vulputate nulla eget mollis ornare. Nullam blandit, nisi id rhoncus laoreet, urna libero cursus nisl, et aliquam dolor est sit amet neque. Nam mattis ex accumsan augue molestie, sit amet malesuada ante ornare. Praesent id sem tristique libero tincidunt dictum. Vivamus nunc orci, consectetur vel ipsum in, posuere commodo purus. Aenean fringilla sodales magna. Aliquam tempus est non purus faucibus elementum. Ut dui arcu, pulvinar sit amet orci ac, ultrices dictum ligula. Donec nunc nibh, venenatis quis euismod eu, malesuada in nisi. Aliquam in dolor feugiat, sagittis lorem eu, tincidunt ex. In augue libero, sodales a purus quis, sodales ornare quam. Sed at accumsan augue. In tincidunt convallis porta. Suspendisse lobortis gravida tellus non tristique. Duis molestie a velit a tincidunt. Fusce feugiat imperdiet mollis. Vivamus rutrum congue est, nec consequat lorem congue eu.",
@@ -179,7 +374,7 @@ angular.module('jakPoliczycApp')
             },
             {
                 "id": 2,
-                "kind": "E",
+                "kind": "Z",
                 "title": "Wise Watson",
                 "intro": "Nulla Lorem magna deserunt nisi nulla aliquip voluptate tempor sit. Pariatur laboris enim eu pariatur aute veniam officia amet velit ut magna sit. Ea in voluptate do in sunt duis sit exercitation labore.\r\n",
                 "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum libero nibh, et tincidunt lacus malesuada eget. Duis lacus lacus, luctus quis tellus at, viverra condimentum sem. Sed non tellus dolor. Maecenas volutpat scelerisque augue, ac scelerisque eros convallis vitae. Donec volutpat lorem quis commodo fringilla. Cras pretium eu nisl non pellentesque. Cras vehicula nibh diam, vel pharetra lorem eleifend sed. Suspendisse egestas placerat urna, eu tristique arcu consequat sit amet. Sed rutrum sed leo sed condimentum. Proin ultricies nisl arcu, quis blandit nunc gravida a. Phasellus posuere vestibulum aliquet. Donec nec elit id velit tincidunt pharetra nec in dolor. In pretium non risus at lacinia. Morbi ornare hendrerit quam, at ultrices libero aliquet quis. Nunc bibendum facilisis metus, sit amet scelerisque ipsum blandit a. In interdum lorem sed dui pharetra, sit amet finibus nulla pulvinar. Duis eget diam lorem. Fusce blandit ipsum ac mollis gravida. Suspendisse ante ante, ornare in rutrum a, hendrerit ut nunc. In sollicitudin et elit ut ultrices. Proin blandit enim suscipit pretium eleifend. Sed scelerisque tellus feugiat mi elementum consectetur. Phasellus quis nunc pharetra, tempus dolor in, vehicula odio. Pellentesque justo elit, varius vel turpis sit amet, laoreet elementum lectus. Nunc convallis, lacus non suscipit congue, dolor nunc iaculis nulla, a molestie nisi libero in urna. Donec arcu ligula, aliquam vitae accumsan ut, cursus ac erat. Maecenas at erat sodales nunc finibus suscipit ut sit amet nisl. Praesent nec ultricies felis. Pellentesque tempor auctor urna sit amet varius. Vestibulum molestie luctus risus non tempor. Quisque nec eros leo. Curabitur pharetra ligula in consectetur pretium. Curabitur pellentesque gravida magna, a vulputate dolor. Fusce quis aliquet mi. Donec hendrerit pellentesque ipsum nec lacinia. Morbi at ultricies augue. Donec rutrum leo sit amet purus blandit ullamcorper. Nam augue lectus, vestibulum sollicitudin suscipit quis, maximus non enim. Curabitur molestie interdum enim in semper. In malesuada lorem ut neque cursus, sit amet consectetur ante vehicula. Nunc hendrerit lorem eget scelerisque suscipit. Etiam tempus nisi sed aliquet venenatis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi nibh libero, ullamcorper at sodales ac, posuere et ipsum. Nunc dictum egestas mattis. Nunc in sollicitudin libero. In hac habitasse platea dictumst. Sed nec tristique augue. Ut nec blandit risus. Vestibulum vitae magna condimentum nunc ultrices molestie non vel velit. Duis bibendum facilisis nisl bibendum lacinia. Quisque maximus nulla quis massa feugiat, vitae auctor mi posuere. In eu justo eget odio fringilla sagittis. Duis luctus eget lorem nec lacinia. Proin eu dapibus orci, id faucibus ante. Aliquam bibendum magna ut libero laoreet interdum. Sed leo est, hendrerit vel nibh nec, pharetra convallis elit. In nibh erat, tempor vel augue id, aliquet lacinia massa. Proin mattis luctus ipsum at interdum. Integer hendrerit lectus sit amet tempus commodo. Cras vel quam lectus. Aenean molestie sagittis nulla, dapibus varius ligula varius at. Donec nisl erat, lobortis quis mi in, faucibus lobortis nisi. Duis sollicitudin felis vitae elit venenatis pharetra. Nulla sed bibendum ante. Nunc eget magna at tortor blandit fringilla sed id leo. Maecenas tristique ut arcu lobortis iaculis. Suspendisse tincidunt nulla nec feugiat viverra. Etiam vulputate nulla eget mollis ornare. Nullam blandit, nisi id rhoncus laoreet, urna libero cursus nisl, et aliquam dolor est sit amet neque. Nam mattis ex accumsan augue molestie, sit amet malesuada ante ornare. Praesent id sem tristique libero tincidunt dictum. Vivamus nunc orci, consectetur vel ipsum in, posuere commodo purus. Aenean fringilla sodales magna. Aliquam tempus est non purus faucibus elementum. Ut dui arcu, pulvinar sit amet orci ac, ultrices dictum ligula. Donec nunc nibh, venenatis quis euismod eu, malesuada in nisi. Aliquam in dolor feugiat, sagittis lorem eu, tincidunt ex. In augue libero, sodales a purus quis, sodales ornare quam. Sed at accumsan augue. In tincidunt convallis porta. Suspendisse lobortis gravida tellus non tristique. Duis molestie a velit a tincidunt. Fusce feugiat imperdiet mollis. Vivamus rutrum congue est, nec consequat lorem congue eu.",
@@ -252,7 +447,7 @@ angular.module('jakPoliczycApp')
             },
             {
                 "id": 6,
-                "kind": "E",
+                "kind": "Z",
                 "title": "Stanley Herman",
                 "intro": "Ex eu cillum aute ad Lorem labore culpa ipsum eiusmod nostrud. Mollit excepteur anim magna eu nostrud sunt sit proident. Ea id aliquip esse veniam non officia irure aute ad duis occaecat fugiat. Cupidatat excepteur excepteur labore qui anim. Magna culpa exercitation mollit duis nostrud ex duis.\r\n",
                 "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum libero nibh, et tincidunt lacus malesuada eget. Duis lacus lacus, luctus quis tellus at, viverra condimentum sem. Sed non tellus dolor. Maecenas volutpat scelerisque augue, ac scelerisque eros convallis vitae. Donec volutpat lorem quis commodo fringilla. Cras pretium eu nisl non pellentesque. Cras vehicula nibh diam, vel pharetra lorem eleifend sed. Suspendisse egestas placerat urna, eu tristique arcu consequat sit amet. Sed rutrum sed leo sed condimentum. Proin ultricies nisl arcu, quis blandit nunc gravida a. Phasellus posuere vestibulum aliquet. Donec nec elit id velit tincidunt pharetra nec in dolor. In pretium non risus at lacinia. Morbi ornare hendrerit quam, at ultrices libero aliquet quis. Nunc bibendum facilisis metus, sit amet scelerisque ipsum blandit a. In interdum lorem sed dui pharetra, sit amet finibus nulla pulvinar. Duis eget diam lorem. Fusce blandit ipsum ac mollis gravida. Suspendisse ante ante, ornare in rutrum a, hendrerit ut nunc. In sollicitudin et elit ut ultrices. Proin blandit enim suscipit pretium eleifend. Sed scelerisque tellus feugiat mi elementum consectetur. Phasellus quis nunc pharetra, tempus dolor in, vehicula odio. Pellentesque justo elit, varius vel turpis sit amet, laoreet elementum lectus. Nunc convallis, lacus non suscipit congue, dolor nunc iaculis nulla, a molestie nisi libero in urna. Donec arcu ligula, aliquam vitae accumsan ut, cursus ac erat. Maecenas at erat sodales nunc finibus suscipit ut sit amet nisl. Praesent nec ultricies felis. Pellentesque tempor auctor urna sit amet varius. Vestibulum molestie luctus risus non tempor. Quisque nec eros leo. Curabitur pharetra ligula in consectetur pretium. Curabitur pellentesque gravida magna, a vulputate dolor. Fusce quis aliquet mi. Donec hendrerit pellentesque ipsum nec lacinia. Morbi at ultricies augue. Donec rutrum leo sit amet purus blandit ullamcorper. Nam augue lectus, vestibulum sollicitudin suscipit quis, maximus non enim. Curabitur molestie interdum enim in semper. In malesuada lorem ut neque cursus, sit amet consectetur ante vehicula. Nunc hendrerit lorem eget scelerisque suscipit. Etiam tempus nisi sed aliquet venenatis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi nibh libero, ullamcorper at sodales ac, posuere et ipsum. Nunc dictum egestas mattis. Nunc in sollicitudin libero. In hac habitasse platea dictumst. Sed nec tristique augue. Ut nec blandit risus. Vestibulum vitae magna condimentum nunc ultrices molestie non vel velit. Duis bibendum facilisis nisl bibendum lacinia. Quisque maximus nulla quis massa feugiat, vitae auctor mi posuere. In eu justo eget odio fringilla sagittis. Duis luctus eget lorem nec lacinia. Proin eu dapibus orci, id faucibus ante. Aliquam bibendum magna ut libero laoreet interdum. Sed leo est, hendrerit vel nibh nec, pharetra convallis elit. In nibh erat, tempor vel augue id, aliquet lacinia massa. Proin mattis luctus ipsum at interdum. Integer hendrerit lectus sit amet tempus commodo. Cras vel quam lectus. Aenean molestie sagittis nulla, dapibus varius ligula varius at. Donec nisl erat, lobortis quis mi in, faucibus lobortis nisi. Duis sollicitudin felis vitae elit venenatis pharetra. Nulla sed bibendum ante. Nunc eget magna at tortor blandit fringilla sed id leo. Maecenas tristique ut arcu lobortis iaculis. Suspendisse tincidunt nulla nec feugiat viverra. Etiam vulputate nulla eget mollis ornare. Nullam blandit, nisi id rhoncus laoreet, urna libero cursus nisl, et aliquam dolor est sit amet neque. Nam mattis ex accumsan augue molestie, sit amet malesuada ante ornare. Praesent id sem tristique libero tincidunt dictum. Vivamus nunc orci, consectetur vel ipsum in, posuere commodo purus. Aenean fringilla sodales magna. Aliquam tempus est non purus faucibus elementum. Ut dui arcu, pulvinar sit amet orci ac, ultrices dictum ligula. Donec nunc nibh, venenatis quis euismod eu, malesuada in nisi. Aliquam in dolor feugiat, sagittis lorem eu, tincidunt ex. In augue libero, sodales a purus quis, sodales ornare quam. Sed at accumsan augue. In tincidunt convallis porta. Suspendisse lobortis gravida tellus non tristique. Duis molestie a velit a tincidunt. Fusce feugiat imperdiet mollis. Vivamus rutrum congue est, nec consequat lorem congue eu.",
@@ -284,7 +479,7 @@ angular.module('jakPoliczycApp')
     .run(function ($httpBackend, jpartfilter, mockMenu, mockTags, mockArticle, mockArticles) {
         $httpBackend.whenGET('/menu').respond(mockMenu);
         $httpBackend.whenGET('/tags').respond(mockTags);
-        $httpBackend.whenGET('/articles').respond(mockArticle);
+        $httpBackend.whenGET('/articles').respond(mockArticles);
 
         $httpBackend.whenGET(/\/article\/id\/(.+)/).respond(function(method, url) {
             var url_parts = url.split('/');

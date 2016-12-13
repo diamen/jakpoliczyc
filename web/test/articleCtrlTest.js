@@ -46,7 +46,7 @@ describe('articlesCtrl && articleCtrl', function () {
      it('Odpytanie przy użyciu odpowiedniego skrótu powinno zwrócić prawidłowy rodzaj artykułu', function () {
         // given
          var theoryLetter = 'T';
-         var exerciseLetter = 'E';
+         var exerciseLetter = 'Z';
 
          // when
          var theoryResult = _mockScope.getKind(theoryLetter);

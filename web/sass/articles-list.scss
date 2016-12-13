@@ -29,4 +29,18 @@
   td:nth-child(4) {
     font-size: 0.7em;
   }
+
+  i {
+    cursor: pointer;
+  }
+
+  tr:not(:first-child) {
+    transition: all 0.5s ease;
+    cursor: pointer;
+  }
+
+  tr:not(:first-child):hover {
+    color: #bb138e;
+  }
+
 }

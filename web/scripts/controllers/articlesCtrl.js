@@ -3,6 +3,14 @@ angular.module('jakPoliczycControllers')
 
         $scope.articles = [];
         $scope.filteredArticles = [];
+        $scope.orderProp = 'title';
+
+        $scope.header = { values: {} };
+        $scope.header.names = { TITLE: "title", KIND: "kind", DATE: "date" };
+
+        angular.forEach($scope.header.names, function (value) {
+            $scope.header.values[value] = { selected: false, reversed: false };
+        });
 
         $http({
             method: 'GET',
@@ -31,8 +39,37 @@ angular.module('jakPoliczycControllers')
             });
         });
 
+        ($scope.orderBy = function (value) {
+            angular.forEach($scope.header.values, function (elem, key) {
+
+                if (key === value) {
+
+                    if (elem.selected) {
+                        elem.selected = false;
+                        elem.reversed = true;
+                        $scope.orderProp = reverse(value);
+                        return;
+                    }
+
+                    $scope.orderProp = value;
+
+                    if (elem.reversed) {
+                        elem.selected = true;
+                        elem.reversed = false;
+                        return;
+                    }
+
+                    elem.selected = true;
+                    return;
+                }
+
+                elem.selected = false;
+                elem.reversed = false;
+            });
+        })($scope.header.names.DATE);
+
         $scope.getKind = function (letter) {
-            if (letter === 'E')
+            if (letter === 'Z')
                 return "ZADANIE";
 
             if (letter === 'T')
@@ -41,4 +78,7 @@ angular.module('jakPoliczycControllers')
             throw new Error('Podano nieprawidłowy rodzaj artykuły. Dopuszczalne rodzaje to "Z" oraz "T"');
         };
 
+        function reverse(value) {
+            return '-' + value;
+        }
     });
