@@ -20,14 +20,9 @@
 
     <header role="banner" class="header" ng-include="'/views/header.html'"></header>
     <div ng-include="'/views/tagger.html'"></div>
-    <div class="row jpcontainer">
-        <aside class="col-md-2 slideable">
-            <jpmenu items="{{mockMenu}}"></jpmenu>
-        </aside>
-        <div class="col-md-10 slideable">
-            <main ui-view class="jpmain"></main>
-        </div>
+    <div class="jpcontainer">
+        <jpmenu class="col-md-2 slideable" items="{{mockMenu}}"></jpmenu>
+        <main class="col-md-10 slideable jpmain"><ui-view></ui-view></main>
     </div>
-
 </body>
 </html>

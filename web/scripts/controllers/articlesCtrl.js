@@ -4,9 +4,12 @@ angular.module('jakPoliczycControllers')
         $scope.articles = [];
         $scope.filteredArticles = [];
         $scope.orderProp = 'title';
+        $scope.isFilter = false;
 
         $scope.header = { values: {} };
         $scope.header.names = { TITLE: "title", KIND: "kind", DATE: "date" };
+
+        var _articlesLength;
 
         angular.forEach($scope.header.names, function (value) {
             $scope.header.values[value] = { selected: false, reversed: false };
@@ -17,6 +20,7 @@ angular.module('jakPoliczycControllers')
             url: '/articles'
         }).then(function success(response) {
             $scope.articles = response.data;
+            _articlesLength = $scope.articles.length;
             angular.copy($scope.articles, $scope.filteredArticles);
         }, function error() {
             throw new Error("HTTP error");
@@ -24,6 +28,11 @@ angular.module('jakPoliczycControllers')
 
         $scope.$on('tags-down', function (event, args) {
             $scope.filteredArticles = jpartfilter($scope.articles, 'tags', args);
+
+            if (angular.isUndefined(_articlesLength))
+                return;
+
+            $scope.isFilter = ($scope.filteredArticles.length !== _articlesLength);
         });
 
         $scope.$on('menu-down', function (event, args) {
@@ -34,6 +43,7 @@ angular.module('jakPoliczycControllers')
             }).then(function success(response) {
                 $scope.articles = response.data;
                 angular.copy($scope.articles, $scope.filteredArticles);
+                $scope.isFilter = ($scope.filteredArticles.length !== _articlesLength);
             }, function error() {
                 throw new Error("HTTP error");
             });

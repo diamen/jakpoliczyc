@@ -3,8 +3,6 @@ $artbrdcolor: #cccccc;
 .jparticle {
   margin-bottom: 6px;
   padding: 5px 15px;
-  background-color: white;
-  border: 1px solid $artbrdcolor;
 }
 
 .jparticle h2 {
@@ -97,4 +95,8 @@ $artbrdcolor: #cccccc;
 
 .jparticle .error {
   padding: 4px 12px;
+}
+
+a.carousel-control:focus {
+  opacity: .57;
 }

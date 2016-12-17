@@ -8,25 +8,8 @@ $height: 50px;
   position: relative;
 }
 
-div.tagger::before, div.tagger:before {
-  @extend .before;
-
-  height: $height;
-  border-bottom: 1px solid $tgbrdcolor;
-  background-color: $bgcolor;
-}
-
-div.tagger::after, div.tagger:after {
-  @extend .after;
-
-  height: $height;
-  border-bottom: 1px solid $tgbrdcolor;
-  background-color: $bgcolor;
-}
-
 .tagger {
-  @extend .width;
-
+  width: 100%;
   display: table;
   border-bottom: 1px solid $tgbrdcolor;
   background-color: $bgcolor;
@@ -114,6 +97,7 @@ div.tagger {
 ul.tagger {
   border-right: 1px solid $tgbrdcolor;
   border-left: 1px solid $tgbrdcolor;
+  margin-bottom: 0;
   position: relative;
   z-index: 0;
 }

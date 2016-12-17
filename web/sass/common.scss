@@ -2,31 +2,13 @@ $bgcolor: #fbfbfb;
 $brdcolor: #a0a0a0;
 
 body {
+  font-size: 13px;
   font-family: 'Lato', sans-serif;
-  background-color: #ececec;
-}
-
-.width {
-  margin: 0 auto;
-  width: 95%;
-  max-width: 90em;
-}
-
-.before {
-  content: "";
-  width: 2.5%;
-  max-width: 5em;
-  position: absolute;
-  left: -2.5%;
-}
-
-.after {
-  content: "";
-  width: 5%;
-  max-width: 5em;
-  position: absolute;
-  right: -2.5%;
-  z-index: -1;
+  background: rgb(255,255,255); /* Old browsers */
+  background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 */
 }
 
 .jperror {
@@ -42,4 +24,38 @@ body {
 
 .jpselected {
   color: #007cff;
+}
+
+a.carousel-control {
+  background-image: initial !important;
+  background: -moz-radial-gradient(ellipse at center, rgba(30,87,153,1) 3%,rgba(47,104,167,1) 7%,rgba(125,185,232,0.53) 26%,rgba(125,185,232,0) 47%,rgba(125,185,232,0) 57%) !important;
+  background: -webkit-radial-gradient(ellipse at center, rgba(30,87,153,1) 3%,rgba(47,104,167,1) 7%,rgba(125,185,232,0.53) 26%,rgba(125,185,232,0) 47%,rgba(125,185,232,0) 57%) !important;
+  background: radial-gradient(ellipse at center, rgba(30,87,153,1) 3%,rgba(47,104,167,1) 7%,rgba(125,185,232,0.53) 26%,rgba(125,185,232,0) 47%,rgba(125,185,232,0) 57%) !important;
+}
+
+ol.carousel-indicators {
+  top: -10px;
+}
+
+ol.carousel-indicators li {
+  box-shadow: 0 0 2px #b9b9b9;
+  border: 1px solid #989898;
+}
+
+main {
+  background: rgb(255,255,255); /* Old browsers */
+  background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 */
+}
+
+main h2 {
+  box-shadow: 3px 4px 13px -4px #dadada;
+  border-bottom: 1px solid #c7c7c7;
+  font-family: Consolas, monaco, monospace;
+  font-weight: 500;
+  font-variant: normal;
+  padding-bottom: 0.1em;
+  text-shadow: 0 4px 6px #b4b1b1;
 }

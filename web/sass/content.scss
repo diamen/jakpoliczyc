@@ -1,14 +1,3 @@
-.jpcontainer {
-  @extend .width;
-}
-
 .jpcontainer > * {
   position: relative;
-  margin: 5px 0;
-}
-
-aside {
-  background-color: white;
-  padding-left: 5px;
-  padding-right: 5px;
 }

@@ -1,5 +1,7 @@
 <div class="jplist">
-    <h2>Najnowsze artykuły</h2>
+    <h2 ng-hide="isFilter">Najnowsze artykuły</h2>
+    <h2 ng-show="isFilter">Wyniki filtrowania</h2>
+    <div ng-if="filteredArticles && filteredArticles.length >= 3 && !isFilter" ng-include="'/views/articles-carousel.html'"></div>
     <table>
         <tr>
             <th>No</th>
