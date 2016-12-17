@@ -3,100 +3,93 @@ $artbrdcolor: #cccccc;
 .jparticle {
   margin-bottom: 6px;
   padding: 5px 15px;
-}
 
-.jparticle h2 {
-  text-align: center;
-  margin-top: 5px;
-  margin-bottom: 10px;
-}
+  h2 {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
 
-.jparticle p {
-  text-indent: 8px;
-}
+  p {
+    text-indent: 8px;
+  }
 
-.jparticle .author, .jparticle .date {
-  font-size: 0.85em;
-}
+  .author,   .date {
+    font-size: 0.85em;
+  }
 
-.jparticle .author {
+  .date {
+    float: right;
+  }
 
-}
+  .tags {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
 
-.jparticle .date {
-  float: right;
-}
+  .tags span:first-child {
+    font-weight: bold;
+  }
 
-.jparticle .tags {
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
+  .tags span {
+    text-transform: lowercase;
+    margin-left: 7px;
+    font-size: 0.75em;
+  }
 
-.jparticle .tags span:first-child {
-  font-weight: bold;
-}
+  .intro {
+    font-weight: bold;
+  }
 
-.jparticle .tags span {
-  text-transform: lowercase;
-  margin-left: 7px;
-  font-size: 0.75em;
-}
+  .intro,   .content {
+    text-align: justify;
+  }
 
-.jparticle .intro {
-  font-weight: bold;
-}
+  .content {
+    word-break: break-all;
+    white-space: pre-line;
+  }
 
-.jparticle .intro, .jparticle .content {
-  text-align: justify;
-}
+  .footer {
+    font-weight: bold;
+    line-height: 2em;
+    padding: 7px 0;
+    border-top: 1px solid $artbrdcolor;
+  }
 
-.jparticle .content {
-  word-break: break-all;
-  white-space: pre-line;
-}
+  i.fa {
+    float: right;
+    margin-right: 8px;
+  }
 
-.jparticle .footer {
-  font-weight: bold;
-  line-height: 2em;
-  padding: 7px 0;
-  border-top: 1px solid $artbrdcolor;
-}
+  .fa-youtube {
+    color: #c72929;
+  }
 
-.jparticle i.fa {
-  float: right;
-  margin-right: 8px;
-}
+  .comment {
+    text-align: justify;
+    margin: 5px 3px;
+    padding: 8px;
+    background-color: whitesmoke;
+  }
 
-.jparticle .fa-youtube {
-  color: #c72929;
-}
+  .comment div {
+    border-bottom: 1px solid $artbrdcolor;
+    margin: 2px 12px;
+  }
 
-.jparticle .comment {
-  text-align: justify;
-  margin: 5px 3px;
-  padding: 8px;
-  background-color: whitesmoke;
-}
+  .comment span {
+    font-weight: bolder;
+    margin-right: 20px;
+  }
 
-.jparticle .comment div {
-  border-bottom: 1px solid $artbrdcolor;
-  margin: 2px 12px;
-}
+  .add {
+    margin: 5px 3px;
+    padding-bottom: 10px;
+  }
 
-.jparticle .comment span {
-  font-weight: bolder;
-  margin-right: 20px;
-}
+  .error {
+    padding: 4px 12px;
+  }
 
-.jparticle .add {
-  margin: 5px 3px;
-  padding-bottom: 10px;
-}
-
-.jparticle .error {
-  padding: 4px 12px;
-}
-
-a.carousel-control:focus {
-  opacity: .57;
 }

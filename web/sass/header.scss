@@ -1,30 +1,22 @@
-.header {
-    background-color: white;
-    height: 114px;
-    box-shadow: 0 0 5px #bbbbbb inset;
-    z-index: 1;
-    position: relative;
-}
+header[role="banner"] {
+  background-color: white;
+  box-shadow: 0 0 0.3125em #bbbbbb inset;
+  z-index: 1;
+  position: relative;
 
-.header > div {
-    height: 100%;
-    padding: 5px 0;
+  div {
+    padding: 0.3125em 0;
     text-align: center;
+  }
+
+  img {
+    max-height: 6.5em;
+    max-width: 100%;
+  }
 }
 
-.header img {
-    max-height: 100%;
-}
-
-.hlogo {
-    background: url("../resources/gfx/logo.png");
-    background-size: 100% 100%;
-
-    margin: 10px 0;
-
-    height: 94px;
-    width: 362px;
-
-    display: inline-block;
-
+@media only screen and (max-width: 30em) {
+  header[role="banner"] img {
+    max-height: 5.1875em;
+  }
 }
