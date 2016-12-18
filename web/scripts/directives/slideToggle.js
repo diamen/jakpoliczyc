@@ -9,20 +9,25 @@ angular.module('jakPoliczycDirectives')
             },
             link: function(scope, element, attrs, ngModel) {
 
-                var main = document.querySelector(scope.mainId);
-                var targets = document.querySelectorAll(attrs.slideToggle);
+                var _main,
+                    _targets;
+
+                $timeout(function () {
+                    _main = document.querySelector(scope.mainId);
+                    _targets = document.querySelectorAll(attrs.slideToggle);
+                }, 0);
 
                 $timeout(angular.element($window).bind('resize', function() {
                     ngModel.$viewValue = false;
-                    move(main, targets);
-                }), 50);
+                    move(_main, _targets);
+                }), 100);
 
                 scope.$watch('invoke', function (toexpand) {
-                    move(main, targets, toexpand);
+                    move(_main, _targets, toexpand);
                 });
 
                 element.bind('click', function() {
-                    move(main, targets);
+                    move(_main, _targets);
                 });
 
                 function move(main, targets, toexpand) {

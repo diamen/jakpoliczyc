@@ -2,7 +2,8 @@ $tgbrdcolor: #cccccc;
 $tgunscolor: #a6e1ec;
 $tgselcolor: #27626d;
 $tgtxtcolor: #5792bd;
-$height: 50px;
+$height: 2.86em;
+$paddtopbtm: 0.25em;
 
 .tagparent {
   position: relative;
@@ -10,94 +11,142 @@ $height: 50px;
 
 .tagger {
   width: 100%;
-  display: table;
   border-bottom: 1px solid $tgbrdcolor;
   background-color: $bgcolor;
-  list-style: none;
-}
 
-.tagger > * {
-  line-height: $height - 10px;
-  display: inline-block;
-  vertical-align: middle;
+  li {
+    cursor: pointer;
+    margin: .5em;
+    padding: .25em .5em .25em .25em;
+    border-radius: 0 .25em .25em 0;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  li:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 1em solid transparent;
+    border-right-width: .5em;
+    left: -1.5em;
+    top: 0;
+    position: absolute;
+  }
+
+  .x {
+    left: -.5em;
+    padding: .25em .5em .25em .5em;
+    border-radius: .25em .25em .25em .25em;
+    background-color: $tgunscolor;
+    color: $tgtxtcolor;
+  }
+
+  .selected {
+    background-color: $tgselcolor;
+    color: #e9ecef;
+  }
+
+  .selected:before {
+    border-right-color: $tgselcolor;
+  }
+
+  .unselected {
+    background-color: $tgunscolor;
+    color: $tgtxtcolor;
+  }
+
+  .unselected:before {
+    border-right-color: $tgunscolor;
+    color: $tgtxtcolor;
+  }
+
+  input {
+    width: auto;
+    display: inline-block;
+  }
+
+  i {
+    cursor: pointer;
+  }
+
+  i.fa-3x {
+    line-height: ($height - 2*$paddtopbtm)/3em; // 3em to font-size elementu fa-3x
+  }
+
+  i.fa-2x {
+    line-height: ($height - 2*$paddtopbtm)/2em; // 2em to font-size elementu fa-2x
+  }
 }
 
 .tagger > * {
   float: left;
-  margin-top: 4px;
-  margin-right: 3px;
-  margin-left: 3px;
+  margin: 0 0.1875em;
 }
 
 i#expander {
   float: right;
 }
 
-.tagger > input {
-  width: auto;
-  height: $height - 10px;
-}
-
-.tagger > i {
-  cursor: pointer;
-}
-
-.tagger li {
-  cursor: pointer;
-  margin: .5em;
-  padding: .25em .5em .25em .25em;
-  border-radius: 0 .25em .25em 0;
-  position: relative;
-  line-height: 1.5;
-}
-
-.tagger li:before {
-  content: '';
-  width: 0;
-  height: 0;
-  border: 1em solid transparent;
-  border-right-width: .5em;
-  left: -1.5em;
-  top: 0;
-  position: absolute;
-}
-
-.tagger .x {
-  left: -.5em;
-  padding: .25em .5em .25em .5em;
-  border-radius: .25em .25em .25em .25em;
-  background-color: $tgunscolor;
-  color: $tgtxtcolor;
-}
-
-.tagger .selected {
-  background-color: $tgselcolor;
-  color: #e9ecef;
-}
-
-.tagger .selected:before {
-  border-right-color: $tgselcolor;
-}
-
-.tagger .unselected {
-  background-color: $tgunscolor;
-  color: $tgtxtcolor;
-}
-
-.tagger .unselected:before {
-  border-right-color: $tgunscolor;
-  color: $tgtxtcolor;
-}
-
 div.tagger {
+  display: table;
   position: relative;
   z-index: 1;
+  padding: 0.25em 0;
 }
 
 ul.tagger {
+  display: table;
   border-right: 1px solid $tgbrdcolor;
   border-left: 1px solid $tgbrdcolor;
   margin-bottom: 0;
   position: relative;
+  list-style: none;
   z-index: 0;
+}
+
+@media only screen and (min-width: 768px) {
+  div.tagger {
+    padding-right: 2.5%;
+    padding-left: 2.5%;
+  }
+
+  div.tagger > span {
+    border-left: 1px solid #e4e4e4;
+    padding: 0 .25em;
+    border-right: 1px solid #e4e4e4;
+    background-color: white;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .col-half {
+    width: 100%;
+    text-align: center;
+  }
+
+  .col-half > label {
+    width: 50%;
+    text-align: center;
+    margin-bottom: 0;
+    display: inline-block;
+  }
+
+  .col-half input {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 476px) {
+  .tagger > * {
+    margin: 0 0;
+  }
+
+  .tagger label {
+    width: 100%;
+  }
+
+  .tagger input {
+    width: 100%;
+  }
 }
