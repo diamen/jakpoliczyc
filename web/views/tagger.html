@@ -1,11 +1,17 @@
 <div ng-controller="tagCtrl" class="tagparent">
     <div class="tagger">
-        <i class="fa fa-home fa-3x col-half" aria-hidden="true" uib-tooltip="Home" ng-click="goHome()"></i>
-        <span class="col-half">
-            <label for="tag">Wyszukiwanie po tagach</label>
-            <input class="form-control" typeahead-on-select="unfocus()" ng-focus="focus()" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag for tag in tags | filter:$viewValue | limitTo: 5" type="text" id="tag">
+        <span class="row-s">
+            <i class="fa fa-bars fa-3x" aria-hidden="true" uib-tooltip="Menu" ng-click="openMenu()"></i>
+            <i class="fa fa-home fa-3x" aria-hidden="true" uib-tooltip="Home" ng-click="goHome()"></i>
+            <i class="fa fa-bars fa-3x" aria-hidden="true"></i>
         </span>
-        <i id="expander" ng-if="!smallScreen" class="fa fa-2x" invoke="invoke" main-id="#tags" slide-toggle=".slideable" ng-model="animation.expanded" ng-class="animation.expanded ? 'fa-hand-o-up' : 'fa-hand-o-down'" aria-hidden="true" uib-tooltip-html="animation.expanded ? animation.expandedText : animation.unexpandedText"></i>
+        <span class="row-s">
+            <label class="row-s" for="tag">Wyszukiwanie po tagach</label>
+            <input class="form-control row-s" typeahead-on-select="unfocus()" ng-focus="focus()" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag for tag in tags | filter:$viewValue | limitTo: 5" type="text" id="tag">
+        </span>
+        <span>
+            <i id="expander" ng-if="!smallScreen" class="fa fa-2x" invoke="invoke" main-id="#tags" slide-toggle=".slideable" ng-model="animation.expanded" ng-class="animation.expanded ? 'fa-hand-o-up' : 'fa-hand-o-down'" aria-hidden="true" uib-tooltip-html="animation.expanded ? animation.expandedText : animation.unexpandedText"></i>
+        </span>
     </div>
 
     <ul ng-if="!smallScreen" class="tagger slideable" id="tags">

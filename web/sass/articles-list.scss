@@ -1,9 +1,12 @@
+$list-background-color: #f2f2f2;
+$list-hover-color: #bb138e;
+
 .jplist {
   overflow-x: auto;
 
   h2 {
-    text-align: center;
     margin: 15px 0;
+    text-align: center;
   }
 
   table {
@@ -12,35 +15,37 @@
     width: 100%;
   }
 
-  table th, table td {
-    border: none;
-    text-align: left;
+  th {
+    white-space: nowrap;
+  }
+
+  th,
+  td {
+    border: 0;
     padding: 8px;
+    text-align: left;
   }
 
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  td:nth-child(2), td:last-child {
-    font-size: 0.8em;
+  td:nth-child(2),
+  td:last-child {
+    font-size: .8em;
   }
 
   td:nth-child(4) {
-    font-size: 0.7em;
+    font-size: .7em;
   }
 
-  i {
-    cursor: pointer;
+  tr:nth-child(even) {
+    background-color: $list-background-color;
   }
 
   tr:not(:first-child) {
-    transition: all 0.5s ease;
     cursor: pointer;
-  }
+    transition: all .5s ease;
 
-  tr:not(:first-child):hover {
-    color: #bb138e;
+    &:hover {
+      color: $list-hover-color;
+    }
   }
 
 }

@@ -1,11 +1,15 @@
+$header-color: #fff;
+$header-shadow-color: #bbb;
+
 header[role="banner"] {
-  background-color: white;
-  box-shadow: 0 0 0.3125em #bbbbbb inset;
-  z-index: 1;
+  background-color: $header-color;
+  box-shadow: 0 0 .3125em $header-shadow-color inset;
+  cursor: pointer;
   position: relative;
+  z-index: 1;
 
   div {
-    padding: 0.3125em 0;
+    padding: .3125em 0;
     text-align: center;
   }
 

@@ -10,6 +10,7 @@ head.load(
     { file: '/libraries/angular-aop/build/angular-aop.js' },
     { file: '/libraries/sprintf-js/src/angular-sprintf.js' },
     { file: '/libraries/angular-ui-tree/dist/angular-ui-tree.js' },
+    { file: '/libraries/modernizr/modernizr.js' },
     { file: '/libraries/sprintf-js/src/sprintf.js' },
     { file: '/libraries/underscore/underscore.js' },
 

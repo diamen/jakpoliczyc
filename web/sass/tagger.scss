@@ -1,151 +1,172 @@
-$tgbrdcolor: #cccccc;
-$tgunscolor: #a6e1ec;
-$tgselcolor: #27626d;
-$tgtxtcolor: #5792bd;
-$height: 2.86em;
-$paddtopbtm: 0.25em;
+$tag-border-color: #ccc;
+$tag-border-edge-color: #e4e4e4;
+$tag-height: 2.86em;
+$tag-nav-height: 2.5em;
+$tag-padding-top: .25em;
+$tag-selected-background-color: #27626d;
+$tag-selected-color: #e9ecef;
+$tag-span-color: #fff;
+$tag-text-color: #5792bd;
+$tag-unselected-color: #a6e1ec;
 
 .tagparent {
   position: relative;
 }
 
 .tagger {
-  width: 100%;
-  border-bottom: 1px solid $tgbrdcolor;
   background-color: $bgcolor;
+  border-bottom: 1px solid $tag-border-color;
+  width: 100%;
 
-  li {
-    cursor: pointer;
-    margin: .5em;
-    padding: .25em .5em .25em .25em;
-    border-radius: 0 .25em .25em 0;
-    position: relative;
-    line-height: 1.5;
+  > * {
+    float: left;
   }
 
-  li:before {
-    content: '';
-    width: 0;
-    height: 0;
+  li {
+    border-radius: 0 .25em .25em 0;
+    cursor: pointer;
+    line-height: 1.5;
+    margin: .5em;
+    padding: .25em .5em .25em .25em;
+    position: relative;
+  }
+
+  li:before,
+  li::before {
     border: 1em solid transparent;
     border-right-width: .5em;
+    content: '';
+    height: 0;
     left: -1.5em;
-    top: 0;
     position: absolute;
+    top: 0;
+    width: 0;
   }
 
   .x {
+    background-color: $tag-unselected-color;
+    border-radius: .25em;
+    color: $tag-text-color;
     left: -.5em;
-    padding: .25em .5em .25em .5em;
-    border-radius: .25em .25em .25em .25em;
-    background-color: $tgunscolor;
-    color: $tgtxtcolor;
+    padding: .25em .5em;
   }
 
   .selected {
-    background-color: $tgselcolor;
-    color: #e9ecef;
+    background-color: $tag-selected-background-color;
+    color: $tag-selected-color;
   }
 
-  .selected:before {
-    border-right-color: $tgselcolor;
+  .selected:before,
+  .selected::before {
+    border-right-color: $tag-selected-background-color;
   }
 
   .unselected {
-    background-color: $tgunscolor;
-    color: $tgtxtcolor;
+    background-color: $tag-unselected-color;
+    color: $tag-text-color;
   }
 
-  .unselected:before {
-    border-right-color: $tgunscolor;
-    color: $tgtxtcolor;
-  }
-
-  input {
-    width: auto;
-    display: inline-block;
+  .unselected:before,
+  .unselected::before {
+    border-right-color: $tag-unselected-color;
+    color: $tag-text-color;
   }
 
   i {
     cursor: pointer;
   }
 
-  i.fa-3x {
-    line-height: ($height - 2*$paddtopbtm)/3em; // 3em to font-size elementu fa-3x
+  .fa-3x {
+    line-height: ($tag-height - 2 * $tag-padding-top) / 3em; // 3em to font-size elementu fa-3x
   }
 
-  i.fa-2x {
-    line-height: ($height - 2*$paddtopbtm)/2em; // 2em to font-size elementu fa-2x
+  .fa-2x {
+    line-height: ($tag-height - 2 * $tag-padding-top) / 2em; // 2em to font-size elementu fa-2x
   }
-}
 
-.tagger > * {
-  float: left;
-  margin: 0 0.1875em;
-}
-
-i#expander {
-  float: right;
+  label {
+    margin-bottom: 0;
+  }
 }
 
 div.tagger {
   display: table;
+  line-height: $tag-nav-height;
+  padding: .25em 0;
   position: relative;
   z-index: 1;
-  padding: 0.25em 0;
+
+  i,
+  input {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  span:last-child {
+    float: right;
+  }
 }
 
 ul.tagger {
-  display: table;
-  border-right: 1px solid $tgbrdcolor;
-  border-left: 1px solid $tgbrdcolor;
-  margin-bottom: 0;
-  position: relative;
   list-style: none;
-  z-index: 0;
 }
 
 @media only screen and (min-width: 768px) {
-  div.tagger {
-    padding-right: 2.5%;
-    padding-left: 2.5%;
+  .tagger {
+
+    input {
+      display: inline-block;
+      width: auto;
+    }
+
+    span {
+      .fa-3x:first-child,
+      .fa-3x:last-child {
+        display: none;
+      }
+    }
+
+    > * {
+      margin: 0 .1875em;
+    }
   }
 
-  div.tagger > span {
-    border-left: 1px solid #e4e4e4;
+  ul.tagger {
+    border-left: 1px solid $tag-border-color;
+    border-right: 1px solid $tag-border-color;
+    display: table;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 0;
+  }
+
+  div.tagger {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+  }
+
+  .tagger > span {
+    background-color: $tag-span-color;
+    border-left: 1px solid $tag-border-edge-color;
+    border-right: 1px solid $tag-border-edge-color;
     padding: 0 .25em;
-    border-right: 1px solid #e4e4e4;
-    background-color: white;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  .col-half {
-    width: 100%;
-    text-align: center;
+  .tagger {
+    > * {
+      text-align: center;
+    }
   }
 
-  .col-half > label {
-    width: 50%;
-    text-align: center;
-    margin-bottom: 0;
-    display: inline-block;
-  }
-
-  .col-half input {
-    width: 50%;
+  span .fa {
+    margin: 0 .3em;
   }
 }
 
 @media only screen and (max-width: 476px) {
-  .tagger > * {
-    margin: 0 0;
-  }
-
-  .tagger label {
-    width: 100%;
-  }
-
+  .tagger label,
   .tagger input {
     width: 100%;
   }

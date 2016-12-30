@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="jakPoliczycApp" lang="en">
+<html ng-app="jakPoliczycApp" class="no-js" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>JakPoliczyc</title>
@@ -18,11 +18,14 @@
 </head>
 <body ng-controller="parentCtrl">
 
-    <header role="banner" class="header" ng-include="'/views/header.html'"></header>
+    <header ng-click="goHome()" role="banner" class="header" ng-include="'/views/header.html'"></header>
     <div ng-include="'/views/tagger.html'"></div>
     <div class="jpcontainer">
-        <jpmenu class="col-md-2 slideable" items="{{mockMenu}}"></jpmenu>
-        <main class="col-md-10 slideable jpmain"><ui-view></ui-view></main>
+        <div ng-class="isMenuOpened ? 'show-s' : 'hide-s'" class="col-2 slideable">
+            <jpmenu items="{{mockMenu}}"></jpmenu>
+        </div>
+        <main class="col-10 slideable jpmain"><ui-view></ui-view></main>
     </div>
+
 </body>
 </html>

@@ -20,22 +20,44 @@ angular.module('jakPoliczycDirectives')
                 };
 
                 scope.select = function (that, item) {
-                    if (!(item.submenus && item.submenus.length > 0)) {
-                        var temp = that.selected;
-                        unselectAll();
-                        that.selected = !temp;
-                        that.selected ? scope.$emit('menu-up', item.id) : scope.$emit('menu-up', undefined);
-                    }
+                    var temp = that.selected;
+                    unselectAll();
+                    that.selected = !temp;
+                    that.selected ? scope.$emit('menu-up', item.id) : scope.$emit('menu-up', undefined);
+
+                    closeMenu();
+                };
+
+                scope.unselectAll = function () {
+                    unselectAll();
+                };
+
+                scope.closeMenu = function () {
+                    closeMenu();
                 };
 
                 function unselectAll() {
-                    scope.$broadcast('unselect-down', null);
+                    scope.$broadcast('unselect-down');
+                }
+
+                function closeMenu() {
+                    scope.$emit('close-up');
                 }
             },
             template:
-            "<div class='jpmenutitle'>" +
+
+            "<section style='display: table;' class='row-s'>" +
+                "<button ng-click='unselectAll()' class='btn btn-default col-s-4 show-s'>Czyść</button>" +
+                "<button ng-click='toggleAll(); toggle =! toggle' class='btn btn-default col-s-4 show-s'>" +
+                    "<span ng-hide='toggle'>Rozwiń</span>" +
+                    "<span ng-show='toggle'>Zwiń</span>" +
+                "</button>" +
+                "<button ng-click='closeMenu()' class='btn btn-default col-s-4 show-s'>Zamknij</button>" +
+            "</section>" +
+
+            "<div class='jpmenutitle hide-s' ng-click='toggleAll()'>" +
                 "<i id='jpmenuparent' class='fa fa-caret-square-o-down' " +
-                "aria-hidden='true' ng-click='toggleAll()'></i>" +
+                "aria-hidden='true'></i>" +
                 "MENU" +
             "</div>" +
 

@@ -1,9 +1,10 @@
-<div jpnode class='node' ng-click="select(this, item)"
+<div jpnode class='node'
+     ng-click="item.submenus && item.submenus.length > 0 ? toggle(this) : select(this, item)"
      ng-class="{click: !(item.submenus && item.submenus.length > 0), selected: selected}"
      ui-tree-handle>
     <i ng-show="item.submenus && item.submenus.length > 0" class="fa"
        ng-class="collapsed ? 'fa-caret-square-o-down' : 'fa-caret-square-o-up'"
-       aria-hidden="true" data-nodrag ng-click="toggle(this)">
+       aria-hidden="true" data-nodrag>
     </i>
     {{item.name}}
 </div>

@@ -1,62 +1,125 @@
-jpmenu {
-  background-color: white;
-  padding: 2px !important;
-  display: block;
-}
+$menu-background-color: #fff;
+$menu-border-bottom-color: transparentize(#fff, .75);
+$menu-border-color: #dae2ea;
+$menu-button-color: #008000;
+$menu-selected-color-s: #1d2c33;
+$menu-selected-color-xl: #000;
+$menu-text-color-s: transparentize(#fff, .25);
+$menu-text-color-xl: #7c9eb2;
 
-.jpmenui {
-  cursor: pointer;
-  color: green;
+jpmenu {
+  display: block;
+  padding: 2px;
+
+  .node {
+    cursor: default;
+  }
+
+  .btn {
+    display: none;
+  }
 }
 
 .jpmenutitle {
-  text-align:center;
-  font-size: 1.1em;
   font-weight: bold;
-  padding: 5px;
+  text-align: center;
+
+  i {
+    margin-right: 5px;
+  }
 }
 
-.jpmenutitle i {
-  @extend .jpmenui;
-  margin-right: 5px;
+@media only screen and (min-width: 768px) {
+  jpmenu {
+    background-color: $menu-background-color;
+  }
+
+  %jpmenui {
+    color: $menu-button-color;
+    cursor: pointer;
+  }
+
+  .jpmenutitle {
+    font-size: 1.1em;
+    padding: 5px;
+  }
+
+  .jpmenutitle i {
+    @extend %jpmenui;
+  }
+
+  jpmenu li,
+  jpmenu ol {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: .95em;
+    list-style-type: none;
+  }
+
+  jpmenu ol {
+    padding-left: 0;
+  }
+
+  jpmenu .node {
+    border: 1px solid $menu-border-color;
+    color: $menu-text-color-xl;
+    margin: 5px 0;
+    padding: 5px;
+  }
+
+  jpmenu .hidden {
+    display: none;
+    visibility: hidden;
+  }
+
+  jpmenu i {
+    @extend %jpmenui;
+    font-size: 1.1em;
+  }
+
+  jpmenu .click {
+    cursor: pointer;
+  }
+
+  jpmenu .selected {
+    background-color: $menu-selected-color-xl;
+  }
 }
 
-.jpmenu li, .jpmenu ol {
-  font-size: 0.95em;
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
-  list-style-type: none;
-}
+@media only screen and (max-width: 768px) {
+  jpmenu {
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
 
-.jpmenu ol {
-  padding-left: 0;
-}
+  jpmenu {
+    color: $menu-text-color-s;
+    font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif;
+    text-transform: uppercase;
+  }
 
-.jpmenu li {
+  .jpmenutitle {
+    font-size: 1.25em;
+    padding: 5px;
+  }
 
-}
+  jpmenu .angular-ui-tree-handle {
+    border-bottom: 1px solid $menu-border-bottom-color;
+    font-size: 1.1em;
+    padding: .15em .1em;
+  }
 
-.jpmenu .node {
-  cursor: default;
-  margin: 5px 0;
-  padding: 5px;
-  border: 1px solid #dae2ea;
-  color: #7c9eb2;
-}
+  .click {
+    font-weight: 500;
+  }
 
-.jpmenu .hidden {
-  display: none !important;
-  visibility: hidden !important;
-}
-
-.jpmenu i {
-  @extend .jpmenui;
-  font-size: 1.1em;
-}
-
-.jpmenu .click {
-  cursor: pointer;
-}
-
-.jpmenu .selected {
-  background-color: black;
+  jpmenu .selected {
+    background-color: $menu-selected-color-s;
+  }
 }
