@@ -17,10 +17,14 @@ head.load(
     /* Browser support */
     { file: '/scripts/browsersupport.js' },
 
+    /* Common */
+    { file: '/scripts/languages/PL.js' },
+
     /* Main */
     { file: '/scripts/app.js' },
 
     /* Config */
+    { file: '/scripts/config/bootstrap.js' },
     { file: '/scripts/config/routersConfig.js' },
     { file: '/scripts/config/treeConfig.js' },
 

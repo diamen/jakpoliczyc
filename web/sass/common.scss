@@ -10,7 +10,7 @@ $opacity: .57;
   width: unquote((( $prop / 12 ) * 100) + '%');
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   %col-s {
     float: left;
   }
@@ -35,6 +35,18 @@ $opacity: .57;
 
   .hide-s {
     display: none !important;
+  }
+
+  %foreground {
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
   }
 }
 
@@ -88,15 +100,23 @@ body {
 main {
   @extend %gradient;
 
-  h2 {
-    border-bottom: 1px solid #c7c7c7;
-    box-shadow: 3px 4px 13px -4px #dadada;
+  h3 {
     font-family: Consolas, monaco, monospace;
     font-variant: normal;
     font-weight: 500;
-    padding-bottom: 0.1em;
+    padding-bottom: .1em;
     text-shadow: 0 4px 6px #b4b1b1;
   }
+
+  h2 {
+    @extend h3;
+    border-bottom: 1px solid #c7c7c7;
+    box-shadow: 3px 4px 13px -4px #dadada;
+  }
+}
+
+.carousel {
+  margin-top: 1em;
 }
 
 .carousel-control {

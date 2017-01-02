@@ -2,6 +2,7 @@ angular.module('jakPoliczycControllers')
     .controller('parentCtrl', function($scope, $state, $timeout, $window, mockMenu) {
 
         $scope.isMenuOpened = false;
+        $scope.isTagsOpened = false;
         $scope.mockMenu = mockMenu;
         $scope.smallScreen = isSmallScreen();
 
@@ -15,6 +16,7 @@ angular.module('jakPoliczycControllers')
 
         $scope.$on('close-up', function () {
            $scope.isMenuOpened = false;
+           $scope.isTagsOpened = false;
         });
 
         /* States */
@@ -28,6 +30,16 @@ angular.module('jakPoliczycControllers')
 
         $scope.openMenu = function () {
             $scope.isMenuOpened = true;
+        };
+
+        $scope.openTags = function () {
+            $scope.isTagsOpened = true;
+        };
+
+        $scope.clear = function () {
+            $scope.$broadcast('menu-down');
+            $scope.$broadcast('tags-down');
+            $scope.$broadcast('unselect-down');
         };
 
         /* RWD */

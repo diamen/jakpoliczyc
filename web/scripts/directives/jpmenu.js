@@ -23,7 +23,7 @@ angular.module('jakPoliczycDirectives')
                     var temp = that.selected;
                     unselectAll();
                     that.selected = !temp;
-                    that.selected ? scope.$emit('menu-up', item.id) : scope.$emit('menu-up', undefined);
+                    that.selected ? scope.$emit('menu-up', item) : scope.$emit('menu-up', undefined);
 
                     closeMenu();
                 };
@@ -47,12 +47,12 @@ angular.module('jakPoliczycDirectives')
             template:
 
             "<section style='display: table;' class='row-s'>" +
-                "<button ng-click='unselectAll()' class='btn btn-default col-s-4 show-s'>Czyść</button>" +
+                "<button ng-click='unselectAll()' class='btn btn-default col-s-4 show-s'>{{$root.language.clear}}</button>" +
                 "<button ng-click='toggleAll(); toggle =! toggle' class='btn btn-default col-s-4 show-s'>" +
                     "<span ng-hide='toggle'>Rozwiń</span>" +
                     "<span ng-show='toggle'>Zwiń</span>" +
                 "</button>" +
-                "<button ng-click='closeMenu()' class='btn btn-default col-s-4 show-s'>Zamknij</button>" +
+                "<button ng-click='closeMenu()' class='btn btn-default col-s-4 show-s'>{{$root.language.close}}</button>" +
             "</section>" +
 
             "<div class='jpmenutitle hide-s' ng-click='toggleAll()'>" +

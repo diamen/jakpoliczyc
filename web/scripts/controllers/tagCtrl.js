@@ -12,7 +12,7 @@ angular.module('jakPoliczycControllers')
         $scope.tags = [];
         $scope.selectedTags = [];
 
-        $scope.$on('menu-down', function (event, args) {
+        $scope.$on('menu-down', function () {
             $scope.untickAll();
         });
 
@@ -87,6 +87,10 @@ angular.module('jakPoliczycControllers')
             $scope.selectedTags = Array($scope.tags.length).fill(false);
             fireEvent($scope.tags, $scope.selectedTags);
         })();
+
+        $scope.closeMenu = function () {
+            $scope.$emit('close-up');
+        };
 
         function fireEvent(tags, selectedTags) {
             $scope.$emit('tags-up', tags.filter(function (value, index) {

@@ -14,7 +14,7 @@ $tag-unselected-color: #a6e1ec;
 }
 
 .tagger {
-  background-color: $bgcolor;
+  background-color: $background-color;
   border-bottom: 1px solid $tag-border-color;
   width: 100%;
 
@@ -87,6 +87,10 @@ $tag-unselected-color: #a6e1ec;
   label {
     margin-bottom: 0;
   }
+
+  .btn {
+    display: none;
+  }
 }
 
 div.tagger {
@@ -120,8 +124,7 @@ ul.tagger {
     }
 
     span {
-      .fa-3x:first-child,
-      .fa-3x:last-child {
+      .fa-3x:not(.fa-home) {
         display: none;
       }
     }
@@ -158,6 +161,11 @@ ul.tagger {
     > * {
       text-align: center;
     }
+  }
+
+  ul.tagger {
+    @extend %foreground;
+    padding: 0 .25em;
   }
 
   span .fa {

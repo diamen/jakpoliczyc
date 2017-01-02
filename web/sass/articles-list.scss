@@ -4,8 +4,9 @@ $list-hover-color: #bb138e;
 .jplist {
   overflow-x: auto;
 
-  h2 {
-    margin: 15px 0;
+  h2,
+  h3 {
+    margin: 0 0 .25em;
     text-align: center;
   }
 

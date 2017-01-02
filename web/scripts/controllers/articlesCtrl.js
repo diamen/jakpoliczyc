@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('articlesCtrl', function($scope, $http, jpartfilter) {
+    .controller('articlesCtrl', function($scope, $rootScope, $http, jpartfilter) {
 
         $scope.articles = [];
         $scope.filteredArticles = [];
@@ -27,22 +27,28 @@ angular.module('jakPoliczycControllers')
         });
 
         $scope.$on('tags-down', function (event, args) {
+            if (angular.isUndefined(args))
+                return;
+
             $scope.filteredArticles = jpartfilter($scope.articles, 'tags', args);
 
             if (angular.isUndefined(_articlesLength))
                 return;
 
+            $scope.chosenTags = args.join(", ");
             $scope.isFilter = ($scope.filteredArticles.length !== _articlesLength);
         });
 
         $scope.$on('menu-down', function (event, args) {
+            args = args || {};
 
             $http({
                 method: 'GET',
-                url: '/articles/menuid/' + args
+                url: '/articles/menuid/' + args.id
             }).then(function success(response) {
                 $scope.articles = response.data;
                 angular.copy($scope.articles, $scope.filteredArticles);
+                $scope.chosenCategory = args.name;
                 $scope.isFilter = ($scope.filteredArticles.length !== _articlesLength);
             }, function error() {
                 throw new Error("HTTP error");
@@ -85,7 +91,7 @@ angular.module('jakPoliczycControllers')
             if (letter === 'T')
                 return "TEORIA";
 
-            throw new Error('Podano nieprawidłowy rodzaj artykuły. Dopuszczalne rodzaje to "Z" oraz "T"');
+            throw new Error('Podano nieprawidłowy rodzaj artykułu. Dopuszczalne rodzaje to "Z" oraz "T"');
         };
 
         function reverse(value) {

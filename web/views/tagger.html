@@ -1,9 +1,10 @@
 <div ng-controller="tagCtrl" class="tagparent">
     <div class="tagger">
         <span class="row-s">
-            <i class="fa fa-bars fa-3x" aria-hidden="true" uib-tooltip="Menu" ng-click="openMenu()"></i>
             <i class="fa fa-home fa-3x" aria-hidden="true" uib-tooltip="Home" ng-click="goHome()"></i>
-            <i class="fa fa-bars fa-3x" aria-hidden="true"></i>
+            <i class="fa fa-bars fa-3x" aria-hidden="true" uib-tooltip="Menu" ng-click="openMenu()"></i>
+            <i class="fa fa-tags fa-3x" aria-hidden="true" uib-tooltip="Tags" ng-click="openTags()"></i>
+            <i class="fa fa-eraser fa-3x" aria-hidden="true" uib-tooltip="Czyść" ng-click="clear()"></i>
         </span>
         <span class="row-s">
             <label class="row-s" for="tag">Wyszukiwanie po tagach</label>
@@ -14,8 +15,12 @@
         </span>
     </div>
 
-    <ul ng-if="!smallScreen" class="tagger slideable" id="tags">
-        <li class="x" ng-click="untickAll()" uib-tooltip="Odznacz tagi" tooltip-placement="bottom">X</li>
+    <ul ng-class="isTagsOpened ? 'show-s' : 'hide-s'" class="tagger slideable" id="tags">
+        <section style="display: table;" class="row-s">
+            <button ng-click="untickAll()" class="btn btn-default col-s-6 show-s">{{$root.language.clear}}</button>
+            <button ng-click="closeMenu()" class="btn btn-default col-s-6 show-s">{{$root.language.close}}</button>
+        </section>
+        <li class="x hide-s" ng-click="untickAll()" uib-tooltip="Odznacz tagi" tooltip-placement="bottom">X</li>
         <li ng-class="selectedTags[$index] ? 'selected' : 'unselected'" class="selected" ng-click="tick($index)" ng-init="render()" ng-repeat="tag in tags">{{tag}}</li>
     </ul>
 </div>
