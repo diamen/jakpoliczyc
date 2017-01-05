@@ -43,6 +43,7 @@ head.load(
 
     /* Directives */
     { file: '/scripts/directives/directive.js' },
+    { file: '/scripts/directives/jplogin.js' },
     { file: '/scripts/directives/jpmenu.js' },
     { file: '/scripts/directives/jpnode.js' },
     { file: '/scripts/directives/jparticle.js' },

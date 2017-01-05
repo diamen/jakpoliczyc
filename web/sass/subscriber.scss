@@ -1,0 +1,12 @@
+$sub-background-color: #dcf5f5;
+$sub-border-color: #9da0a0;
+$sub-box-color: #e4e4e4;
+
+.subscriber {
+  box-shadow: 0 0 2.5em #e4e4e4 inset;
+  border: 1px solid $sub-border-color;
+  background-color: $sub-background-color;
+  margin-top: 1em;
+  padding: .25em;
+  width: 100%;
+}

@@ -1,6 +1,9 @@
 $tag-border-color: #ccc;
 $tag-border-edge-color: #e4e4e4;
+$tag-gradient-color-first: #fff;
+$tag-gradient-color-second: #e5e5e5;
 $tag-height: 2.86em;
+$tag-login-shadow: #808080;
 $tag-nav-height: 2.5em;
 $tag-padding-top: .25em;
 $tag-selected-background-color: #27626d;
@@ -98,7 +101,7 @@ div.tagger {
   line-height: $tag-nav-height;
   padding: .25em 0;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 
   i,
   input {
@@ -106,13 +109,29 @@ div.tagger {
     vertical-align: middle;
   }
 
-  span:last-child {
+  span:first-child,
+  span:nth-child(2) {
     float: right;
   }
 }
 
 ul.tagger {
   list-style: none;
+}
+
+jp-login {
+  background: linear-gradient(to right, $tag-gradient-color-first 0%, $tag-gradient-color-second 100%);
+  box-shadow: 0 2px 3px $tag-login-shadow;
+  padding: .25em;
+  position: absolute;
+  text-align: center;
+  transition: top 500ms;
+  width: 22em;
+  z-index: 1;
+
+  div:last-child {
+    text-align: center;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -176,6 +195,10 @@ ul.tagger {
 @media only screen and (max-width: 476px) {
   .tagger label,
   .tagger input {
+    width: 100%;
+  }
+
+  jp-login {
     width: 100%;
   }
 }
