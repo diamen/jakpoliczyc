@@ -69,6 +69,10 @@ $opacity: .57;
   @extend %col;
 }
 
+@mixin background($direction: right) {
+  background: linear-gradient(to $direction, #fff 0%, #e5e5e5 100%);
+}
+
 %gradient {
   background: rgb(255,255,255); /* Old browsers */
   background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6-15 */

@@ -120,7 +120,7 @@ ul.tagger {
 }
 
 jp-login {
-  background: linear-gradient(to right, $tag-gradient-color-first 0%, $tag-gradient-color-second 100%);
+  @include background;
   box-shadow: 0 2px 3px $tag-login-shadow;
   padding: .25em;
   position: absolute;
