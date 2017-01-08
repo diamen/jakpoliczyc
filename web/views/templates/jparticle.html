@@ -4,14 +4,19 @@
             <span class="author">{{nauthor}}</span>
             <span class="date">{{ndate | date: 'HH:mm dd/MM/yyyy'}}</span>
         </div>
-        <h2>{{ntitle}}</h2>
+        <h2 contenteditable="false">{{ntitle}}</h2>
+        <div>
+            <button ng-show="isEditable" class="btn btn-default" ng-click="submit()">Zatwierdź</button>
+            <button ng-hide="isEditable" class="btn btn-default" ng-click="edit()">Edytuj</button>
+            <button ng-show="isEditable" class="btn btn-default" ng-click="cancel()">Anuluj</button>
+        </div>
     </header>
 
     <div class="tags">
         <span ng-hide="angular.isUndefined(ntags) || ntags.length === 0">tagi</span><span ng-repeat="tag in ntags">{{tag}}</span>
     </div>
-    <p class="intro">{{article.intro}}</p>
-    <p class="content" ng-repeat="ncontent in ncontents">{{ncontent}}</p>
+    <p contenteditable="false" class="intro">{{nintro}}</p>
+    <p contenteditable="false" class="content" ng-bind-html="ncontent"></p>
     <div class="footer">
         <span>Komentarze [{{ncomments.length}}]</span>
         <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="Obejrzyj film na youtube"></i>
@@ -38,5 +43,6 @@
         <div ng-show="form.username.$error.pattern" class="jperror">Zakaz używania znaków specjalnych!</div>
         <div ng-show="form.username.$error.maxlength" class="jperror">Przekroczyłeś długość! Max 15 znaków!</div>
     </form>
-    <div class="comment" ng-repeat="ncomment in ncomments"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> napisał/a o {{ncomment.date | date: 'HH:mm dd/MM/yyyy'}}:</div>{{ncomment.content}}</div>
+    <div class="comment" ng-repeat="ncomment in ncomments"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> napisał/a o {{ncomment.date | date: 'HH:mm dd/MM/yyyy'}}:
+    </div><button ng-click="remove($index)" class="btn btn-default">Usuń</button>{{ncomment.content}}</div>
 </article>
