@@ -27,6 +27,16 @@ angular.module('jakPoliczycRouters', [])
                         templateUrl: "/views/article.html"
                     }
                 }
+            })
+
+            .state("articles.add", {
+                url: "/add",
+                views: {
+                    "articlesView@articles": {
+                        controller: "addCtrl",
+                        templateUrl: "/views/add-article.html"
+                    }
+                }
             });
 
     });

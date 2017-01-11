@@ -24,6 +24,10 @@ angular.module('jakPoliczycControllers')
             $state.go("articles");
         };
 
+        $scope.goAdd = function () {
+            $state.go("articles.add");
+        };
+
         $scope.goArticle = function (id) {
             $state.go("articles.id", { id: id });
         };

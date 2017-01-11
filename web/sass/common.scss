@@ -10,6 +10,13 @@ $opacity: .57;
   width: unquote((( $prop / 12 ) * 100) + '%');
 }
 
+@media only screen and (min-width: 476px) {
+  body {
+    height: 100%;
+    position: absolute;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   %col-s {
     float: left;
@@ -109,6 +116,7 @@ main {
     font-variant: normal;
     font-weight: 500;
     padding-bottom: .1em;
+    text-align: center;
     text-shadow: 0 4px 6px #b4b1b1;
   }
 

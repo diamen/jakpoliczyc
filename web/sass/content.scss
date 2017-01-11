@@ -1,9 +1,5 @@
 .jpcontainer {
-  position: absolute;
-
-  > * {
-    position: relative;
-  }
+  position: relative;
 
   &:after,
   &::after {

@@ -20,12 +20,12 @@
 
     <header ng-click="goHome()" role="banner" class="header" ng-include="'/views/header.html'"></header>
     <div ng-include="'/views/tagger.html'"></div>
-    <div class="jpcontainer">
-        <div class="col-2 slideable">
+    <div class="jpcontainer slideable">
+        <div class="col-2">
             <jpmenu ng-class="isMenuOpened ? 'show-s' : 'hide-s'" items="{{mockMenu}}"></jpmenu>
             <section class="subscriber" ng-include="'/views/subscriber.html'"></section>
         </div>
-        <main class="col-10 slideable jpmain">
+        <main class="col-10 jpmain">
             <ui-view></ui-view>
         </main>
         <section class="contact" ng-include="'/views/contact.html'"></section>

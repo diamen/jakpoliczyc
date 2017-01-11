@@ -37,16 +37,19 @@ head.load(
     /* Controllers */
     { file: '/scripts/controllers/controller.js' },
     { file: '/scripts/controllers/parentCtrl.js' },
+    { file: '/scripts/controllers/addCtrl.js' },
     { file: '/scripts/controllers/articleCtrl.js' },
     { file: '/scripts/controllers/articlesCtrl.js' },
     { file: '/scripts/controllers/tagCtrl.js' },
 
     /* Directives */
     { file: '/scripts/directives/directive.js' },
+    { file: '/scripts/directives/jparticle.js' },
+    { file: '/scripts/directives/jpcategory.js' },
+    { file: '/scripts/directives/jpcategoryInput.js' },
     { file: '/scripts/directives/jplogin.js' },
     { file: '/scripts/directives/jpmenu.js' },
     { file: '/scripts/directives/jpnode.js' },
-    { file: '/scripts/directives/jparticle.js' },
     { file: '/scripts/directives/mathjaxBind.js' },
     { file: '/scripts/directives/postarea.js' },
     { file: '/scripts/directives/slideable.js' },
