@@ -50,10 +50,19 @@ head.load(
     { file: '/scripts/directives/jplogin.js' },
     { file: '/scripts/directives/jpmenu.js' },
     { file: '/scripts/directives/jpnode.js' },
+    { file: '/scripts/directives/jppostarea.js' },
     { file: '/scripts/directives/mathjaxBind.js' },
-    { file: '/scripts/directives/postarea.js' },
     { file: '/scripts/directives/slideable.js' },
     { file: '/scripts/directives/slideToggle.js' },
+
+    /* Directives
+       -----Validators*/
+    { file: '/scripts/directives/validators/jpalphanumeric.js' },
+    { file: '/scripts/directives/validators/jpcharacters.js' },
+
+    /* Factories */
+    { file: '/scripts/factories/factory.js' },
+    { file: '/scripts/factories/jpgenerator.js' },
 
     /* Services */
     { file: '/scripts/services/service.js' },

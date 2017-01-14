@@ -21,6 +21,7 @@ angular.module('jakPoliczycControllers')
         }
 
         $http({
+            cache: true,
             method: 'GET',
             url: '/tags'
         }).then(function success(response) {

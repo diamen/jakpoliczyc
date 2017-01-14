@@ -17,7 +17,7 @@ angular.module('jakPoliczycDirectives')
                             input = input.replace(/<latex>(.*?)<\/latex>/, latexExpression.outerHTML);
                         }
 
-                        for (var i = 0; i < photoTags.length; i++) {
+                        for (i = 0; i < photoTags.length; i++) {
                             var img = angular.element('<img>');
                             img.attr('src', photoTags[i].innerHTML);
                             img.css('max-width', '100%');

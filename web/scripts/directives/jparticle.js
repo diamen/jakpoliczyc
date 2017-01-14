@@ -22,7 +22,7 @@ angular.module('jakPoliczycDirectives')
                 $scope.ncomments = angular.fromJson($scope.article.comments);
                 $scope.ntags = angular.fromJson($scope.article.tags);
                 $scope.ncontent = $sce.trustAsHtml($scope.article.content);
-                $scope.noturls = jpvalidator.noturls;
+                $scope.notUrls = jpvalidator.notUrls;
 
                 $scope.nadd = function (author, content) {
                   $scope.add({author: author, content: $sanitize(content)});

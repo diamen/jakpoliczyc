@@ -11,6 +11,7 @@ angular.module('jakPoliczycApp',
 
         'jakPoliczycControllers',
         'jakPoliczycDirectives',
+        'jakPoliczycFactories',
         'jakPoliczycServices',
         'jakPoliczycRouters'
     ]);

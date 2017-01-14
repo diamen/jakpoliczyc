@@ -16,6 +16,7 @@ angular.module('jakPoliczycControllers')
         });
 
         $http({
+            cache: true,
             method: 'GET',
             url: '/articles'
         }).then(function success(response) {

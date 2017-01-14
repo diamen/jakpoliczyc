@@ -1,33 +1,53 @@
+$postarea-background-color: #e6ecff;
+
 .postarea {
-    margin: 0 5px;
-    width: inherit;
-}
+  width: inherit;
 
-.postarea span {
-    word-break: break-all;
-    white-space: pre-line;
-}
-
-.postarea > div {
+  .display {
+    background-color: $postarea-background-color;
     border-radius: 2px;
-    background-color: #e6ecff;
-
     padding: 5px 2px;
-}
 
-.postarea > textarea {
-    margin: 4px 0;
-}
+    &:after,
+    &::after {
+      @extend %clear-float;
+    }
 
-.postarea > button {
+    button {
+      float: right;
+      height: 25px;
+      margin: 0 3px 3px;
+      width: 25px;
+    }
+  }
+
+  .controls {
+    width: 100%;
+
+    &:after,
+    &::after {
+      @extend %clear-float;
+    }
+
+    div:first-child {
+      float: left;
+    }
+
+    div:last-child {
+      float: right;
+    }
+  }
+
+  p {
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  > button {
     margin-right: 5px;
-}
+  }
 
-.postarea > div > button {
-    float: right;
-    margin-left: 3px;
-    margin-right: 3px;
-    margin-bottom: 3px;
-    height: 25px;
-    width: 25px;
+  > textarea {
+    margin: 4px 0;
+  }
 }

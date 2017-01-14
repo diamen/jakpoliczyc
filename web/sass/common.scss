@@ -6,6 +6,12 @@ $opacity: .57;
   position: relative;
 }
 
+%clear-float {
+  clear: both;
+  content: ' ';
+  display: block;
+}
+
 @mixin col-exp($prop) {
   width: unquote((( $prop / 12 ) * 100) + '%');
 }
