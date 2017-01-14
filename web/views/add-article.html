@@ -43,8 +43,8 @@
     </div>
 
     <div class="add-submit">
-        <button type="button" class="btn btn-primary">Zapisz w schowku</button>
-        <button ng-disabled="addForm.$invalid" class="btn btn-primary">Opublikuj</button>
+        <button ng-click="openModalSaveToStorage()" class="btn btn-primary">Zapisz w schowku</button>
+        <button ng-click="openModalSubmit()" ng-disabled="addForm.$invalid" class="btn btn-primary">Opublikuj</button>
     </div>
 
 </form>

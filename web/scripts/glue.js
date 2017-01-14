@@ -40,6 +40,7 @@ head.load(
     { file: '/scripts/controllers/addCtrl.js' },
     { file: '/scripts/controllers/articleCtrl.js' },
     { file: '/scripts/controllers/articlesCtrl.js' },
+    { file: '/scripts/controllers/modalCtrl.js' },
     { file: '/scripts/controllers/tagCtrl.js' },
 
     /* Directives */
@@ -68,5 +69,6 @@ head.load(
     { file: '/scripts/services/service.js' },
     { file: '/scripts/services/jpartfilter.js' },
     { file: '/scripts/services/jpparser.js' },
-    { file: '/scripts/services/jpvalidator.js' }
+    { file: '/scripts/services/jpvalidator.js' },
+    { file: '/scripts/services/modalService.js' }
 );

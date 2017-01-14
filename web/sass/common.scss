@@ -114,6 +114,10 @@ body {
   color: #007cff;
 }
 
+.jpzindexfix {
+  z-index: 0 !important;
+}
+
 main {
   @extend %gradient;
 

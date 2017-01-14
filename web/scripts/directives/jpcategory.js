@@ -87,7 +87,7 @@ angular.module('jakPoliczycDirectives')
                 '<label>{{ parentId > 0 ? "Poddział" : "Dział"}}</label>' +
                 '<div class="input-group">' +
                     '<input name="input" ng-if="editable" ng-model="inputModel" class="form-control" required jpalphanumeric/>' +
-                    '<select ng-hide="editable" ng-model="selectedModel" class="form-control">' +
+                    '<select ng-hide="editable" ng-model="selectedModel" class="form-control jpzindexfix">' +
                         '<option value="" ng-show="false"></option>' +
                         '<option ng-selected="nitems[0]" ng-repeat="item in nitems" value="{{item}}">{{item.name}}</option>' +
                     '</select>' +
