@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('singleStorageCtrl', function($scope, $http, $stateParams, modalService) {
+    .controller('singleStorageCtrl', function($scope, $rootScope, $http, $stateParams, modalService) {
 
         var id = $stateParams.id;
 
@@ -27,11 +27,11 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.openModalSaveToStorage = function () {
-            modalService.execute($scope.saveToStorage, "Czy chcesz zapisać dotychczasowe pracę i dokończyć później? Uwaga! Wyniki nie zostaną opublikowane!");
+            modalService.execute($scope.saveToStorage, $rootScope.language.msgSaveSto);
         };
 
         $scope.openModalSubmit = function () {
-            modalService.execute($scope.submit, "Czy chcesz opublikować artykuł?");
+            modalService.execute($scope.submit, $rootScope.language.msgPublish);
         };
 
     });

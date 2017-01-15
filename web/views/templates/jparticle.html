@@ -13,36 +13,36 @@
     </header>
 
     <div class="tags">
-        <span ng-hide="angular.isUndefined(ntags) || ntags.length === 0">tagi</span><span ng-repeat="tag in ntags">{{tag}}</span>
+        <span ng-hide="angular.isUndefined(ntags) || ntags.length === 0">{{language.tagsS}}</span><span ng-repeat="tag in ntags">{{tag}}</span>
     </div>
     <p contenteditable="false" class="intro">{{nintro}}</p>
     <p contenteditable="false" class="content" ng-bind-html="ncontent"></p>
     <div class="footer">
-        <span>Komentarze [{{ncomments.length}}]</span>
+        <span>{{language.comments}} [{{ncomments.length}}]</span>
         <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="Obejrzyj film na youtube"></i>
         <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" uib-tooltip="Ściągnij plik pdf"></i>
     </div>
     <form novalidate ng-submit="nadd(usercom.author, usercom.content)" name="form" class="add">
         <div class="form-group">
-            <label for="commentcontent">Dodaj komentarz</label>
+            <label for="commentcontent">{{language.addComment}}</label>
             <textarea name="content" ng-class="notUrls(usercom.content) || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.content"
-                      class="form-control" id="commentcontent" placeholder="Treść komentarza" rows="3"
+                      class="form-control" id="commentcontent" placeholder="{{language.commentContent}}" rows="3"
                       ng-minlength="3" ng-maxlength="500" ng-trim="true" required></textarea>
-            <div ng-show="notUrls(usercom.content)" class="jperror">Zakaz wklejania linków!</div>
-            <div ng-show="form.content.$error.maxlength" class="jperror">Przekroczyłeś długość komentarza! Max 500 znaków!</div>
+            <div ng-show="notUrls(usercom.content)" class="jperror">{{language.urlPrevent}}</div>
+            <div ng-show="form.content.$error.maxlength" class="jperror">{{language.commentLimit}}</div>
         </div>
         <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Nazwa użytkownika</span>
+            <span class="input-group-addon" id="basic-addon1">{{language.username}}</span>
             <input name="username" ng-class="form.content.$error.pattern || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.author"
-                   class="form-control" placeholder="Nazwa użytkownika"
+                   class="form-control" placeholder="{{language.username}}"
                    aria-describedby="basic-addon1" ng-minlength="3" ng-maxlength="15" ng-pattern="pattern.user" ng-trim="true" required>
             <span class="input-group-btn">
-                <input ng-disabled="form.username.$invalid || form.username.$invalid || notUrls(usercom.content) || form.content.$invalid" id="submit" class="btn btn-secondary" type="submit">Dodaj</input>
+                <input ng-disabled="form.username.$invalid || form.username.$invalid || notUrls(usercom.content) || form.content.$invalid" id="submit" class="btn btn-secondary" type="submit">{{language.add}}</input>
             </span>
         </div>
-        <div ng-show="form.username.$error.pattern" class="jperror">Zakaz używania znaków specjalnych!</div>
-        <div ng-show="form.username.$error.maxlength" class="jperror">Przekroczyłeś długość! Max 15 znaków!</div>
+        <div ng-show="form.username.$error.pattern" class="jperror">{{language.errSings}}</div>
+        <div ng-show="form.username.$error.maxlength" class="jperror">{{language.errExceed}}</div>
     </form>
-    <div class="comment" ng-repeat="ncomment in ncomments"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> napisał/a o {{ncomment.date | date: 'HH:mm dd/MM/yyyy'}}:
-    </div><button ng-click="remove($index)" class="btn btn-default">Usuń</button>{{ncomment.content}}</div>
+    <div class="comment" ng-repeat="ncomment in ncomments"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> {{language.wrote}} {{ncomment.date | date: 'HH:mm dd/MM/yyyy'}}:
+    </div><button ng-click="remove($index)" class="btn btn-default">{{language.remove}}</button>{{ncomment.content}}</div>
 </article>

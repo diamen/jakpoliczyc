@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('storageCtrl', function($scope, $http, jpcommon) {
+    .controller('storageCtrl', function($scope, $rootScope, $http, jpcommon) {
 
         $scope.storage = $scope.storage || [];
 

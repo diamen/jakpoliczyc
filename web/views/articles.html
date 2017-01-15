@@ -1,17 +1,17 @@
 <div class="jplist">
-    <h2 ng-hide="isFilter">Najnowsze artykuły</h2>
-    <h2 ng-show="isFilter">Wyniki filtrowania</h2>
+    <h2 ng-hide="isFilter">{{language.artTitle}}</h2>
+    <h2 ng-show="isFilter">{{language.filterRes}}</h2>
     <h3 ng-show="isFilter && chosenCategory">{{language.category}}: {{chosenCategory}}</h3>
     <h3 ng-show="isFilter && chosenTags">{{language.tags}}: {{chosenTags}}</h3>
     <div ng-if="filteredArticles && filteredArticles.length >= 3 && !isFilter"
          class="hide-s" ng-include="'/views/articles-carousel.html'"></div>
     <table>
         <tr>
-            <th>No</th>
-            <th style="cursor: pointer;" ng-click="orderBy(header.names.KIND)"><i uib-tooltip="Sortuj" class='fa' ng-class="{'jpselected': header.values[header.names.KIND].selected || header.values[header.names.KIND].reversed, 'fa-caret-square-o-down': !header.values[header.names.KIND].reversed, 'fa-caret-square-o-up': header.values[header.names.KIND].reversed}" aria-hidden='true'></i> Rodzaj</th>
-            <th style="cursor: pointer;" ng-click="orderBy(header.names.TITLE)"><i uib-tooltip="Sortuj" class='fa' ng-class="{'jpselected': header.values[header.names.TITLE].selected || header.values[header.names.TITLE].reversed, 'fa-caret-square-o-down': !header.values[header.names.TITLE].reversed, 'fa-caret-square-o-up': header.values[header.names.TITLE].reversed}" aria-hidden='true'></i> Tytuł</th>
-            <th>Tagi</th>
-            <th style="cursor: pointer;" ng-click="orderBy(header.names.DATE)"><i uib-tooltip="Sortuj" class='fa' ng-class="{'jpselected': header.values[header.names.DATE].selected || header.values[header.names.DATE].reversed, 'fa-caret-square-o-down': !header.values[header.names.DATE].reversed, 'fa-caret-square-o-up': header.values[header.names.DATE].reversed}" aria-hidden='true'></i> Data</th>
+            <th>{{language.no}}</th>
+            <th style="cursor: pointer;" ng-click="orderBy(header.names.KIND)"><i uib-tooltip="Sortuj" class='fa' ng-class="{'jpselected': header.values[header.names.KIND].selected || header.values[header.names.KIND].reversed, 'fa-caret-square-o-down': !header.values[header.names.KIND].reversed, 'fa-caret-square-o-up': header.values[header.names.KIND].reversed}" aria-hidden='true'></i> {{language.kind}}</th>
+            <th style="cursor: pointer;" ng-click="orderBy(header.names.TITLE)"><i uib-tooltip="Sortuj" class='fa' ng-class="{'jpselected': header.values[header.names.TITLE].selected || header.values[header.names.TITLE].reversed, 'fa-caret-square-o-down': !header.values[header.names.TITLE].reversed, 'fa-caret-square-o-up': header.values[header.names.TITLE].reversed}" aria-hidden='true'></i> {{language.title}}</th>
+            <th>{{language.tags}}</th>
+            <th style="cursor: pointer;" ng-click="orderBy(header.names.DATE)"><i uib-tooltip="Sortuj" class='fa' ng-class="{'jpselected': header.values[header.names.DATE].selected || header.values[header.names.DATE].reversed, 'fa-caret-square-o-down': !header.values[header.names.DATE].reversed, 'fa-caret-square-o-up': header.values[header.names.DATE].reversed}" aria-hidden='true'></i> {{language.date}}</th>
         </tr>
         <tr ng-click="goArticle(article.id)" ng-repeat="article in filteredArticles | orderBy: orderProp">
             <td><strong>{{$index + 1}}</strong></td>

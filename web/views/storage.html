@@ -1,13 +1,13 @@
 <div class="jplist">
-    <h2>Schowek</h2>
+    <h2>{{language.storage}}</h2>
 
     <table>
         <tr>
-            <th>No</th>
-            <th>Rodzaj</th>
-            <th>Tytuł</th>
-            <th>Tagi</th>
-            <th>Data</th>
+            <th>{{language.no}}</th>
+            <th>{{language.kind}}</th>
+            <th>{{language.title}}</th>
+            <th>{{language.tags}}</th>
+            <th>{{language.date}}</th>
         </tr>
         <tr ng-click="goSingleStorage($index + 1)" ng-repeat="article in storage | orderBy: date">
             <td><strong>{{$index + 1}}</strong></td>
