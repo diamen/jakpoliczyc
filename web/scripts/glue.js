@@ -41,10 +41,13 @@ head.load(
     { file: '/scripts/controllers/articleCtrl.js' },
     { file: '/scripts/controllers/articlesCtrl.js' },
     { file: '/scripts/controllers/modalCtrl.js' },
+    { file: '/scripts/controllers/singleStorageCtrl.js' },
+    { file: '/scripts/controllers/storageCtrl.js' },
     { file: '/scripts/controllers/tagCtrl.js' },
 
     /* Directives */
     { file: '/scripts/directives/directive.js' },
+    { file: '/scripts/directives/jpadd.js' },
     { file: '/scripts/directives/jparticle.js' },
     { file: '/scripts/directives/jpcategory.js' },
     { file: '/scripts/directives/jpcategoryInput.js' },
@@ -63,11 +66,13 @@ head.load(
 
     /* Factories */
     { file: '/scripts/factories/factory.js' },
+    { file: '/scripts/factories/jpcommon.js' },
     { file: '/scripts/factories/jpgenerator.js' },
 
     /* Services */
     { file: '/scripts/services/service.js' },
     { file: '/scripts/services/jpartfilter.js' },
+    { file: '/scripts/services/jpauth.js' },
     { file: '/scripts/services/jpparser.js' },
     { file: '/scripts/services/jpvalidator.js' },
     { file: '/scripts/services/modalService.js' }

@@ -1,11 +1,13 @@
 angular.module('jakPoliczycControllers')
     .controller('parentCtrl', function($scope, $state, $timeout, $window, mockMenu) {
 
+        $scope.isAdmin = false;
         $scope.isMenuOpened = false;
         $scope.isTagsOpened = false;
         $scope.mockMenu = mockMenu;
         $scope.smallScreen = isSmallScreen();
 
+        /* Events */
         $scope.$on('tags-up', function (event, args) {
             $scope.$broadcast('tags-down', args);
         });
@@ -30,6 +32,14 @@ angular.module('jakPoliczycControllers')
 
         $scope.goArticle = function (id) {
             $state.go("articles.id", { id: id });
+        };
+
+        $scope.goStorage = function () {
+          $state.go("articles.storage");
+        };
+
+        $scope.goSingleStorage = function (id) {
+          $state.go("articles.storage.id", { id: id });
         };
 
         $scope.openMenu = function () {

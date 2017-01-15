@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('articlesCtrl', function($scope, $rootScope, $http, jpartfilter) {
+    .controller('articlesCtrl', function($scope, $rootScope, $http, jpartfilter, jpcommon) {
 
         $scope.articles = [];
         $scope.filteredArticles = [];
@@ -85,17 +85,5 @@ angular.module('jakPoliczycControllers')
             });
         })($scope.header.names.DATE);
 
-        $scope.getKind = function (letter) {
-            if (letter === 'Z')
-                return "ZADANIE";
-
-            if (letter === 'T')
-                return "TEORIA";
-
-            throw new Error('Podano nieprawidłowy rodzaj artykułu. Dopuszczalne rodzaje to "Z" oraz "T"');
-        };
-
-        function reverse(value) {
-            return '-' + value;
-        }
+        $scope.getKind = jpcommon.getKind;
     });

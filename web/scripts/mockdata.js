@@ -338,6 +338,58 @@ angular.module('jakPoliczycApp')
         ]
     )
 
+    .constant('mockStorage',
+        [
+            {
+                "id": 1,
+                "kind": "Z",
+                "title": "Carlson Dalton",
+                "date": 1480167949,
+                "menuId": 11,
+                "tags": [
+                    "Bryły",
+                    "Analiza",
+                    "Równania"
+                ]
+            },
+            {
+                "id": 2,
+                "kind": "Z",
+                "title": "Wise Watson",
+                "date": 1480167949,
+                "menuId": 11,
+                "tags": [
+                    "Stereometria",
+                    "Logarytmy",
+                    "Wielomiany"
+                ]
+            },
+            {
+                "id": 3,
+                "kind": "T",
+                "title": "Edwina Rosa",
+                "date": 1480167949,
+                "menuId": 13,
+                "tags": [
+                    "Algebra",
+                    "Analiza",
+                    "Całki"
+                ]
+            },
+            {
+                "id": 4,
+                "kind": "T",
+                "title": "Gwendolyn Owen",
+                "date": 1480167949,
+                "menuId": 14,
+                "tags": [
+                    "Funkcje",
+                    "Kombinatoryka"
+                ]
+            }
+        ]
+    )
+
     .constant('mockArticle',
 
         [
@@ -476,10 +528,23 @@ angular.module('jakPoliczycApp')
             }
         ])
 
-    .run(function ($httpBackend, jpartfilter, mockMenu, mockTags, mockArticle, mockArticles) {
+    .run(function ($httpBackend, jpartfilter, mockMenu, mockTags, mockArticle, mockArticles, mockStorage) {
         $httpBackend.whenGET('/menu').respond(mockMenu);
         $httpBackend.whenGET('/tags').respond(mockTags);
         $httpBackend.whenGET('/articles').respond(mockArticles);
+        $httpBackend.whenGET('/storage').respond(mockStorage);
+        $httpBackend.whenPOST('/login').respond(true);
+        $httpBackend.whenPOST('/logout').respond(false);
+
+        $httpBackend.whenGET(/\/storage\/(.+)/).respond(function(method, url) {
+            var url_parts = url.split('/');
+            var id = parseInt(url_parts[url_parts.length - 1], 10);
+
+            if (isNaN(id))
+                throw new Error("HTTP request");
+
+            return [200, jpartfilter(mockStorage, 'id', [id])[0]];
+        });
 
         $httpBackend.whenGET(/\/article\/id\/(.+)/).respond(function(method, url) {
             var url_parts = url.split('/');

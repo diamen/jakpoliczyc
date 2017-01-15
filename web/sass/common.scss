@@ -118,6 +118,10 @@ body {
   z-index: 0 !important;
 }
 
+.jpfullwidth {
+  width: 100%;
+}
+
 main {
   @extend %gradient;
 

@@ -18,7 +18,7 @@
             <input class="form-control row-s" typeahead-on-select="unfocus()" ng-focus="focus()" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag for tag in tags | filter:$viewValue | limitTo: 5" type="text" id="tag">
         </span>
     </div>
-    <jp-login login-id="#login"></jp-login>
+    <jp-login login-id="#login" is-admin="isAdmin" add-redirect="goAdd" storage-redirect="goStorage"></jp-login>
     <ul ng-class="isTagsOpened ? 'show-s' : 'hide-s'" class="tagger slideable" id="tags">
         <section style="display: table;" class="row-s">
             <button ng-click="untickAll()" class="btn btn-default col-s-6 show-s">{{$root.language.clear}}</button>
