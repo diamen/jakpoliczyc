@@ -37,6 +37,7 @@ head.load(
     { file: '/scripts/controllers/modalCtrl.js' },
     { file: '/scripts/controllers/singleStorageCtrl.js' },
     { file: '/scripts/controllers/storageCtrl.js' },
+    { file: '/scripts/controllers/subscribeCtrl.js' },
     { file: '/scripts/controllers/tagCtrl.js' },
 
     /* Directives */
