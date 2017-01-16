@@ -1,7 +1,7 @@
 <div ng-controller="tagCtrl" class="tagparent">
     <div class="tagger">
         <span>
-            <i id="expander" ng-if="!smallScreen" class="fa fa-2x" invoke="invoke" main-id="#tags" slide-toggle=".slideable" ng-model="animation.expanded" ng-class="animation.expanded ? 'fa-hand-o-up' : 'fa-hand-o-down'" aria-hidden="true" uib-tooltip-html="animation.expanded ? animation.expandedText : animation.unexpandedText"></i>
+            <i id="expander" ng-if="!smallScreen" class="fa fa-2x" invoke="invoke" main-id="#tags" slide-toggle=".slideable" ng-model="animation.expanded" ng-class="animation.expanded ? 'fa-hand-o-up' : 'fa-hand-o-down'" aria-hidden="true" uib-tooltip-html="animation.expanded ? animation.collapsedText : animation.expandedText"></i>
         </span>
         <span id="login" class="row-s">
             Zalogowany jako <strong>admin</strong>

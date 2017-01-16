@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jparticle', ['$rootScope', '$sanitize', '$sce', '$window', 'jpparser', 'jpvalidator', function ($rootScope, $sanitize, $sce, $window, jpparser, jpvalidator) {
+    .directive('jparticle', ['$sanitize', '$sce', '$window', 'jpvalidator', function ($sanitize, $sce, $window, jpvalidator) {
         return {
             restrict: 'E',
             scope: {
@@ -10,7 +10,6 @@ angular.module('jakPoliczycDirectives')
             link: function($scope, $element) {
                 var editables = [];
                 $scope.isEditable = false;
-                $scope.language = $rootScope.language;
 
                 $scope.article = angular.fromJson($scope.article);
                 $scope.nauthor = "Małgorzata Kotarska";

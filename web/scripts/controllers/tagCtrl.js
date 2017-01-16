@@ -6,8 +6,8 @@ angular.module('jakPoliczycControllers')
 
         $scope.animation = {};
         $scope.animation.expanded = false;
-        $scope.animation.expandedText = $sce.trustAsHtml('<div>Zwiń</div>');
-        $scope.animation.unexpandedText = $sce.trustAsHtml('<div>Rozwiń</div>');
+        $scope.animation.collapsedText = $sce.trustAsHtml('<div>' + $scope.language.collapse + '</div>');
+        $scope.animation.expandedText = $sce.trustAsHtml('<div>' + $scope.language.expand + '</div>');
 
         $scope.tags = [];
         $scope.selectedTags = [];

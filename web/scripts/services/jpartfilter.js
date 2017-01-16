@@ -1,12 +1,12 @@
 angular.module('jakPoliczycServices')
-    .service("jpartfilter", [function() {
+    .service("jpartfilter", ['$rootScope', function($rootScope) {
 
         return function (articles, filterParamName, filterValue) {
             if (angular.isUndefined(filterValue) || angular.isUndefined(filterParamName) || angular.isUndefined(articles))
-                throw new Error('Nie podano jednego z parametrów');
+                throw new Error($rootScope.language.errParam);
 
             if (!Array.isArray(filterValue))
-                throw new Error('Wartość filtrująca musi być tablicą');
+                throw new Error($rootScope.language.errFilter);
 
             filteredArticles = [];
 

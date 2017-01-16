@@ -6,43 +6,43 @@
         </div>
         <h2 contenteditable="false">{{ntitle}}</h2>
         <div>
-            <button ng-show="isEditable" class="btn btn-default" ng-click="submit()">Zatwierdź</button>
-            <button ng-hide="isEditable" class="btn btn-default" ng-click="edit()">Edytuj</button>
-            <button ng-show="isEditable" class="btn btn-default" ng-click="cancel()">Anuluj</button>
+            <button ng-show="isEditable" class="btn btn-default" ng-click="submit()">{{$root.language.submit}}</button>
+            <button ng-hide="isEditable" class="btn btn-default" ng-click="edit()">{{$root.language.edit}}</button>
+            <button ng-show="isEditable" class="btn btn-default" ng-click="cancel()">{{$root.language.cancel}}</button>
         </div>
     </header>
 
     <div class="tags">
-        <span ng-hide="angular.isUndefined(ntags) || ntags.length === 0">{{language.tagsS}}</span><span ng-repeat="tag in ntags">{{tag}}</span>
+        <span ng-hide="angular.isUndefined(ntags) || ntags.length === 0">{{$root.language.tagsS}}</span><span ng-repeat="tag in ntags">{{tag}}</span>
     </div>
     <p contenteditable="false" class="intro">{{nintro}}</p>
     <p contenteditable="false" class="content" ng-bind-html="ncontent"></p>
     <div class="footer">
-        <span>{{language.comments}} [{{ncomments.length}}]</span>
-        <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="Obejrzyj film na youtube"></i>
-        <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" uib-tooltip="Ściągnij plik pdf"></i>
+        <span>{{$root.language.comments}} [{{ncomments.length}}]</span>
+        <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>
+        <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.pdfDownload}}"></i>
     </div>
     <form novalidate ng-submit="nadd(usercom.author, usercom.content)" name="form" class="add">
         <div class="form-group">
-            <label for="commentcontent">{{language.addComment}}</label>
+            <label for="commentcontent">{{$root.language.addComment}}</label>
             <textarea name="content" ng-class="notUrls(usercom.content) || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.content"
-                      class="form-control" id="commentcontent" placeholder="{{language.commentContent}}" rows="3"
+                      class="form-control" id="commentcontent" placeholder="{{$root.language.commentContent}}" rows="3"
                       ng-minlength="3" ng-maxlength="500" ng-trim="true" required></textarea>
-            <div ng-show="notUrls(usercom.content)" class="jperror">{{language.urlPrevent}}</div>
-            <div ng-show="form.content.$error.maxlength" class="jperror">{{language.commentLimit}}</div>
+            <div ng-show="notUrls(usercom.content)" class="jperror">{{$root.language.urlPrevent}}</div>
+            <div ng-show="form.content.$error.maxlength" class="jperror">{{$root.language.commentLimit}}</div>
         </div>
         <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">{{language.username}}</span>
+            <span class="input-group-addon" id="basic-addon1">{{$root.language.username}}</span>
             <input name="username" ng-class="form.content.$error.pattern || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.author"
-                   class="form-control" placeholder="{{language.username}}"
+                   class="form-control" placeholder="{{$root.language.username}}"
                    aria-describedby="basic-addon1" ng-minlength="3" ng-maxlength="15" ng-pattern="pattern.user" ng-trim="true" required>
             <span class="input-group-btn">
-                <input ng-disabled="form.username.$invalid || form.username.$invalid || notUrls(usercom.content) || form.content.$invalid" id="submit" class="btn btn-secondary" type="submit">{{language.add}}</input>
+                <input ng-disabled="form.username.$invalid || form.username.$invalid || notUrls(usercom.content) || form.content.$invalid" id="submit" class="btn btn-secondary" type="submit">{{$root.language.add}}</input>
             </span>
         </div>
-        <div ng-show="form.username.$error.pattern" class="jperror">{{language.errSings}}</div>
-        <div ng-show="form.username.$error.maxlength" class="jperror">{{language.errExceed}}</div>
+        <div ng-show="form.username.$error.pattern" class="jperror">{{$root.language.errSings}}</div>
+        <div ng-show="form.username.$error.maxlength" class="jperror">{{$root.language.errExceed}}</div>
     </form>
-    <div class="comment" ng-repeat="ncomment in ncomments"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> {{language.wrote}} {{ncomment.date | date: 'HH:mm dd/MM/yyyy'}}:
-    </div><button ng-click="remove($index)" class="btn btn-default">{{language.remove}}</button>{{ncomment.content}}</div>
+    <div class="comment" ng-repeat="ncomment in ncomments"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> {{$root.language.wrote}} {{ncomment.date | date: 'HH:mm dd/MM/yyyy'}}:
+    </div><button ng-click="remove($index)" class="btn btn-default">{{$root.language.remove}}</button>{{ncomment.content}}</div>
 </article>

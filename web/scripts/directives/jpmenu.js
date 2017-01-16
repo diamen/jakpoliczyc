@@ -49,8 +49,8 @@ angular.module('jakPoliczycDirectives')
             "<section style='display: table;' class='row-s'>" +
                 "<button ng-click='unselectAll()' class='btn btn-default col-s-4 show-s'>{{$root.language.clear}}</button>" +
                 "<button ng-click='toggleAll(); toggle =! toggle' class='btn btn-default col-s-4 show-s'>" +
-                    "<span ng-hide='toggle'>Rozwiń</span>" +
-                    "<span ng-show='toggle'>Zwiń</span>" +
+                    "<span ng-hide='toggle'>{{$root.language.expand}}</span>" +
+                    "<span ng-show='toggle'>{{$root.language.collapse}}</span>" +
                 "</button>" +
                 "<button ng-click='closeMenu()' class='btn btn-default col-s-4 show-s'>{{$root.language.close}}</button>" +
             "</section>" +

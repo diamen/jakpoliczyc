@@ -68,7 +68,6 @@ head.load(
     { file: '/scripts/services/service.js' },
     { file: '/scripts/services/jpartfilter.js' },
     { file: '/scripts/services/jpauth.js' },
-    { file: '/scripts/services/jpparser.js' },
     { file: '/scripts/services/jpvalidator.js' },
     { file: '/scripts/services/modalService.js' }
 );

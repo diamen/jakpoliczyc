@@ -1,19 +1,19 @@
 <ng-form name="postarea">
     <div class="postarea form-group">
         <div class="display" ng-show="show"><button ng-click="show = false">x</button><p mathjax-bind></p></div>
-        <label for="add-content">Treść artykułu</label>
+        <label for="add-content">{{$root.language.artContent}}</label>
         <textarea id="add-content" ng-model="expression" name="post" class="form-control" rows="{{rows}}"
                   ng-trim="false" required></textarea>
         <div ng-show="postarea.post.$error.required">
-            <span class="jperror">Pole jest wymagane</span>
+            <span class="jperror">{{$root.language.errReq}}</span>
         </div>
         <div class="controls form-group">
             <div>
                 <button ng-click="appendLatex()" class="btn btn-default">LaTeX</button>
-                <button ng-click="appendPhoto()" class="btn btn-default">Grafika</button>
+                <button ng-click="appendPhoto()" class="btn btn-default">{{$root.language.graphic}}</button>
             </div>
             <div>
-                <button ng-click="preview()" class="btn btn-default">Podgląd</button>
+                <button ng-click="preview()" class="btn btn-default">{{$root.language.preview}}</button>
             </div>
         </div>
     </div>

@@ -84,23 +84,23 @@ angular.module('jakPoliczycDirectives')
             template:
 
             '<div ng-form name="category" class="form-group">' +
-                '<label>{{ parentId > 0 ? "Poddział" : "Dział"}}</label>' +
+                '<label>{{ parentId > 0 ? $root.language.subchapter : $root.language.chapter }}</label>' +
                 '<div class="input-group">' +
                     '<input name="input" ng-if="editable" ng-model="inputModel" class="form-control" required jpalphanumeric/>' +
                     '<select ng-hide="editable" ng-model="selectedModel" class="form-control jpzindexfix">' +
                         '<option value="" ng-show="false"></option>' +
                         '<option ng-selected="nitems[0]" ng-repeat="item in nitems" value="{{item}}">{{item.name}}</option>' +
                     '</select>' +
-                    '<span class="input-group-btn"><button ng-click="edit()" class="btn btn-default">{{ editable ? "Anuluj" : "Edytuj" }}</button></span>' +
-                    '<span ng-show="parentId > 0" class="input-group-btn"><button ng-click="remove()" class="btn btn-default remove">Usuń</button></span>' +
-                    '<span ng-hide="editable" class="input-group-btn"><button ng-click="addSelect()" class="btn btn-default">Dodaj</button></span>' +
-                    '<span ng-show="editable" class="input-group-btn"><button ng-click="addInput()" ng-disabled="category.input.$error.required || category.input.$error.jpalphanumeric" class="btn btn-default">Dodaj</button></span>' +
+                    '<span class="input-group-btn"><button ng-click="edit()" class="btn btn-default">{{ editable ? $root.language.cancel : $root.language.edit }}</button></span>' +
+                    '<span ng-show="parentId > 0" class="input-group-btn"><button ng-click="remove()" class="btn btn-default remove">{{$root.language.remove}}</button></span>' +
+                    '<span ng-hide="editable" class="input-group-btn"><button ng-click="addSelect()" class="btn btn-default">{{$root.language.add}}</button></span>' +
+                    '<span ng-show="editable" class="input-group-btn"><button ng-click="addInput()" ng-disabled="category.input.$error.required || category.input.$error.jpalphanumeric" class="btn btn-default">{{$root.language.add}}</button></span>' +
                 '</div>' +
                 '<div ng-show="editable && category.input.$error.required">' +
-                    '<span class="jperror">Pole jest wymagane</span>' +
+                    '<span class="jperror">{{$root.language.errReq}}</span>' +
                 '</div>' +
                 '<div ng-show="editable && category.input.$error.jpalphanumeric">' +
-                    '<span class="jperror">Dopuszczalne jedynie znaki alfanumeryczne</span>' +
+                    '<span class="jperror">{{$root.language.errAlphanum}}</span>' +
                 '</div>' +
             '</div>'
         };

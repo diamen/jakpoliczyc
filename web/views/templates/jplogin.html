@@ -1,35 +1,35 @@
 <form name="loginForm" ng-hide="isAdmin" class="ng-pristine ng-valid">
     <div class="form-group row">
         <div class="col-sm-12">
-            <input type="text" name="user" ng-model="user" class="form-control" placeholder="Użytkownik" required>
+            <input type="text" name="user" ng-model="user" class="form-control" placeholder="{{$root.language.username}}" required>
         </div>
-        <small ng-show="loginForm.user.$error.required && loginForm.user.$dirty" class="form-text jperror">Pole jest wymagane.</small>
+        <small ng-show="loginForm.user.$error.required && loginForm.user.$dirty" class="form-text jperror">{{$root.language.errReq}}</small>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-12">
-            <input type="password" name="pass" ng-model="pass" class="form-control" placeholder="Hasło" required>
+            <input type="password" name="pass" ng-model="pass" class="form-control" placeholder="{{$root.language.password}}" required>
         </div>
-        <small ng-show="loginForm.pass.$error.required && loginForm.pass.$dirty" class="form-text jperror">Pole jest wymagane.</small>
+        <small ng-show="loginForm.pass.$error.required && loginForm.pass.$dirty" class="form-text jperror">{{$root.language.errReq}}</small>
     </div>
 
     <div class="row">
-        <button type="submit" ng-disabled="loginForm.$invalid" ng-click="login(user, pass)" class="btn btn-primary">Zaloguj</button>
+        <button type="submit" ng-disabled="loginForm.$invalid" ng-click="login(user, pass)" class="btn btn-primary">{{$root.language.login}}</button>
     </div>
 </form>
 
 <form ng-show="isAdmin" class="ng-pristine ng-valid">
 
     <div class="form-group">
-        <button ng-click="addRedirect()" class="btn btn-default jpfullwidth">Dodaj nowy artykuł</button>
+        <button ng-click="addRedirect()" class="btn btn-default jpfullwidth">{{$root.language.artAdd}}</button>
     </div>
 
     <div class="form-group">
-        <button ng-click="storageRedirect()" class="btn btn-default jpfullwidth">Przeglądaj schowek</button>
+        <button ng-click="storageRedirect()" class="btn btn-default jpfullwidth">{{$root.language.stoReview}}</button>
     </div>
 
     <div class="row">
-        <button type="submit" ng-disabled="loginForm.$invalid" ng-click="logout()" class="btn btn-primary">Wyloguj</button>
+        <button type="submit" ng-disabled="loginForm.$invalid" ng-click="logout()" class="btn btn-primary">{{$root.language.logout}}</button>
     </div>
 
 </form>

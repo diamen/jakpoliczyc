@@ -1,14 +1,14 @@
 angular.module('jakPoliczycFactories')
-    .factory('jpcommon', [function() {
+    .factory('jpcommon', ['$rootScope', function($rootScope) {
 
         var kind = function (letter) {
             if (letter === 'Z')
-                return "ZADANIE";
+                return $rootScope.language.exercise.toUpperCase();
 
             if (letter === 'T')
-                return "TEORIA";
+                return $rootScope.language.theory.toUpperCase();
 
-            throw new Error('Podano nieprawidłowy rodzaj artykułu. Dopuszczalne rodzaje to "Z" oraz "T"');
+            throw new Error($rootScope.language.errKind);
         };
 
         return {

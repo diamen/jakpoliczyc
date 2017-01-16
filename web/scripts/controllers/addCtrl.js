@@ -15,11 +15,11 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.openModalSaveToStorage = function () {
-            modalService.execute($scope.saveToStorage, "Czy chcesz zapisać dotychczasowe pracę i dokończyć później? Uwaga! Wyniki nie zostaną opublikowane!");
+            modalService.execute($scope.saveToStorage, $scope.language.msgSaveSto);
         };
 
         $scope.openModalSubmit = function () {
-            modalService.execute($scope.submit, "Czy chcesz opublikować artykuł?");
+            modalService.execute($scope.submit, $scope.language.msgPublish);
         };
 
     });
