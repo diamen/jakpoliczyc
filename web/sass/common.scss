@@ -1,6 +1,8 @@
 $background-color: #fbfbfb;
 $border-color: #a0a0a0;
+$error-color: #f52;
 $opacity: .57;
+$selected-color: #007cff;
 
 %col {
   position: relative;
@@ -99,9 +101,13 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
+.smerr {
+  display: block;
+}
+
 .jperror {
-  border-color: #ff5522;
-  color: #ff5522;
+  border-color: $error-color;
+  color: $error-color;
 }
 
 .jpmain {
@@ -111,7 +117,7 @@ body {
 }
 
 .jpselected {
-  color: #007cff;
+  color: $selected-color;
 }
 
 .jpzindexfix {

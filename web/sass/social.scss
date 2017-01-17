@@ -1,0 +1,22 @@
+$soc-init-color: #333;
+
+.social {
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgb(223, 252, 255) 100%);
+  text-align: right;
+
+  a {
+    color: $soc-init-color;
+  }
+
+  span {
+    display: inline-block;
+    margin-right: 1.5em;
+    vertical-align: middle;
+  }
+
+  img {
+    cursor: pointer;
+    height: 50px;
+    margin: .25em 1em;
+  }
+}

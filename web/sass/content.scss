@@ -1,13 +1,9 @@
 .jpcontainer {
   position: relative;
-
-  &:after,
-  &::after {
-    clear: both;
-  }
 }
 
 footer {
+  border: 1px solid $border-color;
   text-align: center;
 }
 
@@ -16,7 +12,7 @@ footer {
     display: flex;
     flex-direction: column;
 
-    > div {
+    > jpcontact {
       order: 2;
     }
 
@@ -28,8 +24,12 @@ footer {
       order: 3;
     }
 
-    > footer {
+    > div {
       order: 4;
+    }
+
+    > footer {
+      order: 5;
     }
   }
 }

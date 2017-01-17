@@ -11,10 +11,7 @@
     <script src="/libraries/head/head.load.min.js"></script>
     <script src="/scripts/glue.js"></script>
 
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/main.css"/>
-    <link rel="stylesheet" href="/libraries/angular-ui-tree/dist/angular-ui-tree.css"/>
+    <link rel="stylesheet" href="/styles/main.min.css"/>
 </head>
 <body ng-controller="parentCtrl">
 
@@ -28,8 +25,21 @@
         <main class="col-10 jpmain">
             <ui-view></ui-view>
         </main>
-        <section class="contact" ng-include="'/views/contact.html'"></section>
-        <footer>Autor strony: <strong>Michał Stobiński</strong></footer>
+        <jpcontact></jpcontact>
+        <div class="social">
+            <span>
+                <a href="https://www.youtube.com"><i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybRedirect}}"></i></a>
+                <a href="https://www.facebook.com"><i class="fa fa-facebook fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.fbRedirect}}"></i></a>
+            </span>
+
+            <img src="../resources/gfx/logo320w.png"
+                 srcset="../resources/gfx/logo320w.png,
+                ../resources/gfx/logo500w.png"
+                 sizes="(min-width: 30em) 30em"
+                 ng-click="goHome()"
+                 alt="logo"/>
+        </div>
+        <footer>{{language.webAuthor}}: <strong>Michał Stobiński</strong></footer>
     </div>
 
 </body>

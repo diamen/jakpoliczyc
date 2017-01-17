@@ -46,6 +46,7 @@ head.load(
     { file: '/scripts/directives/jparticle.js' },
     { file: '/scripts/directives/jpcategory.js' },
     { file: '/scripts/directives/jpcategoryInput.js' },
+    { file: '/scripts/directives/jpcontact.js' },
     { file: '/scripts/directives/jplogin.js' },
     { file: '/scripts/directives/jpmenu.js' },
     { file: '/scripts/directives/jpnode.js' },
