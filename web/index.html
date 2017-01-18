@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="jakPoliczycApp" class="no-js" lang="en">
+<html ng-app="jakPoliczycApp" lang="pl">
 <head>
     <meta charset="UTF-8">
     <title>JakPoliczyc</title>
@@ -8,19 +8,18 @@
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
     </script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-    <script src="/libraries/head/head.load.min.js"></script>
-    <script src="/scripts/glue.js"></script>
+    <script src="/scripts/output.min.js"></script>
 
     <link rel="stylesheet" href="/styles/main.min.css"/>
 </head>
 <body ng-controller="parentCtrl">
 
-    <header ng-click="goHome()" role="banner" class="header" ng-include="'/views/header.html'"></header>
-    <div ng-include="'/views/tagger.html'"></div>
+    <header ng-click="goHome()" role="banner" class="header" ng-include="'views/header.html'"></header>
+    <div ng-include="'views/tagger.html'"></div>
     <div class="jpcontainer slideable">
         <div class="col-2">
             <jpmenu ng-class="isMenuOpened ? 'show-s' : 'hide-s'" items="{{mockMenu}}"></jpmenu>
-            <section class="subscriber" ng-include="'/views/subscriber.html'"></section>
+            <section class="subscriber" ng-include="'views/subscriber.html'"></section>
         </div>
         <main class="col-10 jpmain">
             <ui-view></ui-view>
@@ -32,11 +31,7 @@
                 <a href="https://www.facebook.com"><i class="fa fa-facebook fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.fbRedirect}}"></i></a>
             </span>
 
-            <img src="../resources/gfx/logo320w.png"
-                 srcset="../resources/gfx/logo320w.png,
-                ../resources/gfx/logo500w.png"
-                 sizes="(min-width: 30em) 30em"
-                 ng-click="goHome()"
+            <img ng-click="goHome()"
                  alt="logo"/>
         </div>
         <footer>{{language.webAuthor}}: <strong>Michał Stobiński</strong></footer>

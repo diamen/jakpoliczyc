@@ -10,11 +10,11 @@ angular.module('jakPoliczycRouters', [])
                 url: "/articles",
                 views: {
                     '': {
-                        templateUrl: "/views/partials/partial.articles.html"
+                        templateUrl: "views/partials/partial.articles.html"
                     },
                     "articlesView@articles": {
                         controller: "articlesCtrl",
-                        templateUrl: "/views/articles.html"
+                        templateUrl: "views/articles.html"
                     }
                 }
             })
@@ -24,7 +24,7 @@ angular.module('jakPoliczycRouters', [])
                 views: {
                     "articlesView@articles": {
                         controller: "articleCtrl",
-                        templateUrl: "/views/article.html"
+                        templateUrl: "views/article.html"
                     }
                 }
             })
@@ -34,7 +34,7 @@ angular.module('jakPoliczycRouters', [])
                 views: {
                     "articlesView@articles": {
                         controller: "addCtrl",
-                        templateUrl: "/views/add-article.html"
+                        templateUrl: "views/add-article.html"
                     }
                 }
             })
@@ -44,7 +44,7 @@ angular.module('jakPoliczycRouters', [])
                 views: {
                     "articlesView@articles": {
                         controller: "storageCtrl",
-                        templateUrl: "/views/storage.html"
+                        templateUrl: "views/storage.html"
                     }
                 }
             })
@@ -54,7 +54,7 @@ angular.module('jakPoliczycRouters', [])
                 views: {
                     "articlesView@articles": {
                         controller: "singleStorageCtrl",
-                        templateUrl: "/views/single-storage.html"
+                        templateUrl: "views/single-storage.html"
                     }
                 }
             })

@@ -3,6 +3,10 @@ angular.module('jakPoliczycControllers')
 
         $scope.id = parseInt($stateParams.id, 10);
 
+        $scope.$on('$stateChangeSuccess', function () {
+            $scope.$emit('unselect-up');
+        });
+
         ($scope.init = function (id) {
             $http({
                 method: 'GET',

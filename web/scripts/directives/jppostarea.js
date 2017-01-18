@@ -5,7 +5,7 @@ angular.module('jakPoliczycDirectives')
             scope: {
                 rows: '@'
             },
-            templateUrl: '/views/templates/jppostarea.html',
+            templateUrl: 'views/templates/jppostarea.html',
             link: function(scope) {
                 scope.expression = "";
 

@@ -9,16 +9,24 @@ angular.module('jakPoliczycControllers')
 
         /* Events */
         $scope.$on('tags-up', function (event, args) {
-            $scope.$broadcast('tags-down', args);
+            passDown('tags-down', args);
         });
 
         $scope.$on('menu-up', function (event, args) {
-            $scope.$broadcast('menu-down', args);
+            passDown('menu-down', args);
         });
 
         $scope.$on('close-up', function () {
            $scope.isMenuOpened = false;
            $scope.isTagsOpened = false;
+        });
+
+        $scope.$on('unselect-up', function () {
+            $scope.$broadcast('unselect-down');
+        });
+
+        $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+
         });
 
         /* States */
@@ -63,6 +71,20 @@ angular.module('jakPoliczycControllers')
 
         function isSmallScreen() {
             return $window.innerWidth <= 768;
+        }
+
+        function passDown(eventName, args) {
+            if (!isHome($state.current.url)) {
+                $scope.goHome();
+            }
+
+            $timeout(function () {
+                $scope.$broadcast(eventName, args);
+            }, 50);
+        }
+
+        function isHome(url) {
+            return url === '/articles';
         }
 
     });

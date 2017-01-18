@@ -83,6 +83,6 @@ angular.module('jakPoliczycDirectives')
                     }, 3000)
                 }
             },
-            templateUrl: '/views/templates/jplogin.html'
+            templateUrl: 'views/templates/jplogin.html'
         }
     }]);

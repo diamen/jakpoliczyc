@@ -6,7 +6,7 @@ angular.module('jakPoliczycDirectives')
                 article: '@',
                 add: '&'
             },
-            templateUrl: '/views/templates/jparticle.html',
+            templateUrl: 'views/templates/jparticle.html',
             link: function($scope, $element) {
                 var editables = [];
                 $scope.isEditable = false;

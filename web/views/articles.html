@@ -4,7 +4,7 @@
     <h3 ng-show="isFilter && chosenCategory">{{language.category}}: {{chosenCategory}}</h3>
     <h3 ng-show="isFilter && chosenTags">{{language.tags}}: {{chosenTags}}</h3>
     <div ng-if="filteredArticles && filteredArticles.length >= 3 && !isFilter"
-         class="hide-s" ng-include="'/views/articles-carousel.html'"></div>
+         class="hide-s" ng-include="'views/articles-carousel.html'"></div>
     <table>
         <tr>
             <th>{{language.no}}</th>

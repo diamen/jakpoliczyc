@@ -9,5 +9,5 @@
     {{item.name}}
 </div>
 <ol ui-tree-nodes='' ng-model='item.submenus' ng-class='{hidden: collapsed}'>
-    <li ng-repeat='item in item.submenus track by $index' ui-tree-node ng-include="'/views/templates/jpnode.html'"></li>
+    <li ng-repeat='item in item.submenus track by $index' ui-tree-node ng-include="'views/templates/jpnode.html'"></li>
 </ol>

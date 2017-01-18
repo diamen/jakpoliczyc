@@ -16,6 +16,6 @@ angular.module('jakPoliczycDirectives')
                     }
                 }
             },
-            templateUrl: '/views/templates/jpadd.html'
+            templateUrl: 'views/templates/jpadd.html'
         }
     }]);

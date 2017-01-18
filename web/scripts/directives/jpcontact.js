@@ -17,6 +17,6 @@ angular.module('jakPoliczycDirectives')
             restrict: 'E',
             replace: true,
             scope: {},
-            templateUrl: '/views/templates/jpcontact.html'
+            templateUrl: 'views/templates/jpcontact.html'
         }
     }]);
