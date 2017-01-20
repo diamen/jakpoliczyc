@@ -31,7 +31,7 @@ angular.module('jakPoliczycControllers')
             if (angular.isUndefined(args))
                 return;
 
-            $scope.filteredArticles = jpartfilter($scope.articles, 'tags', args);
+            $scope.filteredArticles = jpartfilter($scope.articles, 'tags', args) || [];
 
             if (angular.isUndefined(_articlesLength))
                 return;

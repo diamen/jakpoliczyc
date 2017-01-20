@@ -31,6 +31,12 @@ angular.module('jakPoliczycControllers')
 
         /* States */
         $scope.goHome = function () {
+            $timeout(function () {
+                passDown('menu-down');
+                passDown('tags-down');
+                $scope.$broadcast('unselect-down');
+            }, 0);
+
             $state.go("articles");
         };
 

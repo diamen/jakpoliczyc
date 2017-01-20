@@ -40,7 +40,7 @@ describe('articlesCtrl && articleCtrl', function () {
          // when-then
          expect(function () {
              _mockScope.getKind(wrongLetter);
-         }).toThrowError('Podano nieprawidłowy rodzaj artykuły. Dopuszczalne rodzaje to "Z" oraz "T"');
+         }).toThrowError('Podano nieprawidłowy rodzaj artykułu. Dopuszczalne rodzaje to "Z" oraz "T"');
      });
 
      it('Odpytanie przy użyciu odpowiedniego skrótu powinno zwrócić prawidłowy rodzaj artykułu', function () {

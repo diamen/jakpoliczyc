@@ -2,11 +2,9 @@ angular.module('jakPoliczycDirectives')
     .directive('jpmenu', function () {
         return {
             restrict: 'E',
-            scope: {
-                items: '@'
-            },
-            link: function(scope, element) {
-                scope.nitems = angular.fromJson(scope.items);
+            scope: true,
+            link: function(scope, element, attr) {
+                scope.nitems = angular.fromJson(attr.items);
                 scope.collapsed = true;
                 scope.selected = false;
                 var parentElem = element.find('i');
