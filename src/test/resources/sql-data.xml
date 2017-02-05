@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<dataset>
+    <configuration keyy="ONE"
+                   value="ONEE"/>
+    <storages/>
+    <stags/>
+    <comments id="1"
+              author="Jan Kowalski"
+              content="Lorem ipsum..."
+              added_date="2016-03-03"/>
+</dataset>

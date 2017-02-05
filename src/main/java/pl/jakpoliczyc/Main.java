@@ -8,18 +8,16 @@ import pl.jakpoliczyc.cache.CacheConfig;
 import pl.jakpoliczyc.cache.Cached;
 import pl.jakpoliczyc.config.auto.AutoParent;
 import pl.jakpoliczyc.dao.entities.Configuration;
-import pl.jakpoliczyc.dao.config.DaoConfig;
+import pl.jakpoliczyc.dao.repos.ConfigurationService;
 import pl.jakpoliczyc.service.config.ServiceConfig;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        main.serviceXmlTest();
+        main.jpaTest();
     }
 
     public void serviceAutoTest() {
@@ -72,21 +70,12 @@ public class Main {
         cached.getSth(1);
     }
 
-    public void daoTest() {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoConfig.class);
+    public void jpaTest() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("test-db.xml");
+        ConfigurationService configurationService = applicationContext.getBean(ConfigurationService.class);
 
-        EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class);
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-
-        Configuration configuration = new Configuration();
-        configuration.setKeyy("jak");
-        configuration.setValue("jakpoliczyc");
-
-        entityManager.persist(configuration);
-        transaction.commit();
-        entityManager.close();
+        List<Configuration> configurationList = configurationService.findAll();
+        System.out.println(configurationList);
     }
 
 }

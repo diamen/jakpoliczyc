@@ -19,7 +19,7 @@ public class Article {
     @ManyToOne
     @JoinColumn(name = "MENU_ID")
     private Menu menu;
-    @OneToMany(mappedBy = "articles", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private Collection<Comment> comments;
     @ManyToMany
     @JoinTable(name = "ART_TAG",

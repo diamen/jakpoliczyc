@@ -12,7 +12,7 @@ public class Storage {
     private long id;
     @Embedded
     private Story story;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "storages", targetEntity = Stag.class)
     @JoinTable(name = "STO_STA",
             joinColumns = @JoinColumn(name = "STO_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "STA_ID", referencedColumnName = "ID"))
