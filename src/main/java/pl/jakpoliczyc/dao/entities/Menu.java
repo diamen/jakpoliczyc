@@ -10,20 +10,24 @@ public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne
+    @Column(nullable = false)
+    private String name;
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Menu parent;
     @OneToMany(mappedBy = "parent")
     private Collection<Menu> submenus;
     @OneToMany(mappedBy = "menu")
     private Collection<Article> articles;
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
     public void setId(long id) {
         this.id = id;
     }
+
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
 
     public Menu getParent() {
         return parent;

@@ -16,8 +16,8 @@ public class Article {
     @Temporal(TemporalType.DATE)
     @Column(name = "ADDED_DATE")
     private Date addedDate;
-    @ManyToOne
-    @JoinColumn(name = "MENU_ID")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "MENU_ID", nullable = false)
     private Menu menu;
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private Collection<Comment> comments;
