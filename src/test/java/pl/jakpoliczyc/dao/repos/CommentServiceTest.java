@@ -14,7 +14,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-db.xml"})
+@ContextConfiguration(locations = {"classpath:db-config.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
