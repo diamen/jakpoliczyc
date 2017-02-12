@@ -1,5 +1,15 @@
 module.exports = function (grunt) {
 
+    var concat = function () {
+        var prefix = 'src/main/webapp/';
+        var libs = [];
+        for (var i = 0; i < files.length; i++) {
+            libs.push(prefix + files[i]);
+        }
+
+        return libs;
+    };
+
     var files = [
         /* Libraries */
         'libraries/angular/angular.min.js',
@@ -80,7 +90,7 @@ module.exports = function (grunt) {
 
        pkg: grunt.file.readJSON('package.json'),
 
-       clean: ['sass/build.scss', 'styles/main.css', 'styles/main.css.map'],
+       clean: ['src/main/webapp/sass/build.scss', 'src/main/webapp/styles/main.css', 'src/main/webapp/styles/main.css.map'],
 
        replace: {
          dist: {
@@ -93,8 +103,8 @@ module.exports = function (grunt) {
                  ]
              },
              files: [{
-                 src: ['scripts/libraries.preprocess'],
-                 dest: 'scripts/libraries.js'
+                 src: ['src/main/webapp/scripts/libraries.preprocess'],
+                 dest: 'src/main/webapp/scripts/libraries.js'
              }]
          }
        },
@@ -102,9 +112,9 @@ module.exports = function (grunt) {
        concatScss: {
             dist: {
                src: [
-                   'sass/*.scss'
+                   'src/main/webapp/sass/*.scss'
                ],
-               dest: 'sass/build.scss'
+               dest: 'src/main/webapp/sass/build.scss'
             }
        },
 
@@ -114,7 +124,7 @@ module.exports = function (grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'styles/external/tmp.css': 'sass/build.scss'
+                    'src/main/webapp/styles/external/tmp.css': 'src/main/webapp/sass/build.scss'
                 }
             }
        },
@@ -122,18 +132,18 @@ module.exports = function (grunt) {
        concatCss: {
             dist: {
                 src: [
-                    'styles/external/*.css'
+                    'src/main/webapp/styles/external/*.css'
                 ],
-                dest: 'styles/main.css'
+                dest: 'src/main/webapp/styles/main.css'
             }
        },
 
         purifycss: {
            options: {},
            target: {
-               src: ['index.preprocess.html', 'views/*.html', 'views/templates/*.html', 'scripts/directives/*.js', 'libraries/ui-bootstrap/*.js'],
-               css: ['styles/main.css'],
-               dest: 'styles/main.css'
+               src: ['src/main/webapp/index.preprocess.html', 'src/main/webapp/views/*.html', 'src/main/webapp/views/partials/*.html', 'src/main/webapp/views/templates/*.html', 'src/main/webapp/scripts/directives/*.js', 'src/main/webapp/libraries/ui-bootstrap/*.js'],
+               css: ['src/main/webapp/styles/main.css'],
+               dest: 'src/main/webapp/styles/main.css'
            }
         },
 
@@ -142,37 +152,52 @@ module.exports = function (grunt) {
                 options: {
                     diff: false
                 },
-                src: 'styles/main.css'
+                src: 'src/main/webapp/styles/main.css'
             }
        },
 
        cssmin: {
            target: {
                files: [{
-                   src: 'styles/main.css',
-                   dest: 'styles/main.min.css'
+                   src: 'src/main/webapp/styles/main.css',
+                   dest: 'src/main/webapp/styles/main.min.css'
                }]
            }
        },
 
         ngtemplates: {
           jakPoliczycApp: {
-              src:  ['views/*.html', 'views/partials/*.html', 'views/templates/*.html'],
-              dest: 'scripts/template.js'
+              src:  ['src/main/webapp/views/*.html', 'src/main/webapp/views/partials/*.html', 'src/main/webapp/views/templates/*.html'],
+              dest: 'src/main/webapp/scripts/template.js'
           }
+        },
+
+        stringreplace: {
+            dist: {
+                files: [{
+                    src: 'src/main/webapp/scripts/template.js',
+                    dest: 'src/main/webapp/scripts/template.js'
+                }],
+                options: {
+                    replacements: [{
+                        pattern: /src\/main\/webapp\//g,
+                        replacement: ''
+                    }]
+                }
+            }
         },
 
         concatJS: {
             dist: {
-                src: files,
-                dest: 'scripts/output.js'
+                src: concat(),
+                dest: 'src/main/webapp/scripts/output.js'
             }
         },
 
         ngAnnotate: {
             dist: {
                 files: {
-                    'scripts/output.js': 'scripts/output.js'
+                    'src/main/webapp/scripts/output.js': 'src/main/webapp/scripts/output.js'
                 }
             }
         },
@@ -180,7 +205,7 @@ module.exports = function (grunt) {
         uglify: {
             my_target: {
                 files: {
-                    'scripts/output.min.js': 'scripts/output.js'
+                    'src/main/webapp/scripts/output.min.js': 'src/main/webapp/scripts/output.js'
                 }
             }
         },
@@ -192,8 +217,8 @@ module.exports = function (grunt) {
               }
             },
             html: {
-                src: 'index.preprocess.html',
-                dest: 'index.html'
+                src: 'src/main/webapp/index.preprocess.html',
+                dest: 'src/main/webapp/index.html'
             }
         },
 
@@ -204,8 +229,8 @@ module.exports = function (grunt) {
                 }
             },
             html: {
-                src: 'index.preprocess.html',
-                dest: 'index.html'
+                src: 'src/main/webapp/index.preprocess.html',
+                dest: 'src/main/webapp/index.html'
             }
         }
     });
@@ -222,6 +247,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-string-replace');
+    grunt.renameTask('string-replace', 'stringreplace');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.renameTask('concat', 'concatJS');
     grunt.loadNpmTasks('grunt-ng-annotate');
@@ -232,9 +259,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-preprocess');
     grunt.renameTask('preprocess', 'distpreprocess');
 
-    grunt.registerTask('css', ['clean', 'concatScss', 'sass', 'concatCss', 'purifycss', 'autoprefixer', 'cssmin']);
-    grunt.registerTask('js', ['ngtemplates', 'concatJS', 'ngAnnotate', 'uglify']);
+    grunt.registerTask('cssdev', ['clean', 'concatScss', 'sass', 'concatCss']);
+    grunt.registerTask('css', ['cssdev', 'purifycss', 'autoprefixer', 'cssmin']);
+    grunt.registerTask('js', ['ngtemplates', 'stringreplace', 'concatJS', 'ngAnnotate', 'uglify']);
 
     grunt.registerTask('dist', ['replace', 'css', 'js', 'distpreprocess']);
-    grunt.registerTask('dev', ['replace', 'css', 'devpreprocess']);
+    grunt.registerTask('dev', ['replace', 'cssdev', 'devpreprocess']);
 };

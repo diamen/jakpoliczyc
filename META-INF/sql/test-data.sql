@@ -1,0 +1,1 @@
+insert into configuration (keyy, value) values ('OK', 'OK VALUE');

@@ -9,11 +9,17 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
+
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.6.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.3.5.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -22,7 +28,40 @@
             <version>1.8.1</version>
         </dependency>
 
+        <!-- WEB -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.3.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.8.6</version>
+        </dependency>
+
         <!-- Persistence Provider -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>4.3.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.3.5.RELEASE</version>
+        </dependency>
 
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
@@ -45,6 +84,13 @@
         </dependency>
 
         <!-- Testing -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.3.6.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
@@ -96,8 +142,12 @@
     </dependencies>
 
     <build>
+        <finalName>jakpoliczyc</finalName>
 
         <resources>
+            <resource>
+                <directory>src/main/java/pl/jakpoliczyc/web/config</directory>
+            </resource>
             <resource>
                 <directory>src/main/java/pl/jakpoliczyc/service/config</directory>
             </resource>
@@ -113,8 +163,10 @@
             <resource>
                 <directory>META-INF</directory>
             </resource>
+            <resource>
+                <directory>/src/main/webapp/WEB-INF</directory>
+            </resource>
         </resources>
-
     </build>
 
 </project>
