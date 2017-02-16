@@ -1,10 +1,18 @@
 angular.module('jakPoliczycDirectives')
     .directive('jpmenu', function () {
         return {
+            require: '?ngModel',
             restrict: 'E',
             scope: true,
             link: function(scope, element, attr) {
-                scope.nitems = angular.fromJson(attr.items);
+                scope.nitems = {};
+                attr.$observe('items', function (data) {
+                    if (data.length > 0) {
+                        console.log(data);
+                        scope.nitems = angular.fromJson(data);
+                        console.log(scope.nitems);
+                    }
+                }, true);
                 scope.collapsed = true;
                 scope.selected = false;
                 var parentElem = element.find('i');

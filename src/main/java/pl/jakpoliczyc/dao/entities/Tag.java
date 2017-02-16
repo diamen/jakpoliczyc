@@ -1,5 +1,7 @@
 package pl.jakpoliczyc.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -8,10 +10,11 @@ import java.util.Collection;
 public class Tag {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    @ManyToMany(mappedBy = "tags")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     private Collection<Article> articles;
 
     public long getId() {

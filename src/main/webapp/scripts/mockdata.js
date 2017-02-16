@@ -60,7 +60,7 @@ angular.module('jakPoliczycApp')
                         "id": 9,
                         "name": "Równania kwadratowe",
                         "submenus": [
-                            {"id": 10, "name": "Rownania prowadzące do równań kwadratowych"}
+                            {"id": 20, "name": "Rownania prowadzące do równań kwadratowych"}
                         ]
                     }
                 ]
@@ -529,8 +529,8 @@ angular.module('jakPoliczycApp')
         ])
 
     .run(function ($httpBackend, jpartfilter, mockMenu, mockTags, mockArticle, mockArticles, mockStorage) {
-        $httpBackend.whenGET('/menu').respond(mockMenu);
-        $httpBackend.whenGET('/tags').respond(mockTags);
+//        $httpBackend.whenGET('/menu').respond(mockMenu);
+//        $httpBackend.whenGET('/tags').respond(mockTags);
         $httpBackend.whenGET('/articles').respond(mockArticles);
         $httpBackend.whenGET('/storage').respond(mockStorage);
         $httpBackend.whenPOST('/login').respond(true);

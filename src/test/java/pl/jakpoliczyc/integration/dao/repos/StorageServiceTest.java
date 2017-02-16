@@ -1,10 +1,11 @@
-package pl.jakpoliczyc.dao.repos;
+package pl.jakpoliczyc.integration.dao.repos;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -13,6 +14,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import pl.jakpoliczyc.dao.entities.Stag;
 import pl.jakpoliczyc.dao.entities.Storage;
 import pl.jakpoliczyc.dao.entities.Story;
+import pl.jakpoliczyc.dao.repos.StorageService;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,8 +22,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles("TEST")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:db-config.xml"})
+@ContextConfiguration(locations = {"classpath:test-db-config.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})

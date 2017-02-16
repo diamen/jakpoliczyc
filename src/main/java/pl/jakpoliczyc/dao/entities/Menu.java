@@ -1,5 +1,9 @@
 package pl.jakpoliczyc.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -12,11 +16,15 @@ public class Menu {
     private long id;
     @Column(nullable = false)
     private String name;
+    @JsonBackReference
+    @JoinColumn(nullable = true)
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Menu parent;
+    @JsonManagedReference
     @OneToMany(mappedBy = "parent")
     private Collection<Menu> submenus;
-    @OneToMany(mappedBy = "menu")
+    @JsonIgnore
+    @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
     private Collection<Article> articles;
 
     public long getId() { return id; }

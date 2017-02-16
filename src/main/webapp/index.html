@@ -9,11 +9,11 @@
     </script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
+    <script src="/scripts/glue.js"></script>
 
-    <script src="/scripts/output.min.js"></script>
 
+    <link rel="stylesheet" href="/styles/main.css"/>
 
-    <link rel="stylesheet" href="/styles/main.min.css"/>
 
 </head>
 <body ng-controller="parentCtrl">
@@ -22,7 +22,7 @@
     <div ng-include="'views/tagger.html'"></div>
     <div class="jpcontainer slideable">
         <div class="col-2">
-            <jpmenu ng-class="isMenuOpened ? 'show-s' : 'hide-s'" items="{{mockMenu}}"></jpmenu>
+            <jpmenu ng-class="isMenuOpened ? 'show-s' : 'hide-s'" items="{{menu}}"></jpmenu>
             <section class="subscriber" ng-include="'views/subscriber.html'"></section>
         </div>
         <main class="col-10 jpmain">

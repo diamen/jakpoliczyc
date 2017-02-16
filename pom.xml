@@ -28,6 +28,12 @@
             <version>1.8.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
         <!-- WEB -->
 
         <dependency>
@@ -139,10 +145,28 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>de.ppi.dbunit.datasetbuilder</groupId>
+            <artifactId>dbunit-datasetbuilder</artifactId>
+            <version>1.4</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
         <finalName>jakpoliczyc</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
 
         <resources>
             <resource>
@@ -161,7 +185,10 @@
                 <directory>src/test/resources</directory>
             </resource>
             <resource>
-                <directory>META-INF</directory>
+                <directory>src/main/webapp/META-INF</directory>
+            </resource>
+            <resource>
+                <directory>src/main/webapp/META-INF/sql</directory>
             </resource>
             <resource>
                 <directory>/src/main/webapp/WEB-INF</directory>

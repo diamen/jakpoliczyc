@@ -1,11 +1,14 @@
 angular.module('jakPoliczycControllers')
-    .controller('parentCtrl', function($scope, $state, $timeout, $window, mockMenu) {
+    .controller('parentCtrl', function($scope, $state, $timeout, $window, menuService) {
 
         $scope.isAdmin = false;
         $scope.isMenuOpened = false;
         $scope.isTagsOpened = false;
-        $scope.mockMenu = mockMenu;
         $scope.smallScreen = isSmallScreen();
+
+        menuService.getMenus().then(function success(response) {
+            $scope.menu = response.data;
+        });
 
         /* Events */
         $scope.$on('tags-up', function (event, args) {

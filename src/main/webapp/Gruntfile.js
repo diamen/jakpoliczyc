@@ -83,6 +83,7 @@ module.exports = function (grunt) {
         'scripts/services/jpartfilter.js',
         'scripts/services/jpauth.js',
         'scripts/services/jpvalidator.js',
+        'scripts/services/menuService.js',
         'scripts/services/modalService.js'
     ];
 
