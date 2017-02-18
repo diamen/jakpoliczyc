@@ -27,12 +27,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup("/fake.xml")
+@DatabaseSetup(value = "/fake.xml")
 @DbUnitConfiguration(dataSetLoader = MenuServiceTest.Loader.class)
 public class MenuServiceTest {
 
     public static class Loader extends AbstractDataSetLoader {
-
         @Override
         protected IDataSet createDataSet(Resource resource) throws Exception {
             return MenuServiceTest.getDataset();

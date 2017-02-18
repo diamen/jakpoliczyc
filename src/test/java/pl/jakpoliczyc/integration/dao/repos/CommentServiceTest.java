@@ -17,6 +17,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.repos.CommentService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,6 +49,7 @@ public class CommentServiceTest {
     @Autowired
     private CommentService commentService;
 
+    @Transactional
     @Test
     public void shouldListSizeDecreaseAfterRemove() {
         // given
