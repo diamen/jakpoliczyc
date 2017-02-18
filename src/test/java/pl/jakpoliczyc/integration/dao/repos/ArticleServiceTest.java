@@ -12,9 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
-import pl.jakpoliczyc.dao.entities.Article;
-import pl.jakpoliczyc.dao.entities.Menu;
-import pl.jakpoliczyc.dao.entities.Story;
+import pl.jakpoliczyc.dao.entities.*;
 import pl.jakpoliczyc.dao.repos.ArticleService;
 
 import java.util.Arrays;
@@ -55,6 +53,39 @@ public class ArticleServiceTest {
         return article;
     }
 
+    private Article getInsertData() {
+        Article article = new Article();
+        article.setAddedDate(new Date());
+        Story story = new Story();
+        story.setIntro("Lorem ipsum");
+        story.setContent("Lorem ipsum...");
+        story.setTitle("LI");
+
+        Tag tag1 = new Tag();
+        Tag tag2 = new Tag();
+        tag1.setName("Funkcje");
+        tag2.setName("Geometria");
+
+        Menu menu = new Menu();
+        menu.setName("Fizyka");
+
+        Comment comment1 = new Comment();
+        Comment comment2 = new Comment();
+        comment1.setAddedDate(new Date());
+        comment1.setAuthor("Annonymous");
+        comment1.setContent("Lorem ipsum...");
+        comment2.setAddedDate(new Date());
+        comment2.setAuthor("Annonymous");
+        comment2.setContent("Lorem ipsum...");
+
+        article.setStory(story);
+        article.setMenu(menu);
+        article.setComments(Arrays.asList(comment1, comment2));
+        article.setTags(Arrays.asList(tag1, tag2));
+
+        return article;
+    }
+
     @Transactional
     @Test
     public void shouldListSizeIncreaseAfterInsert() {
@@ -84,6 +115,20 @@ public class ArticleServiceTest {
 
         // then
         assertThat(sizeBefore).isGreaterThan(sizeAfter);
+    }
+
+    @Transactional
+    @Test
+    public void shouldInsertOfArticleWithItsDependencies() {
+        // given
+        int sizeBefore = articleService.findAll().size();
+
+        // when
+        articleService.insert(getInsertData());
+        int sizeAfter = articleService.findAll().size();
+
+        // then
+        assertThat(sizeBefore).isLessThan(sizeAfter);
     }
 
 }

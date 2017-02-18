@@ -1,5 +1,9 @@
 package pl.jakpoliczyc.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import pl.jakpoliczyc.web.common.View;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
@@ -8,20 +12,26 @@ import java.util.Date;
 @Entity(name = "ARTICLES")
 public class Article {
 
+    @JsonView(View.Compress.class)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @JsonView(View.Compress.class)
     @Embedded
     private Story story;
+    @JsonView(View.Compress.class)
     @Temporal(TemporalType.DATE)
     @Column(name = "ADDED_DATE")
     private Date addedDate;
+    @JsonView(View.Compress.class)
+    @JsonIgnoreProperties({ "name", "parent", "submenus", "articles" })
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MENU_ID", nullable = false)
     private Menu menu;
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Comment> comments;
-    @ManyToMany
+    @JsonView(View.Compress.class)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "ART_TAG",
         joinColumns = @JoinColumn(name = "ART_ID", referencedColumnName = "ID"),
         inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID"))

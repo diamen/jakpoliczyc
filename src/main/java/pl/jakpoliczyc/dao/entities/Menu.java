@@ -3,6 +3,8 @@ package pl.jakpoliczyc.dao.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import pl.jakpoliczyc.web.common.View;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -11,6 +13,7 @@ import java.util.Collection;
 @Entity
 public class Menu {
 
+    @JsonView(View.Compress.class)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
