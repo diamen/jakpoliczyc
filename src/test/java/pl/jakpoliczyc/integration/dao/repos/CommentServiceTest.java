@@ -2,15 +2,15 @@ package pl.jakpoliczyc.integration.dao.repos;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.DbUnitConfiguration;
+import com.github.springtestdbunit.dataset.AbstractDataSetLoader;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.builder.DataSetBuilder;
-import org.dbunit.dataset.xml.FlatXmlWriter;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -18,10 +18,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import pl.jakpoliczyc.dao.repos.CommentService;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,20 +27,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup("/" + CommentServiceTest.datasetFileName)
+@DatabaseSetup("/fake.xml")
+@DbUnitConfiguration(dataSetLoader = CommentServiceTest.Loader.class)
 public class CommentServiceTest {
 
-    protected static final String datasetFileName = "comments-data.xml";
-    private static File file;
-
-    @BeforeClass
-    public static void test() throws IOException, DataSetException {
-        file = new File("src/test/resources/" + datasetFileName);
-        file.createNewFile();
-        try (
-                FileOutputStream outputStream = new FileOutputStream(file, false);
-                ){
-            new FlatXmlWriter(outputStream).write(getDataset());
+    public static class Loader extends AbstractDataSetLoader {
+        @Override
+        protected IDataSet createDataSet(Resource resource) throws Exception {
+            return CommentServiceTest.getDataset();
         }
     }
 
@@ -57,6 +47,7 @@ public class CommentServiceTest {
 
     @Autowired
     private CommentService commentService;
+
     @Test
     public void shouldListSizeDecreaseAfterRemove() {
         // given
@@ -68,11 +59,6 @@ public class CommentServiceTest {
 
         // then
         assertThat(sizeBefore).isGreaterThan(sizeAfter);
-    }
-
-    @AfterClass
-    public static void afterClass() {
-        file.delete();
     }
 
 }
