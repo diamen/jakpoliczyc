@@ -10,16 +10,18 @@ angular.module('jakPoliczycControllers')
         ($scope.init = function (id) {
             $http({
                 method: 'GET',
-                url: '/article/id/' + id
+                url: '/articles/' + id
             }).then(function success(response) {
                 $scope.ready = true;
                 $scope.article = response.data;
+                console.log($scope.article);
             }, function error() {
                 throw new Error("HTTP error");
             });
         })($scope.id);
 
         $scope.addComment = function (author, content) {
+            // TODO
             console.log(author + ' dodał komentarz o treści: ' + content);
         };
 

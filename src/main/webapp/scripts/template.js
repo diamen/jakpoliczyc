@@ -57,8 +57,6 @@ angular.module('jakPoliczycApp').run(['$templateCache', function($templateCache)
     "\n" +
     "            <th>{{language.no}}</th>\r" +
     "\n" +
-    "            <th style=\"cursor: pointer;\" ng-click=\"orderBy(header.names.KIND)\"><i uib-tooltip=\"Sortuj\" class='fa' ng-class=\"{'jpselected': header.values[header.names.KIND].selected || header.values[header.names.KIND].reversed, 'fa-caret-square-o-down': !header.values[header.names.KIND].reversed, 'fa-caret-square-o-up': header.values[header.names.KIND].reversed}\" aria-hidden='true'></i> {{language.kind}}</th>\r" +
-    "\n" +
     "            <th style=\"cursor: pointer;\" ng-click=\"orderBy(header.names.TITLE)\"><i uib-tooltip=\"Sortuj\" class='fa' ng-class=\"{'jpselected': header.values[header.names.TITLE].selected || header.values[header.names.TITLE].reversed, 'fa-caret-square-o-down': !header.values[header.names.TITLE].reversed, 'fa-caret-square-o-up': header.values[header.names.TITLE].reversed}\" aria-hidden='true'></i> {{language.title}}</th>\r" +
     "\n" +
     "            <th>{{language.tags}}</th>\r" +
@@ -71,13 +69,11 @@ angular.module('jakPoliczycApp').run(['$templateCache', function($templateCache)
     "\n" +
     "            <td><strong>{{$index + 1}}</strong></td>\r" +
     "\n" +
-    "            <td>[{{getKind(article.kind)}}]</td>\r" +
+    "            <td><strong>{{article.story.title}}</strong></td>\r" +
     "\n" +
-    "            <td><strong>{{article.title}}</strong></td>\r" +
+    "            <td><span ng-repeat=\"tag in article.tags\">[{{tag.name}}] </span></td>\r" +
     "\n" +
-    "            <td><span ng-repeat=\"tag in article.tags\">[{{tag}}] </span></td>\r" +
-    "\n" +
-    "            <td>{{article.date | date: 'HH:mm dd/MM/yyyy'}}</td>\r" +
+    "            <td>{{article.addedDate | date: 'HH:mm dd/MM/yyyy'}}</td>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -387,7 +383,7 @@ angular.module('jakPoliczycApp').run(['$templateCache', function($templateCache)
     "\n" +
     "    <div class=\"tags\">\r" +
     "\n" +
-    "        <span ng-hide=\"angular.isUndefined(ntags) || ntags.length === 0\">{{$root.language.tagsS}}</span><span ng-repeat=\"tag in ntags\">{{tag}}</span>\r" +
+    "        <span ng-hide=\"angular.isUndefined(ntags) || ntags.length === 0\">{{$root.language.tagsS}}</span><span ng-repeat=\"tag in ntags\">{{tag.name}}</span>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
@@ -447,7 +443,7 @@ angular.module('jakPoliczycApp').run(['$templateCache', function($templateCache)
     "\n" +
     "    </form>\r" +
     "\n" +
-    "    <div class=\"comment\" ng-repeat=\"ncomment in ncomments\"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> {{$root.language.wrote}} {{ncomment.date | date: 'HH:mm dd/MM/yyyy'}}:\r" +
+    "    <div class=\"comment\" ng-repeat=\"ncomment in ncomments\"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> {{$root.language.wrote}} {{ncomment.addedDate | date: 'HH:mm dd/MM/yyyy'}}:\r" +
     "\n" +
     "    </div><button ng-click=\"remove($index)\" class=\"btn btn-default\">{{$root.language.remove}}</button>{{ncomment.content}}</div>\r" +
     "\n" +

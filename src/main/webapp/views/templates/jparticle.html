@@ -13,7 +13,7 @@
     </header>
 
     <div class="tags">
-        <span ng-hide="angular.isUndefined(ntags) || ntags.length === 0">{{$root.language.tagsS}}</span><span ng-repeat="tag in ntags">{{tag}}</span>
+        <span ng-hide="angular.isUndefined(ntags) || ntags.length === 0">{{$root.language.tagsS}}</span><span ng-repeat="tag in ntags">{{tag.name}}</span>
     </div>
     <p contenteditable="false" class="intro">{{nintro}}</p>
     <p contenteditable="false" class="content" ng-bind-html="ncontent"></p>
@@ -43,6 +43,6 @@
         <div ng-show="form.username.$error.pattern" class="jperror">{{$root.language.errSings}}</div>
         <div ng-show="form.username.$error.maxlength" class="jperror">{{$root.language.errExceed}}</div>
     </form>
-    <div class="comment" ng-repeat="ncomment in ncomments"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> {{$root.language.wrote}} {{ncomment.date | date: 'HH:mm dd/MM/yyyy'}}:
+    <div class="comment" ng-repeat="ncomment in ncomments"><div><span>#{{$index + 1}}</span><strong>{{ncomment.author}}</strong> {{$root.language.wrote}} {{ncomment.addedDate | date: 'HH:mm dd/MM/yyyy'}}:
     </div><button ng-click="remove($index)" class="btn btn-default">{{$root.language.remove}}</button>{{ncomment.content}}</div>
 </article>

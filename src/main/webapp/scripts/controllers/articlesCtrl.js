@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('articlesCtrl', function($scope, $rootScope, $http, jpartfilter, jpcommon) {
+    .controller('articlesCtrl', function($scope, $rootScope, $http, jpartfilter) {
 
         $scope.articles = [];
         $scope.filteredArticles = [];
@@ -16,11 +16,12 @@ angular.module('jakPoliczycControllers')
         });
 
         $http({
-            cache: true,
+//            cache: true,
             method: 'GET',
             url: '/articles'
         }).then(function success(response) {
             $scope.articles = response.data;
+            console.log($scope.articles);
             _articlesLength = $scope.articles.length;
             angular.copy($scope.articles, $scope.filteredArticles);
         }, function error() {
@@ -85,5 +86,4 @@ angular.module('jakPoliczycControllers')
             });
         })($scope.header.names.DATE);
 
-        $scope.getKind = jpcommon.getKind;
     });

@@ -75,7 +75,6 @@ module.exports = function (grunt) {
 
         /* Factories */
         'scripts/factories/factory.js',
-        'scripts/factories/jpcommon.js',
         'scripts/factories/jpgenerator.js',
 
         /* Services */

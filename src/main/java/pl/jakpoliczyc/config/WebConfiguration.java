@@ -16,7 +16,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("../styles/*").addResourceLocations("../styles/");
+        registry.addResourceHandler("../styles/**");
     }
 
     @Override

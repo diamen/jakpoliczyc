@@ -1,6 +1,7 @@
 package pl.jakpoliczyc.dao.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import pl.jakpoliczyc.web.common.View;
 
@@ -28,6 +29,7 @@ public class Article {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MENU_ID", nullable = false)
     private Menu menu;
+    @JsonManagedReference
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Comment> comments;
     @JsonView(View.Compress.class)

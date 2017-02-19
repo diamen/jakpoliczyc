@@ -20,6 +20,11 @@ public class ArticleServiceImpl implements ArticleService {
         return entityManager.createQuery("SELECT e FROM ARTICLES e", Article.class).getResultList();
     }
 
+    @Transactional(readOnly = true)
+    public Article find(long id) {
+        return entityManager.find(Article.class, id);
+    }
+
     public void insert(Article article) {
         entityManager.persist(article);
     }

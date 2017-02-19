@@ -2,10 +2,7 @@ package pl.jakpoliczyc.web.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.repos.ArticleService;
 import pl.jakpoliczyc.web.common.View;
@@ -23,6 +20,12 @@ public class ArticleController {
     @RequestMapping(value = "/articles", method = RequestMethod.GET)
     public List<Article> getArticles() {
         return articleService.findAll();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/articles/{id}", method = RequestMethod.GET)
+    public Article getArticle(@PathVariable long id) {
+        return articleService.find(id);
     }
 
 }

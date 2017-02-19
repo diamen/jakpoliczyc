@@ -546,25 +546,25 @@ angular.module('jakPoliczycApp')
             return [200, jpartfilter(mockStorage, 'id', [id])[0]];
         });
 
-        $httpBackend.whenGET(/\/article\/id\/(.+)/).respond(function(method, url) {
-            var url_parts = url.split('/');
-            var id = parseInt(url_parts[url_parts.length - 1], 10);
-
-            if (isNaN(id))
-                throw new Error("HTTP request");
-
-            return [200, jpartfilter(mockArticle, 'id', [id])[0]];
-        });
-
-        $httpBackend.whenGET(/\/articles\/menuid\/(.+)/).respond(function(method, url) {
-            var url_parts = url.split('/');
-            var id = parseInt(url_parts[url_parts.length - 1], 10);
-
-            if (isNaN(id))
-                return [200, mockArticles];
-
-            return [200, jpartfilter(mockArticles, 'menuId', [id])];
-        });
+        // $httpBackend.whenGET(/\/article\/id\/(.+)/).respond(function(method, url) {
+        //     var url_parts = url.split('/');
+        //     var id = parseInt(url_parts[url_parts.length - 1], 10);
+        //
+        //     if (isNaN(id))
+        //         throw new Error("HTTP request");
+        //
+        //     return [200, jpartfilter(mockArticle, 'id', [id])[0]];
+        // });
+        //
+        // $httpBackend.whenGET(/\/articles\/menuid\/(.+)/).respond(function(method, url) {
+        //     var url_parts = url.split('/');
+        //     var id = parseInt(url_parts[url_parts.length - 1], 10);
+        //
+        //     if (isNaN(id))
+        //         return [200, mockArticles];
+        //
+        //     return [200, jpartfilter(mockArticles, 'menuId', [id])];
+        // });
 
         $httpBackend.whenGET(new RegExp('.*')).passThrough();
     });

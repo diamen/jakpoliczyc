@@ -1,5 +1,7 @@
 package pl.jakpoliczyc.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class Comment {
     @Temporal(TemporalType.DATE)
     @Column(name = "ADDED_DATE")
     private Date addedDate;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "ART_ID")
     private Article article;

@@ -13,15 +13,15 @@ angular.module('jakPoliczycDirectives')
 
                 $scope.article = angular.fromJson($scope.article);
                 $scope.nauthor = "Małgorzata Kotarska";
-                $scope.ndate = $scope.article.date;
-                $scope.nintro = $scope.article.intro;
-                $scope.ntitle = $scope.article.title;
+                $scope.ndate = $scope.article.addedDate;
+                $scope.nintro = $scope.article.story.intro;
+                $scope.ntitle = $scope.article.story.title;
                 $scope.pattern = {};
                 $scope.pattern.user = "[a-zA-Z0-9]+";
                 $scope.pattern.content = new RegExp('^((?!http:\/\/)(?!https:\/\/)(?!www\.).)*$', "im");
                 $scope.ncomments = angular.fromJson($scope.article.comments);
                 $scope.ntags = angular.fromJson($scope.article.tags);
-                $scope.ncontent = $sce.trustAsHtml($scope.article.content);
+                $scope.ncontent = $sce.trustAsHtml($scope.article.story.content);
                 $scope.notUrls = jpvalidator.notUrls;
 
                 $scope.nadd = function (author, content) {
