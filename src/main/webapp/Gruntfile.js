@@ -24,6 +24,9 @@ module.exports = function (grunt) {
         /* Browser support */
         'scripts/browsersupport.js',
 
+        /* Plain JavaScript */
+        'scripts/global/Menu.js',
+
         /* Common */
         'scripts/languages/PL.js',
 
@@ -76,9 +79,11 @@ module.exports = function (grunt) {
         /* Factories */
         'scripts/factories/factory.js',
         'scripts/factories/jpgenerator.js',
+        'scripts/factories/jpstorage.js',
 
         /* Services */
         'scripts/services/service.js',
+        'scripts/services/articleService.js',
         'scripts/services/jpartfilter.js',
         'scripts/services/jpauth.js',
         'scripts/services/jpvalidator.js',

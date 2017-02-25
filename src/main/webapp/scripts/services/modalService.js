@@ -2,7 +2,7 @@ angular.module('jakPoliczycServices')
     .service("modalService", ['$uibModal', function($uibModal) {
 
         return {
-            execute: function(fn, msg) {
+            execute: function(fn, msg, args) {
 
                 var modalInstance = $uibModal.open({
                     animation: true,
@@ -17,7 +17,7 @@ angular.module('jakPoliczycServices')
                 });
 
                 modalInstance.result.then(function () {
-                    fn();
+                    fn(args);
                 }, function () {
                     return;
                 });

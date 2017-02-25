@@ -25,6 +25,6 @@
             <button ng-click="closeMenu()" class="btn btn-default col-s-6 show-s">{{$root.language.close}}</button>
         </section>
         <li class="x hide-s" ng-click="untickAll()" uib-tooltip="Odznacz tagi" tooltip-placement="bottom">X</li>
-        <li ng-class="selectedTags[$index] ? 'selected' : 'unselected'" class="selected" ng-click="tick($index)" ng-init="render()" ng-repeat="tag in tags">{{tag}}</li>
+        <li ng-class="selectedTags[$index] ? 'selected' : 'unselected'" class="selected" ng-click="tick($index)" ng-init="render()" ng-repeat="tag in tags">{{tag.name}}</li>
     </ul>
 </div>

@@ -1,6 +1,6 @@
 <form name="addForm">
 
-    <jpcategory items="{{mockMenu}}"></jpcategory>
+    <jpcategory ng-if="menu" items="{{menu}}"></jpcategory>
 
     <div class="form-group">
         <label for="add-tags">{{language.tags}}</label>
@@ -42,7 +42,7 @@
 
     <div class="add-submit">
         <button ng-click="openModalSaveToStorage()" class="btn btn-primary">{{language.stoSave}}</button>
-        <button ng-click="openModalSubmit()" ng-disabled="addForm.$invalid" class="btn btn-primary">{{language.publish}}</button>
+        <button ng-click="submit()" ng-disabled="addForm.$invalid" class="btn btn-primary">{{language.publish}}</button>
     </div>
 
 </form>

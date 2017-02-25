@@ -6,7 +6,7 @@ angular.module('jakPoliczycApp').run(['$templateCache', function($templateCache)
     "\n" +
     "\r" +
     "\n" +
-    "<jpadd></jpadd>"
+    "<jpadd ng-if=\"menu\" items=\"{{menu}}\"></jpadd>"
   );
 
 
@@ -22,11 +22,9 @@ angular.module('jakPoliczycApp').run(['$templateCache', function($templateCache)
     "\n" +
     "        <div uib-slide ng-repeat=\"article in filteredArticles track by article.id\" ng-if=\"$index < 3\" index=\"$index\">\r" +
     "\n" +
-    "            <h4>{{article.title}}</h4>\r" +
+    "            <h4>{{article.story.title}}</h4>\r" +
     "\n" +
-    "            <p>{{article.title}}</p>\r" +
-    "\n" +
-    "            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum libero nibh, et tincidunt lacus malesuada eget. Duis lacus lacus, luctus quis tellus at, viverra condimentum sem. Sed non tellus dolor. Maecenas volutpat scelerisque augue, ac scelerisque eros convallis vitae. Donec volutpat lorem quis commodo fringilla. Cras pretium eu nisl non pellentesque. Cras vehicula nibh diam, vel pharetra lorem eleifend sed. Suspendisse egestas placerat urna, eu tristique arcu consequat sit amet. Sed rutrum sed leo sed condimentum. Proin ultricies nisl arcu, quis blandit nunc gravida a. Phasellus posuere vestibulum aliquet. Donec nec elit id velit tincidunt pharetra nec in dolor. In pretium non risus at lacinia.</div>\r" +
+    "            <div>{{article.story.intro}}</div>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -240,7 +238,7 @@ angular.module('jakPoliczycApp').run(['$templateCache', function($templateCache)
     "\n" +
     "        <li class=\"x hide-s\" ng-click=\"untickAll()\" uib-tooltip=\"Odznacz tagi\" tooltip-placement=\"bottom\">X</li>\r" +
     "\n" +
-    "        <li ng-class=\"selectedTags[$index] ? 'selected' : 'unselected'\" class=\"selected\" ng-click=\"tick($index)\" ng-init=\"render()\" ng-repeat=\"tag in tags\">{{tag}}</li>\r" +
+    "        <li ng-class=\"selectedTags[$index] ? 'selected' : 'unselected'\" class=\"selected\" ng-click=\"tick($index)\" ng-init=\"render()\" ng-repeat=\"tag in tags\">{{tag.name}}</li>\r" +
     "\n" +
     "    </ul>\r" +
     "\n" +
@@ -258,7 +256,7 @@ angular.module('jakPoliczycApp').run(['$templateCache', function($templateCache)
     "\n" +
     "\r" +
     "\n" +
-    "    <jpcategory items=\"{{mockMenu}}\"></jpcategory>\r" +
+    "    <jpcategory ng-if=\"menu\" items=\"{{menu}}\"></jpcategory>\r" +
     "\n" +
     "\r" +
     "\n" +
@@ -342,7 +340,7 @@ angular.module('jakPoliczycApp').run(['$templateCache', function($templateCache)
     "\n" +
     "        <button ng-click=\"openModalSaveToStorage()\" class=\"btn btn-primary\">{{language.stoSave}}</button>\r" +
     "\n" +
-    "        <button ng-click=\"openModalSubmit()\" ng-disabled=\"addForm.$invalid\" class=\"btn btn-primary\">{{language.publish}}</button>\r" +
+    "        <button ng-click=\"submit()\" ng-disabled=\"addForm.$invalid\" class=\"btn btn-primary\">{{language.publish}}</button>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +

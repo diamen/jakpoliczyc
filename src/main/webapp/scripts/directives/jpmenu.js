@@ -4,13 +4,10 @@ angular.module('jakPoliczycDirectives')
             require: '?ngModel',
             restrict: 'E',
             scope: true,
-            link: function(scope, element, attr) {
-                scope.nitems = {};
-                attr.$observe('items', function (data) {
+            link: function(scope, element, attrs) {
+                attrs.$observe('items', function (data) {
                     if (data.length > 0) {
-                        console.log(data);
                         scope.nitems = angular.fromJson(data);
-                        console.log(scope.nitems);
                     }
                 }, true);
                 scope.collapsed = true;

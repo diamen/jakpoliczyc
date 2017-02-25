@@ -4,6 +4,19 @@ angular.module('jakPoliczycDirectives')
             restrict: 'E',
             scope: true,
             link: function(scope, element, attrs) {
+                var uuid = jpgenerator.guid();
+                element.attr('uuid', uuid);
+
+                scope.$on('publish-down', function () {
+                    if (angular.isUndefined(scope.inputModel))
+                        return;
+                    scope.saveMenuInfo(0, scope.inputModel);
+                });
+
+                element.on('$destroy', function () {
+                    scope = {};
+                });
+
                 var parentId = attrs.parentId;
                 scope.inputModel = '';
                 scope.name = jpgenerator.randomString();
