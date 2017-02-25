@@ -4,7 +4,7 @@
 
     <div class="form-group">
         <label for="add-tags">{{language.tags}}</label>
-        <textarea ng-pattern="pattern.tags" ng-model="add.tags" name="addTags" class="form-control" id="add-tags" maxlength="1000"
+        <textarea ng-model="add.tags" name="addTags" class="form-control" id="add-tags" maxlength="1000"
                   aria-describedby="add tags" rows="4" jpcharacters></textarea>
         <small class="form-text text-muted">{{language.tagWarn}}</small>
         <div ng-show="addForm.addTags.$error.jpcharacters">

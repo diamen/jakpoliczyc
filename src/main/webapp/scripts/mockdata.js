@@ -567,4 +567,5 @@ angular.module('jakPoliczycApp')
         // });
 
         $httpBackend.whenGET(new RegExp('.*')).passThrough();
+        $httpBackend.whenPOST(new RegExp('.*')).passThrough();
     });

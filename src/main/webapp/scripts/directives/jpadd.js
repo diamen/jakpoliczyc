@@ -21,8 +21,19 @@ angular.module('jakPoliczycDirectives')
                     var noOfMenus = jpstorage.retrieve('menus').length;
 
                     if (noOfMenus === noOfMenusElem) {
-                        scope.add.menus = jpstorage.retrieve('menus');
-                        scope.openModalSubmit(scope.add);
+                        if (scope.add.tags && angular.isString(scope.add.tags) && (scope.add.tags.length > 0)) {
+                            var tags = scope.add.tags.trim().split(" ");
+                        }
+                        var request = {
+                            story: {
+                                title: scope.add.title,
+                                intro: scope.add.intro,
+                                content: scope.add.content
+                            },
+                            menus: jpstorage.retrieve('menus'),
+                            tags: tags
+                        };
+                        scope.openModalSubmit(request);
                     }
                 });
 

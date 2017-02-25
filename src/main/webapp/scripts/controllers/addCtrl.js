@@ -1,8 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('addCtrl', function($scope, menuService, modalService) {
-
-        $scope.pattern = {};
-        $scope.pattern.tags = "[a-zA-Z]+";
+    .controller('addCtrl', function($scope, articleService, menuService, modalService) {
 
         menuService.getMenus().then(function success(response) {
             $scope.menu = response.data;
@@ -15,8 +12,7 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.submit = function (args) {
-          console.log(args);
-          // TODO
+            articleService.postArticle(args);
         };
 
         $scope.openModalSaveToStorage = function () {
