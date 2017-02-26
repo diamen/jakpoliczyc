@@ -97,5 +97,4 @@ public class MenuServiceTest {
         // then
         assertThat(resultCount).isEqualTo(expectedCount);
     }
-
 }

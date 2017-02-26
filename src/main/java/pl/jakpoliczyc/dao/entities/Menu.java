@@ -15,16 +15,16 @@ public class Menu {
 
     @JsonView(View.Compress.class)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false)
     private String name;
     @JsonBackReference
     @JoinColumn(nullable = true)
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Menu parent;
     @JsonManagedReference
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.PERSIST)
     private Collection<Menu> submenus;
     @JsonIgnore
     @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)

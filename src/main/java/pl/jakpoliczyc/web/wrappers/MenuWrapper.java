@@ -1,15 +1,15 @@
 package pl.jakpoliczyc.web.wrappers;
 
-public class Menu {
+public class MenuWrapper {
 
     public long id;
     public String name;
 
-    public Menu() {
+    public MenuWrapper() {
         super();
     };
 
-    public Menu(long id, String name) {
+    public MenuWrapper(long id, String name) {
         this.id = id;
         this.name = name;
     }

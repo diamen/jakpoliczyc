@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.repos.ArticleService;
 import pl.jakpoliczyc.web.common.View;
-import pl.jakpoliczyc.web.wrappers.StoryMenuTag;
+import pl.jakpoliczyc.web.preparers.ArticlePreparer;
+import pl.jakpoliczyc.web.wrappers.StoryMenuTagWrapper;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ArticlePreparer preparer;
 
     @JsonView(View.Compress.class)
     @ResponseBody
@@ -31,8 +35,10 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/articles", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveArticle(@RequestBody StoryMenuTag storyMenuTag) {
+    public void saveArticle(@RequestBody StoryMenuTagWrapper storyMenuTagWrapper) {
         // TODO
-        System.out.println(storyMenuTag);
+        Article article = preparer.prepare(storyMenuTagWrapper);
+        System.out.println(storyMenuTagWrapper);
+        articleService.insert(article);
     }
 }

@@ -6,17 +6,17 @@ import pl.jakpoliczyc.dao.entities.Story;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StoryMenuTag {
+public class StoryMenuTagWrapper {
 
     private Story story;
     private List<String> tags;
-    private List<Menu> menus;
+    private List<MenuWrapper> menus;
 
-    public StoryMenuTag() {
+    public StoryMenuTagWrapper() {
         super();
     };
 
-    public StoryMenuTag(Story story, List<String> tags, List<Menu> menus) {
+    public StoryMenuTagWrapper(Story story, List<String> tags, List<MenuWrapper> menus) {
         this.story = story;
         this.tags = tags;
         this.menus = menus;
@@ -38,11 +38,11 @@ public class StoryMenuTag {
         this.tags = tags;
     }
 
-    public List<Menu> getMenus() {
+    public List<MenuWrapper> getMenus() {
         return menus;
     }
 
-    public void setMenus(List<Menu> menus) {
+    public void setMenus(List<MenuWrapper> menus) {
         this.menus = menus;
     }
 

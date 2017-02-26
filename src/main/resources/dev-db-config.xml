@@ -56,5 +56,6 @@
         </property>
      </bean>
 
-    <context:component-scan base-package="pl.jakpoliczyc.dao"/>
+    <context:component-scan base-package="pl.jakpoliczyc.dao.repos"/>
+    <context:component-scan base-package="pl.jakpoliczyc.dao.entities"/>
 </beans>

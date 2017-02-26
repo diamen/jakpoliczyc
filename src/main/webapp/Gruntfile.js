@@ -97,6 +97,8 @@ module.exports = function (grunt) {
 
        clean: ['src/main/webapp/sass/build.scss', 'src/main/webapp/styles/main.css', 'src/main/webapp/styles/main.css.map'],
 
+       cleanjs: ['src/main/webapp/scripts/template.js', 'src/main/webapp/scripts/output.js', 'scr/main/webapp/scripts/output.min.js'],
+
        replace: {
          dist: {
              options: {
@@ -242,6 +244,8 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-replace');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.renameTask('clean', 'cleanjs');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.renameTask('concat', 'concatScss');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -269,5 +273,5 @@ module.exports = function (grunt) {
     grunt.registerTask('js', ['ngtemplates', 'stringreplace', 'concatJS', 'ngAnnotate', 'uglify']);
 
     grunt.registerTask('dist', ['replace', 'css', 'js', 'distpreprocess']);
-    grunt.registerTask('dev', ['replace', 'cssdev', 'devpreprocess']);
+    grunt.registerTask('dev', ['replace', 'cssdev', 'cleanjs', 'devpreprocess']);
 };

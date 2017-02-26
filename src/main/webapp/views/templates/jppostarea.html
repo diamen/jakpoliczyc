@@ -2,7 +2,7 @@
     <div class="postarea form-group">
         <div class="display" ng-show="show"><button ng-click="show = false">x</button><p mathjax-bind></p></div>
         <label for="add-content">{{$root.language.artContent}}</label>
-        <textarea id="add-content" ng-model="expression" name="post" class="form-control" rows="{{rows}}"
+        <textarea id="add-content" ng-model="add.content" name="post" class="form-control" rows="20"
                   ng-trim="false" required></textarea>
         <div ng-show="postarea.post.$error.required">
             <span class="jperror">{{$root.language.errReq}}</span>
