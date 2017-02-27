@@ -1,6 +1,8 @@
 package pl.jakpoliczyc.dao.repos;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Menu;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Primary
 @Service("menuServiceImpl")
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Transactional
 public class MenuServiceImpl implements MenuService {
 

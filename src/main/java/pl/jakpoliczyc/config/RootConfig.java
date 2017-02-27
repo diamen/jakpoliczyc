@@ -2,7 +2,7 @@ package pl.jakpoliczyc.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import pl.jakpoliczyc.web.preparers.ArticlePreparer;
+import pl.jakpoliczyc.dao.managers.ArticleManager;
 
 @Configuration
 @ImportResource("classpath:*-db-config.xml")
@@ -13,8 +13,8 @@ import pl.jakpoliczyc.web.preparers.ArticlePreparer;
 public class RootConfig {
 
     @Bean
-    public ArticlePreparer articlePreparer() {
-        return new ArticlePreparer();
+    public ArticleManager articlePreparer() {
+        return new ArticleManager();
     }
 
 }

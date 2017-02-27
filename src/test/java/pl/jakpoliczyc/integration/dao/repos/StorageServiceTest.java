@@ -2,9 +2,16 @@ package pl.jakpoliczyc.integration.dao.repos;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.DbUnitConfiguration;
+import com.github.springtestdbunit.dataset.AbstractDataSetLoader;
+import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.builder.DataSetBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -29,8 +36,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup("/sql-data.xml")
+@DatabaseSetup(value = "/fake.xml")
+@DbUnitConfiguration(dataSetLoader = StorageServiceTest.Loader.class)
 public class StorageServiceTest {
+
+    public static class Loader extends AbstractDataSetLoader {
+        @Override
+        protected IDataSet createDataSet(Resource resource) throws Exception {
+            return StorageServiceTest.getDataset();
+        }
+    }
+
+    public static IDataSet getDataset() throws DataSetException {
+        return new DataSetBuilder()
+                .newRow("storages").add()
+                .build();
+    }
 
     @Autowired
     private StorageService storageService;
@@ -53,6 +74,7 @@ public class StorageServiceTest {
         return stag;
     }
 
+    @Rollback
     @Transactional
     @Test
     public void shouldListSizeIncreaseAfterInsert() {
@@ -68,6 +90,7 @@ public class StorageServiceTest {
         assertThat(after).isEqualTo(before + 1);
     }
 
+    @Rollback
     @Transactional
     @Test
     public void shouldListSizeDecreaseAfterRemove() {

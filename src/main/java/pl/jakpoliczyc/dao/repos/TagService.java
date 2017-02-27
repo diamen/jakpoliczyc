@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TagService {
     List<Tag> findAll();
+    List<Tag> in(List<String> names);
 }

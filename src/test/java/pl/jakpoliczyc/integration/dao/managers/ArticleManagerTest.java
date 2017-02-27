@@ -1,6 +1,7 @@
-package pl.jakpoliczyc.integration.web.preparers;
+package pl.jakpoliczyc.integration.dao.managers;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 import com.github.springtestdbunit.dataset.AbstractDataSetLoader;
@@ -16,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -23,12 +25,18 @@ import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Menu;
+import pl.jakpoliczyc.dao.entities.Story;
+import pl.jakpoliczyc.dao.managers.ArticleManager;
+import pl.jakpoliczyc.dao.repos.ArticleService;
 import pl.jakpoliczyc.dao.repos.MenuService;
-import pl.jakpoliczyc.web.preparers.ArticlePreparer;
+import pl.jakpoliczyc.dao.repos.TagService;
 import pl.jakpoliczyc.web.wrappers.MenuWrapper;
+import pl.jakpoliczyc.web.wrappers.StoryMenuTagWrapper;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,9 +49,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup(value = "/fake.xml")
-@DbUnitConfiguration(dataSetLoader = pl.jakpoliczyc.integration.web.preparers.ArticlePreparerTest.Loader.class)
-public class ArticlePreparerTest {
+@DatabaseSetup(value = "/fake.xml", type = DatabaseOperation.CLEAN_INSERT)
+@DbUnitConfiguration(dataSetLoader = ArticleManagerTest.Loader.class)
+public class ArticleManagerTest {
 
     @ClassRule
     public static final SpringClassRule SCR = new SpringClassRule();
@@ -54,14 +62,13 @@ public class ArticlePreparerTest {
     public static class Loader extends AbstractDataSetLoader {
         @Override
         protected IDataSet createDataSet(Resource resource) throws Exception {
-            return pl.jakpoliczyc.integration.web.preparers.ArticlePreparerTest.getDataset();
+            return ArticleManagerTest.getDataset();
         }
     }
 
     public static IDataSet getDataset() throws DataSetException {
         return new DataSetBuilder()
 
-                // DATA
                 .newRow("menu").with("id", 1).with("name", "x").add()
 
                 .newRow("menu").with("id", 2).with("name", "x").with("parent_id", 1).add()
@@ -88,17 +95,32 @@ public class ArticlePreparerTest {
 
                 .newRow("menu").with("id", 10).with("name", "x").with("parent_id", 1).add()
 
+                .newRow("articles").with("id", 1).with("added_date", new Date()).with("content", "content").with("intro", "intro").with("title", "title")
+                .with("menu_id", 2).add()
+
+                .newRow("tags").with("id", 1).with("name", "Exists").add()
+                .newRow("tags").with("id", 2).with("name", "Also").add()
+
+                .newRow("art_tag").with("art_id", 1).with("tag_id", 1).add()
+                .newRow("art_tag").with("art_id", 1).with("tag_id", 2).add()
+
                 .build();
     }
 
     @Autowired
-    private ArticlePreparer preparer;
+    private ArticleManager articleManager;
 
     @Autowired
     @Qualifier("menuServiceStub")
     private MenuService menuService;
 
-    private List<MenuWrapper> getShouldInsertWorkTestData1() {
+    @Autowired
+    private ArticleService articleService;
+
+    @Autowired
+    private TagService tagService;
+
+    private List<MenuWrapper> getShouldInsertToMenuWorkWithTestData1() {
         return Arrays.asList(new MenuWrapper(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
                 new MenuWrapper(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
                 new MenuWrapper(18, "Okrąg wpisany w czworokąt"),
@@ -106,23 +128,25 @@ public class ArticlePreparerTest {
                 new MenuWrapper(0, "Również nie istniejący dział"));
     }
 
-    private List<MenuWrapper> getShouldInsertWorkTestData2() {
+    private List<MenuWrapper> getShouldInsertToMenuWorkWithTestData2() {
         return Arrays.asList(new MenuWrapper(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
                 new MenuWrapper(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
                 new MenuWrapper(18, "Okrąg wpisany w czworokąt"),
                 new MenuWrapper(0, "Nie istniejący dział"));
     }
 
-    private List<MenuWrapper> getShouldInsertWorkTestData3() {
+    private List<MenuWrapper> getShouldInsertToMenuWorkWithTestData3() {
         return Arrays.asList(new MenuWrapper(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
                 new MenuWrapper(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
                 new MenuWrapper(18, "Okrąg wpisany w czworokąt"));
     }
 
-    private List<MenuWrapper> getShouldInsertWorkTestData4() {
+    private List<MenuWrapper> getShouldInsertToMenuWorkWithTestData4() {
         return Arrays.asList(new MenuWrapper(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"));
     }
 
+    @Rollback
+    @Transactional
     @Test
     @Parameters
     public void shouldListBeIncreasedOnlyByElementsWithIdEqualedToZero(List<MenuWrapper> param) {
@@ -131,7 +155,7 @@ public class ArticlePreparerTest {
         int noOfElementsWithIdEqualedToZero = param.stream().filter(e -> e.getId() == 0).collect(Collectors.toList()).size();
 
         // when
-        Menu menu = preparer.prepareMenu(param);
+        Menu menu = articleManager.prepareMenu(param);
         if (menu.getId() == 0) {
             menuService.save(menu);
         }
@@ -143,10 +167,77 @@ public class ArticlePreparerTest {
 
     public Object[] parametersForShouldListBeIncreasedOnlyByElementsWithIdEqualedToZero() {
         return $(
-          $(getShouldInsertWorkTestData1()),
-          $(getShouldInsertWorkTestData2()),
-          $(getShouldInsertWorkTestData3()),
-          $(getShouldInsertWorkTestData4())
+          $(getShouldInsertToMenuWorkWithTestData1()),
+          $(getShouldInsertToMenuWorkWithTestData2()),
+          $(getShouldInsertToMenuWorkWithTestData3()),
+          $(getShouldInsertToMenuWorkWithTestData4())
           );
     }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldNotInsertPresentMenu() {
+        // given
+        List<MenuWrapper> existingMenus = getShouldInsertToMenuWorkWithTestData3();
+        Story story = new Story();
+        story.setTitle("any title");
+        story.setIntro("any intro");
+        story.setContent("any content");
+        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper(story, Arrays.asList("Not"), existingMenus);
+
+        int sizeBefore = menuService.findAll().size();
+
+        // when
+        articleManager.save(storyMenuTagWrapper);
+
+        // then
+        int sizeAfter = menuService.findAll().size();
+        assertThat(sizeAfter).isEqualTo(sizeBefore);
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldInsertOnlyNotPresentTags() {
+        // given
+        List<MenuWrapper> existingMenus = getShouldInsertToMenuWorkWithTestData3();
+        Story story = new Story();
+        story.setTitle("any title");
+        story.setIntro("any intro");
+        story.setContent("any content");
+        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper(story, Arrays.asList("Not", "Exists"), existingMenus);
+
+        int tagsBefore = tagService.findAll().size();
+
+        // when
+        articleManager.save(storyMenuTagWrapper);
+
+        // then
+        int sizeAfter = tagService.findAll().size();
+        assertThat(sizeAfter).isEqualTo(tagsBefore + 1);
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldInsertCorrectlyWhenTagsAreNull() {
+        // given
+        List<MenuWrapper> existingMenus = getShouldInsertToMenuWorkWithTestData3();
+        Story story = new Story();
+        story.setTitle("any title");
+        story.setIntro("any intro");
+        story.setContent("any content");
+        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper(story, null, existingMenus);
+
+        int sizeBefore = articleService.findAll().size();
+
+        // when
+        articleManager.save(storyMenuTagWrapper);
+        int sizeAfter = articleService.findAll().size();
+
+        // then
+        assertThat(sizeAfter).isGreaterThan(sizeBefore);
+    }
+
 }

@@ -4,7 +4,7 @@ angular.module('jakPoliczycServices')
         return {
             getMenus: function() {
                 return $http({
-                    cache: true,
+                    //cache: true,
                     method: 'GET',
                     url: '/menu'
                 });

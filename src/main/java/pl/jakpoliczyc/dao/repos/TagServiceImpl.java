@@ -20,4 +20,10 @@ public class TagServiceImpl implements TagService {
         return entityManager.createQuery("SELECT e FROM TAGS e", Tag.class).getResultList();
     }
 
+    @Override
+    public List<Tag> in(List<String> names) {
+        return entityManager.createQuery("SELECT e FROM TAGS e where e.name IN :names")
+                .setParameter("names", names).getResultList();
+    }
+
 }

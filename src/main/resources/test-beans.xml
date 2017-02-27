@@ -5,6 +5,6 @@
                             http://www.springframework.org/schema/beans/spring-beans.xsd"
        profile="TEST">
 
-    <bean id="articlePreparer" class="pl.jakpoliczyc.web.preparers.ArticlePreparer"/>
+    <bean id="articlePreparer" class="pl.jakpoliczyc.dao.managers.ArticleManager"/>
 
 </beans>

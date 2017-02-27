@@ -16,6 +16,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @JsonView(View.Compress.class)
+    @Column(unique = true)
     private String name;
     @JsonIgnore
     @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)

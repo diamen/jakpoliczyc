@@ -5,6 +5,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -48,7 +49,7 @@ public class ArticleServiceTest {
         menu.setName("Funkcje");
         menu.setParent(parent);
         parent.setSubmenus(Arrays.asList(menu));
-        article.setMenu(menu);
+        article.setMenu(parent);
 
         return article;
     }
@@ -86,6 +87,7 @@ public class ArticleServiceTest {
         return article;
     }
 
+    @Rollback
     @Transactional
     @Test
     public void shouldListSizeIncreaseAfterInsert() {
@@ -100,6 +102,7 @@ public class ArticleServiceTest {
         assertThat(sizeBefore).isLessThan(sizeAfter);
     }
 
+    @Rollback
     @Transactional
     @Test
     public void shouldListSizeDecreaseAfterRemove() {
@@ -117,6 +120,7 @@ public class ArticleServiceTest {
         assertThat(sizeBefore).isGreaterThan(sizeAfter);
     }
 
+    @Rollback
     @Transactional
     @Test
     public void shouldInsertOfArticleWithItsDependencies() {
