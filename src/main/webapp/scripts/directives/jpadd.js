@@ -16,13 +16,16 @@ angular.module('jakPoliczycDirectives')
                     scope.$broadcast('publish-down');
                 };
 
-                scope.$on('publish-up', function (event, args) {
+                scope.$on('publish-up', function () {
                     var noOfMenusElem = element.find('jpcategory').length + element.find('jpcategoryInput').length;
                     var noOfMenus = jpstorage.retrieve('menus').length;
 
                     if (noOfMenus === noOfMenusElem) {
                         if (scope.add.tags && angular.isString(scope.add.tags) && (scope.add.tags.length > 0)) {
-                            var tags = scope.add.tags.trim().split(" ");
+                            var tags = scope.add.tags.trim().split(" ").map(function(tag) {
+                                tag = tag.trim();
+                                return tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase();
+                            });
                         }
                         var request = {
                             story: {

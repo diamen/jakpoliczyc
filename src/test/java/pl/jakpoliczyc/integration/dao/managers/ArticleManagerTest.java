@@ -26,6 +26,7 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Story;
 import pl.jakpoliczyc.dao.managers.ArticleManager;
@@ -238,6 +239,27 @@ public class ArticleManagerTest {
 
         // then
         assertThat(sizeAfter).isGreaterThan(sizeBefore);
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldInsertedArticleHasReferenceToAlreadyExistedTag() {
+        // given
+        List<MenuWrapper> existingMenus = getShouldInsertToMenuWorkWithTestData3();
+        Story story = new Story();
+        story.setTitle("any title");
+        story.setIntro("any intro");
+        story.setContent("any content");
+        List<String> tags = Arrays.asList("Exists");
+        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper(story, tags, existingMenus);
+
+        // when
+        articleManager.save(storyMenuTagWrapper);
+
+        // then
+        Article currentlyAddedArticle = articleService.find(articleService.findAll().size());
+        assertThat(currentlyAddedArticle.getTags().size()).isEqualTo(tags.size());
     }
 
 }

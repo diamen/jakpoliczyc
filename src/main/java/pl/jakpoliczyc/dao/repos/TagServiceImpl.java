@@ -6,7 +6,9 @@ import pl.jakpoliczyc.dao.entities.Tag;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @Service("tagServiceImpl")
 @Transactional
@@ -25,5 +27,20 @@ public class TagServiceImpl implements TagService {
         return entityManager.createQuery("SELECT e FROM TAGS e where e.name IN :names")
                 .setParameter("names", names).getResultList();
     }
+
+    public Optional<Tag> findByName(String name) {
+        List<Tag> tags = entityManager.createQuery("SELECT e FROM TAGS e where e.name = :name", Tag.class)
+                .setParameter("name", name).getResultList();
+        if (tags.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+        return Optional.of(tags.get(0));
+    }
+
+    @Override
+    public void save(Tag tag) {
+        entityManager.persist(tag);
+    }
+
 
 }

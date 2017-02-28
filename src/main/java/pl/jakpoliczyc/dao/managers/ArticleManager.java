@@ -11,10 +11,7 @@ import pl.jakpoliczyc.dao.repos.TagService;
 import pl.jakpoliczyc.web.wrappers.MenuWrapper;
 import pl.jakpoliczyc.web.wrappers.StoryMenuTagWrapper;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
@@ -41,14 +38,17 @@ public class ArticleManager {
     }
 
     public List<Tag> prepareTags(List<String> names) {
-        List<String> exists = tagService.in(names).stream().map(e -> e.getName()).collect(Collectors.toList());
-        List<Tag> notExists = names.stream().filter(e -> !exists.contains(e)).map(e -> {
-            Tag tag = new Tag();
-            tag.setName(e);
-            return tag;
+        return names.stream().map(e -> {
+            Optional<Tag> tagOptional = tagService.findByName(e);
+            if (tagOptional.isPresent()) {
+                return tagOptional.get();
+            } else {
+                Tag tag = new Tag();
+                tag.setName(e);
+                tagService.save(tag);
+                return tag;
+            }
         }).collect(Collectors.toList());
-
-        return notExists;
     }
 
     @Transactional

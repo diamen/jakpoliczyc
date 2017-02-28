@@ -13,7 +13,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
-import pl.jakpoliczyc.dao.entities.*;
+import pl.jakpoliczyc.dao.entities.Article;
+import pl.jakpoliczyc.dao.entities.Comment;
+import pl.jakpoliczyc.dao.entities.Menu;
+import pl.jakpoliczyc.dao.entities.Story;
 import pl.jakpoliczyc.dao.repos.ArticleService;
 
 import java.util.Arrays;
@@ -62,11 +65,6 @@ public class ArticleServiceTest {
         story.setContent("Lorem ipsum...");
         story.setTitle("LI");
 
-        Tag tag1 = new Tag();
-        Tag tag2 = new Tag();
-        tag1.setName("Funkcje");
-        tag2.setName("Geometria");
-
         Menu menu = new Menu();
         menu.setName("Fizyka");
 
@@ -82,7 +80,6 @@ public class ArticleServiceTest {
         article.setStory(story);
         article.setMenu(menu);
         article.setComments(Arrays.asList(comment1, comment2));
-        article.setTags(Arrays.asList(tag1, tag2));
 
         return article;
     }

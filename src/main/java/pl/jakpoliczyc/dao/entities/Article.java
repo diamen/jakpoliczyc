@@ -33,7 +33,7 @@ public class Article {
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Comment> comments;
     @JsonView(View.Compress.class)
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(name = "ART_TAG",
         joinColumns = @JoinColumn(name = "ART_ID", referencedColumnName = "ID"),
         inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID"))
