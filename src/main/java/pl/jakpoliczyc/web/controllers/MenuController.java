@@ -1,6 +1,10 @@
 package pl.jakpoliczyc.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,9 +21,13 @@ public class MenuController {
     private MenuService menuService;
 
     @ResponseBody
-    @RequestMapping(value = "/menu", method = RequestMethod.GET)
-    public List<Menu> getTags() {
-        return menuService.findAll();
+    @RequestMapping(value = "/menu", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getMenus() {
+        List<Menu> menus = menuService.findAll();
+        if (menus == null || menus.isEmpty()) {
+            throw new ResourceNotFoundException("None menus found");
+        }
+        return new ResponseEntity<>(menuService.findAll(), HttpStatus.OK);
     }
 
 }

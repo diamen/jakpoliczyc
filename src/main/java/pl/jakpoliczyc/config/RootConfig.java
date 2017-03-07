@@ -13,7 +13,7 @@ import pl.jakpoliczyc.dao.managers.ArticleManager;
 public class RootConfig {
 
     @Bean
-    public ArticleManager articlePreparer() {
+    public ArticleManager articleManager() {
         return new ArticleManager();
     }
 

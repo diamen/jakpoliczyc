@@ -3,13 +3,16 @@ package pl.jakpoliczyc.web.wrappers;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import pl.jakpoliczyc.dao.entities.Story;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StoryMenuTagWrapper {
 
+    @NotNull
     private Story story;
     private List<String> tags;
+    @NotNull
     private List<MenuWrapper> menus;
 
     public StoryMenuTagWrapper() {

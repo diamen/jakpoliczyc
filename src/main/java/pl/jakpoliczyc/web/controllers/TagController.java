@@ -1,6 +1,7 @@
 package pl.jakpoliczyc.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,12 @@ public class TagController {
     private TagService tagService;
 
     @RequestMapping(value = "/tags", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Tag>> getTags() {
-        return new ResponseEntity<>(tagService.findAll(), HttpStatus.OK);
+    public ResponseEntity<?> getTags() {
+        List<Tag> tags = tagService.findAll();
+        if (tags == null || tags.isEmpty()) {
+            throw new ResourceNotFoundException("None tags found");
+        }
+        return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 
 }
