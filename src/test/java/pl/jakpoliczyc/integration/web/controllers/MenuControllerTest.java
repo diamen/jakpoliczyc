@@ -11,10 +11,10 @@ import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import pl.jakpoliczyc.dao.entities.Tag;
-import pl.jakpoliczyc.dao.repos.TagServiceImpl;
+import pl.jakpoliczyc.dao.entities.Menu;
+import pl.jakpoliczyc.dao.repos.MenuServiceImpl;
 import pl.jakpoliczyc.integration.web.WebTestConfig;
-import pl.jakpoliczyc.web.controllers.TagController;
+import pl.jakpoliczyc.web.controllers.MenuController;
 
 import javax.servlet.ServletContext;
 import java.util.Arrays;
@@ -23,13 +23,13 @@ import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class TagControllerTest extends WebTestConfig {
+public class MenuControllerTest extends WebTestConfig {
 
     @Spy
-    private TagServiceImpl tagService;
+    private MenuServiceImpl menuService;
 
     @InjectMocks
-    private TagController tagController;
+    private MenuController menuController;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -40,7 +40,7 @@ public class TagControllerTest extends WebTestConfig {
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(tagController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(menuController).build();
     }
 
     @Test
@@ -49,38 +49,36 @@ public class TagControllerTest extends WebTestConfig {
 
         Assert.assertNotNull(servletContext);
         Assert.assertTrue(servletContext instanceof MockServletContext);
-        Assert.assertNotNull(webApplicationContext.getBean("tagController"));
+        Assert.assertNotNull(webApplicationContext.getBean("menuController"));
     }
 
     @Test
     public void shouldReturnOkStatusWhenListIsNotEmpty() throws Exception {
         // given
-        Tag tag = new Tag();
-        tag.setName("test");
-        doReturn(Arrays.asList(tag)).when(tagService).findAll();
+        doReturn(Arrays.asList(new Menu())).when(menuService).findAll();
 
         // when - then
-        mockMvc.perform(get("/tags"))
+        mockMvc.perform(get("/menu"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void shouldReturnErrorNotFoundStatusWhenListIsEmpty() throws Exception {
         // given
-        doReturn(Arrays.asList()).when(tagService).findAll();
+        doReturn(Arrays.asList()).when(menuService).findAll();
 
         // when - then
-        mockMvc.perform(get("/tags"))
+        mockMvc.perform(get("/menu"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void shouldReturnErrorNotFoundStatusWhenListIsNull() throws Exception {
         // given
-        doReturn(null).when(tagService).findAll();
+        doReturn(null).when(menuService).findAll();
 
         // when - then
-        mockMvc.perform(get("/tags"))
+        mockMvc.perform(get("/menu"))
                 .andExpect(status().isNotFound());
     }
 
