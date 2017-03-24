@@ -6,12 +6,13 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.managers.ArticleManager;
 import pl.jakpoliczyc.dao.repos.ArticleService;
 import pl.jakpoliczyc.web.common.View;
-import pl.jakpoliczyc.web.wrappers.StoryMenuTagWrapper;
+import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -46,9 +47,10 @@ public class ArticleController {
         return new ResponseEntity<>(articleService.find(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/articles", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> saveArticle(@Valid @RequestBody StoryMenuTagWrapper storyMenuTagWrapper) {
-        articleManager.save(storyMenuTagWrapper);
+    public ResponseEntity<?> saveArticle(@Valid @RequestBody StoryMenuTagDto storyMenuTagDto) {
+        articleManager.save(storyMenuTagDto);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 }

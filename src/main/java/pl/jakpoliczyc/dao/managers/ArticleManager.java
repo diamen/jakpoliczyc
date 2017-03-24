@@ -8,8 +8,8 @@ import pl.jakpoliczyc.dao.entities.Tag;
 import pl.jakpoliczyc.dao.repos.ArticleService;
 import pl.jakpoliczyc.dao.repos.MenuService;
 import pl.jakpoliczyc.dao.repos.TagService;
-import pl.jakpoliczyc.web.wrappers.MenuWrapper;
-import pl.jakpoliczyc.web.wrappers.StoryMenuTagWrapper;
+import pl.jakpoliczyc.web.dto.MenuDto;
+import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -27,7 +27,7 @@ public class ArticleManager {
     private TagService tagService;
 
     @Transactional
-    public void save(StoryMenuTagWrapper wrapper) {
+    public void save(StoryMenuTagDto wrapper) {
         Menu menu = prepareMenu(wrapper.getMenus());
         Article article = new Article();
         article.setStory(wrapper.getStory());
@@ -52,9 +52,9 @@ public class ArticleManager {
     }
 
     @Transactional
-    public Menu prepareMenu(List<MenuWrapper> wrappers) {
-        MenuWrapper lastNotZero = wrappers.stream().filter(e -> e.id > 0).max((e1, e2) -> wrappers.indexOf(e1) - wrappers.indexOf(e2)).get();
-        List<MenuWrapper> menuToInsert = wrappers.stream().filter(e -> e.getId() == 0).collect(Collectors.toList());
+    public Menu prepareMenu(List<MenuDto> wrappers) {
+        MenuDto lastNotZero = wrappers.stream().filter(e -> e.id > 0).max((e1, e2) -> wrappers.indexOf(e1) - wrappers.indexOf(e2)).get();
+        List<MenuDto> menuToInsert = wrappers.stream().filter(e -> e.getId() == 0).collect(Collectors.toList());
         Menu lastExist = menuService.find(lastNotZero.getId());
 
         Queue<Menu> menuQueue = new LinkedBlockingQueue<>();
@@ -65,7 +65,7 @@ public class ArticleManager {
 
         Menu firstNotExist = null;
         for (int i = menuToInsert.size() - 1; i >= 0; i--) {
-            MenuWrapper currentMenu = menuToInsert.get(i);
+            MenuDto currentMenu = menuToInsert.get(i);
             firstNotExist = new Menu();
             firstNotExist.setName(currentMenu.getName());
             if (menuQueue.size() > 0) {

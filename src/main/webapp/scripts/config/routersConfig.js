@@ -36,6 +36,9 @@ angular.module('jakPoliczycRouters', [])
                         controller: "addCtrl",
                         templateUrl: "views/add-article.html"
                     }
+                },
+                data: {
+                    role: 'ROLE_USER'
                 }
             })
 
@@ -58,5 +61,20 @@ angular.module('jakPoliczycRouters', [])
                     }
                 }
             })
+
+            /* LOGIN SECTION */
+            .state("login", {
+                url: "/login",
+                templateUrl: "views/login.html"
+            })
+
+            /* ERROR SECTION */
+            .state("error", {
+                url: "/error/{no:[0-9]{1,9}}",
+                templateUrl: "views/error.html",
+                controller: function ($scope, $stateParams) {
+                    $scope.no = $stateParams.no;
+                }
+            });
 
     });

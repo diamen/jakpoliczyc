@@ -80,3 +80,7 @@ insert into comments (ADDED_DATE, AUTHOR, CONTENT, ART_ID) values ('2017-07-06',
 
 insert into art_tag (ART_ID, TAG_ID) values (4, 8);
 insert into art_tag (ART_ID, TAG_ID) values (4, 18);
+
+insert into users (USERNAME, PASSWORD) values ('admin', '$2a$04$Xez6YDSFfcbHRdno3z.hf.dk1..Bjm5zuTWANzSMBydUrTXWawQhe');
+insert into authorities (USERNAME, AUTHORITY) values ('admin', 'ROLE_ADMIN');
+insert into authorities (USERNAME, AUTHORITY) values ('admin', 'ROLE_USER');

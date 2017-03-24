@@ -1,13 +1,16 @@
 angular.module('jakPoliczycServices')
     .service("jpauth", ['$http', function($http) {
 
+        var roles;
+
         var login = function (username, password, callback) {
             $http({
-                data: { user: username, pass: password },
+                data: { username: username, password: password },
                 method: 'POST',
                 url: '/login'
             }).then(function success(response) {
                 callback(response.data);
+                roles = [ 'ROLE_ADMIN' ]
             }, function error() {
                 throw new Error("HTTP error");
             });
@@ -24,7 +27,17 @@ angular.module('jakPoliczycServices')
             });
         };
 
+        var getRoles = function () {
+          return roles;
+        };
+
+        var hasRole = function(role) {
+            return roles.indexOf(role) != -1;
+        };
+
         return {
+            getRoles: getRoles,
+            hasRole: hasRole,
             login: login,
             logout: logout
         };

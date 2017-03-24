@@ -28,10 +28,6 @@ angular.module('jakPoliczycControllers')
             $scope.$broadcast('unselect-down');
         });
 
-        $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-
-        });
-
         /* States */
         $scope.goHome = function () {
             $timeout(function () {

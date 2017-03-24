@@ -533,8 +533,6 @@ angular.module('jakPoliczycApp')
 //        $httpBackend.whenGET('/tags').respond(mockTags);
 //        $httpBackend.whenGET('/articles').respond(mockArticles);
         $httpBackend.whenGET('/storage').respond(mockStorage);
-        $httpBackend.whenPOST('/login').respond(true);
-        $httpBackend.whenPOST('/logout').respond(false);
 
         $httpBackend.whenGET(/\/storage\/(.+)/).respond(function(method, url) {
             var url_parts = url.split('/');

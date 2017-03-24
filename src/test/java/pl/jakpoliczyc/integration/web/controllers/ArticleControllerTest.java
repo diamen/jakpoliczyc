@@ -22,8 +22,8 @@ import pl.jakpoliczyc.dao.managers.ArticleManager;
 import pl.jakpoliczyc.dao.repos.ArticleServiceImpl;
 import pl.jakpoliczyc.integration.web.WebTestConfig;
 import pl.jakpoliczyc.web.controllers.ArticleController;
-import pl.jakpoliczyc.web.wrappers.MenuWrapper;
-import pl.jakpoliczyc.web.wrappers.StoryMenuTagWrapper;
+import pl.jakpoliczyc.web.dto.MenuDto;
+import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import javax.servlet.ServletContext;
 import java.util.Arrays;
@@ -119,13 +119,13 @@ public class ArticleControllerTest extends WebTestConfig {
     @Test
     public void shouldReturnCreatedStatusWhenRecordIsSendValidObject() throws Exception {
         // given
-        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper();
-        storyMenuTagWrapper.setMenus(Arrays.asList(new MenuWrapper()));
-        storyMenuTagWrapper.setStory(new Story());
+        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
+        storyMenuTagDto.setMenus(Arrays.asList(new MenuDto()));
+        storyMenuTagDto.setStory(new Story());
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
-        String requestJson = objectWriter.writeValueAsString(storyMenuTagWrapper);
+        String requestJson = objectWriter.writeValueAsString(storyMenuTagDto);
 
         // when - then
         mockMvc.perform(post("/articles")
@@ -137,13 +137,13 @@ public class ArticleControllerTest extends WebTestConfig {
     @Test
     public void shouldReturnBadRequestWhenValidationNotPass() throws Exception {
         // given
-        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper();
-        storyMenuTagWrapper.setMenus(Arrays.asList(new MenuWrapper()));
-        storyMenuTagWrapper.setStory(null);
+        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
+        storyMenuTagDto.setMenus(Arrays.asList(new MenuDto()));
+        storyMenuTagDto.setStory(null);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
-        String requestJson = objectWriter.writeValueAsString(storyMenuTagWrapper);
+        String requestJson = objectWriter.writeValueAsString(storyMenuTagDto);
 
         // when - then
         mockMvc.perform(post("/articles")

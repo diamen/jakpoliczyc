@@ -1,4 +1,4 @@
-package pl.jakpoliczyc.web.wrappers;
+package pl.jakpoliczyc.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import pl.jakpoliczyc.dao.entities.Story;
@@ -7,19 +7,19 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StoryMenuTagWrapper {
+public class StoryMenuTagDto {
 
     @NotNull
     private Story story;
     private List<String> tags;
     @NotNull
-    private List<MenuWrapper> menus;
+    private List<MenuDto> menus;
 
-    public StoryMenuTagWrapper() {
+    public StoryMenuTagDto() {
         super();
     };
 
-    public StoryMenuTagWrapper(Story story, List<String> tags, List<MenuWrapper> menus) {
+    public StoryMenuTagDto(Story story, List<String> tags, List<MenuDto> menus) {
         this.story = story;
         this.tags = tags;
         this.menus = menus;
@@ -41,11 +41,11 @@ public class StoryMenuTagWrapper {
         this.tags = tags;
     }
 
-    public List<MenuWrapper> getMenus() {
+    public List<MenuDto> getMenus() {
         return menus;
     }
 
-    public void setMenus(List<MenuWrapper> menus) {
+    public void setMenus(List<MenuDto> menus) {
         this.menus = menus;
     }
 

@@ -1,15 +1,15 @@
-package pl.jakpoliczyc.web.wrappers;
+package pl.jakpoliczyc.web.dto;
 
-public class MenuWrapper {
+public class MenuDto {
 
     public long id;
     public String name;
 
-    public MenuWrapper() {
+    public MenuDto() {
         super();
     };
 
-    public MenuWrapper(long id, String name) {
+    public MenuDto(long id, String name) {
         this.id = id;
         this.name = name;
     }

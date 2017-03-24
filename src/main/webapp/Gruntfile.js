@@ -39,6 +39,7 @@ module.exports = function (grunt) {
         /* Config */
         'scripts/config/bootstrap.js',
         'scripts/config/routersConfig.js',
+        'scripts/config/securityConfig.js',
         'scripts/config/treeConfig.js',
 
         /* Dane testowe */

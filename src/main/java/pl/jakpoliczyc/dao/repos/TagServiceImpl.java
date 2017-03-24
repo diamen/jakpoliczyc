@@ -6,7 +6,6 @@ import pl.jakpoliczyc.dao.entities.Tag;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +40,5 @@ public class TagServiceImpl implements TagService {
     public void save(Tag tag) {
         entityManager.persist(tag);
     }
-
 
 }

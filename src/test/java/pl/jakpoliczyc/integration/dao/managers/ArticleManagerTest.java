@@ -33,8 +33,8 @@ import pl.jakpoliczyc.dao.managers.ArticleManager;
 import pl.jakpoliczyc.dao.repos.ArticleService;
 import pl.jakpoliczyc.dao.repos.MenuService;
 import pl.jakpoliczyc.dao.repos.TagService;
-import pl.jakpoliczyc.web.wrappers.MenuWrapper;
-import pl.jakpoliczyc.web.wrappers.StoryMenuTagWrapper;
+import pl.jakpoliczyc.web.dto.MenuDto;
+import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -121,36 +121,36 @@ public class ArticleManagerTest {
     @Autowired
     private TagService tagService;
 
-    private List<MenuWrapper> getShouldInsertToMenuWorkWithTestData1() {
-        return Arrays.asList(new MenuWrapper(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
-                new MenuWrapper(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
-                new MenuWrapper(18, "Okrąg wpisany w czworokąt"),
-                new MenuWrapper(0, "Nie istniejący dział"),
-                new MenuWrapper(0, "Również nie istniejący dział"));
+    private List<MenuDto> getShouldInsertToMenuWorkWithTestData1() {
+        return Arrays.asList(new MenuDto(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
+                new MenuDto(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
+                new MenuDto(18, "Okrąg wpisany w czworokąt"),
+                new MenuDto(0, "Nie istniejący dział"),
+                new MenuDto(0, "Również nie istniejący dział"));
     }
 
-    private List<MenuWrapper> getShouldInsertToMenuWorkWithTestData2() {
-        return Arrays.asList(new MenuWrapper(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
-                new MenuWrapper(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
-                new MenuWrapper(18, "Okrąg wpisany w czworokąt"),
-                new MenuWrapper(0, "Nie istniejący dział"));
+    private List<MenuDto> getShouldInsertToMenuWorkWithTestData2() {
+        return Arrays.asList(new MenuDto(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
+                new MenuDto(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
+                new MenuDto(18, "Okrąg wpisany w czworokąt"),
+                new MenuDto(0, "Nie istniejący dział"));
     }
 
-    private List<MenuWrapper> getShouldInsertToMenuWorkWithTestData3() {
-        return Arrays.asList(new MenuWrapper(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
-                new MenuWrapper(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
-                new MenuWrapper(18, "Okrąg wpisany w czworokąt"));
+    private List<MenuDto> getShouldInsertToMenuWorkWithTestData3() {
+        return Arrays.asList(new MenuDto(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
+                new MenuDto(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
+                new MenuDto(18, "Okrąg wpisany w czworokąt"));
     }
 
-    private List<MenuWrapper> getShouldInsertToMenuWorkWithTestData4() {
-        return Arrays.asList(new MenuWrapper(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"));
+    private List<MenuDto> getShouldInsertToMenuWorkWithTestData4() {
+        return Arrays.asList(new MenuDto(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"));
     }
 
     @Rollback
     @Transactional
     @Test
     @Parameters
-    public void shouldListBeIncreasedOnlyByElementsWithIdEqualedToZero(List<MenuWrapper> param) {
+    public void shouldListBeIncreasedOnlyByElementsWithIdEqualedToZero(List<MenuDto> param) {
         // given
         int sizeBefore = menuService.findAll().size();
         int noOfElementsWithIdEqualedToZero = param.stream().filter(e -> e.getId() == 0).collect(Collectors.toList()).size();
@@ -180,17 +180,17 @@ public class ArticleManagerTest {
     @Test
     public void shouldNotInsertPresentMenu() {
         // given
-        List<MenuWrapper> existingMenus = getShouldInsertToMenuWorkWithTestData3();
+        List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();
         Story story = new Story();
         story.setTitle("any title");
         story.setIntro("any intro");
         story.setContent("any content");
-        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper(story, Arrays.asList("Not"), existingMenus);
+        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, Arrays.asList("Not"), existingMenus);
 
         int sizeBefore = menuService.findAll().size();
 
         // when
-        articleManager.save(storyMenuTagWrapper);
+        articleManager.save(storyMenuTagDto);
 
         // then
         int sizeAfter = menuService.findAll().size();
@@ -202,17 +202,17 @@ public class ArticleManagerTest {
     @Test
     public void shouldInsertOnlyNotPresentTags() {
         // given
-        List<MenuWrapper> existingMenus = getShouldInsertToMenuWorkWithTestData3();
+        List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();
         Story story = new Story();
         story.setTitle("any title");
         story.setIntro("any intro");
         story.setContent("any content");
-        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper(story, Arrays.asList("Not", "Exists"), existingMenus);
+        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, Arrays.asList("Not", "Exists"), existingMenus);
 
         int tagsBefore = tagService.findAll().size();
 
         // when
-        articleManager.save(storyMenuTagWrapper);
+        articleManager.save(storyMenuTagDto);
 
         // then
         int sizeAfter = tagService.findAll().size();
@@ -224,17 +224,17 @@ public class ArticleManagerTest {
     @Test
     public void shouldInsertCorrectlyWhenTagsAreNull() {
         // given
-        List<MenuWrapper> existingMenus = getShouldInsertToMenuWorkWithTestData3();
+        List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();
         Story story = new Story();
         story.setTitle("any title");
         story.setIntro("any intro");
         story.setContent("any content");
-        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper(story, null, existingMenus);
+        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, null, existingMenus);
 
         int sizeBefore = articleService.findAll().size();
 
         // when
-        articleManager.save(storyMenuTagWrapper);
+        articleManager.save(storyMenuTagDto);
         int sizeAfter = articleService.findAll().size();
 
         // then
@@ -246,16 +246,16 @@ public class ArticleManagerTest {
     @Test
     public void shouldInsertedArticleHasReferenceToAlreadyExistedTag() {
         // given
-        List<MenuWrapper> existingMenus = getShouldInsertToMenuWorkWithTestData3();
+        List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();
         Story story = new Story();
         story.setTitle("any title");
         story.setIntro("any intro");
         story.setContent("any content");
         List<String> tags = Arrays.asList("Exists");
-        StoryMenuTagWrapper storyMenuTagWrapper = new StoryMenuTagWrapper(story, tags, existingMenus);
+        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, tags, existingMenus);
 
         // when
-        articleManager.save(storyMenuTagWrapper);
+        articleManager.save(storyMenuTagDto);
 
         // then
         Article currentlyAddedArticle = articleService.find(articleService.findAll().size());
