@@ -1,6 +1,7 @@
 angular.module('jakPoliczycApp',
     [
         'ngMockE2E',
+        'ngCookies',
         'ngSanitize',
 
         'ui.bootstrap',

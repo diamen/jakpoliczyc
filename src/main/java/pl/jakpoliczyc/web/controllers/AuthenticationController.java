@@ -1,6 +1,7 @@
 package pl.jakpoliczyc.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.jakpoliczyc.security.JwtTokenUtils;
 import pl.jakpoliczyc.web.dto.JwtAuthenticationRequestDto;
+import pl.jakpoliczyc.web.dto.JwtAuthenticationResponseDto;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,7 +34,7 @@ public class AuthenticationController {
     @Autowired
     private JwtTokenUtils jwtTokenUtils;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@RequestBody JwtAuthenticationRequestDto authenticationRequest, HttpServletRequest request) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -47,7 +49,7 @@ public class AuthenticationController {
                     String.format("Credentials for username %s with given password not found", authenticationRequest.getUsername()));
         }
 
-        return ResponseEntity.ok(jwtTokenUtils.generateToken(userDetails, DeviceUtils.getCurrentDevice(request)));
+        return ResponseEntity.ok(new JwtAuthenticationResponseDto(jwtTokenUtils.generateToken(userDetails, DeviceUtils.getCurrentDevice(request))));
     }
 
 }

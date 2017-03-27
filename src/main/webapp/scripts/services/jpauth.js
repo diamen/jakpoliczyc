@@ -9,8 +9,7 @@ angular.module('jakPoliczycServices')
                 method: 'POST',
                 url: '/login'
             }).then(function success(response) {
-                callback(response.data);
-                roles = [ 'ROLE_ADMIN' ]
+                callback(response.data.token);
             }, function error() {
                 throw new Error("HTTP error");
             });

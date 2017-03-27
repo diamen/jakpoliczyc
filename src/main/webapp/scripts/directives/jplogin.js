@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpLogin', ['$timeout', '$window', 'jpauth', function($timeout, $window, jpauth) {
+    .directive('jpLogin', ['$timeout', '$window', '$cookies', '$http', 'jpauth', function($timeout, $window, $cookies, $http, jpauth) {
         return {
             restrict: 'E',
             scope: {
@@ -43,14 +43,15 @@ angular.module('jakPoliczycDirectives')
                 }), 100);
 
                 scope.login = function(username, password) {
-                   jpauth.login(username, password, function (response) {
-                      scope.isAdmin = response;
+                   jpauth.login(username, password, function (token) {
+                      $cookies.put("TOKEN", token);
+                      $http.defaults.headers.common['Authorization'] = 'Bearer ' + $cookies.get("TOKEN");
                    });
                 };
 
                 scope.logout = function () {
                   jpauth.logout(function (response) {
-                     scope.isAdmin = response;
+                     // TODO
                   });
                 };
 

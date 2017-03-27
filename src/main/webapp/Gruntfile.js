@@ -13,6 +13,7 @@ module.exports = function (grunt) {
     var files = [
         /* Libraries */
         'libraries/angular/angular.min.js',
+        'libraries/angular-cookies/angular-cookies.js',
         'libraries/mspace/mspace.js',
         'libraries/ui-bootstrap/ui-bootstrap-tpls-2.0.0.min.js',
         'libraries/ui-router/angular-ui-router.min.js',
@@ -38,6 +39,7 @@ module.exports = function (grunt) {
 
         /* Config */
         'scripts/config/bootstrap.js',
+        'scripts/config/httpConfig.js',
         'scripts/config/routersConfig.js',
         'scripts/config/securityConfig.js',
         'scripts/config/treeConfig.js',
@@ -81,6 +83,7 @@ module.exports = function (grunt) {
         'scripts/factories/factory.js',
         'scripts/factories/jpgenerator.js',
         'scripts/factories/jpstorage.js',
+        'scripts/factories/jptokeninterceptor.js',
 
         /* Services */
         'scripts/services/service.js',

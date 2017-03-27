@@ -15,7 +15,6 @@ import java.util.Map;
 @Component
 public class JwtTokenUtils {
 
-    static final String CLAIM_KEY_USERNAME = "sub";
     static final String CLAIM_KEY_AUDIENCE = "audience";
     static final String CLAIM_KEY_CREATED = "created";
 
@@ -24,11 +23,17 @@ public class JwtTokenUtils {
     private static final String AUDIENCE_MOBILE = "mobile";
     private static final String AUDIENCE_TABLET = "tablet";
 
+    private SignatureAlgorithm signatureAlgorithm;
+
     @Value("${jwt.secret}")
     private String secret;
 
     @Value("${jwt.expiration}")
     private Long expiration;
+
+    public JwtTokenUtils() {
+        this.signatureAlgorithm = SignatureAlgorithm.HS256;
+    }
 
     public String getUsernameFromToken(String token) {
         String username;
@@ -50,6 +55,10 @@ public class JwtTokenUtils {
             created = null;
         }
         return created;
+    }
+
+    public Date getExpirationDate() {
+        return new Date(System.currentTimeMillis() + expiration);
     }
 
     public Date getExpirationDateFromToken(String token) {
@@ -119,10 +128,14 @@ public class JwtTokenUtils {
 
     public String generateToken(UserDetails userDetails, Device device) {
         Map<String, Object> claims = new ClassLoaderRepository.SoftHashMap();
-        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
         claims.put(CLAIM_KEY_AUDIENCE, generateAudience(device));
         claims.put(CLAIM_KEY_CREATED, new Date());
-        return generateToken(claims);
+
+        return Jwts.builder().setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(getExpirationDate())
+                .setSubject(userDetails.getUsername())
+                .signWith(signatureAlgorithm, secret)
+                .compact();
     }
 
     String generateToken(Map<String, Object> claims) {
