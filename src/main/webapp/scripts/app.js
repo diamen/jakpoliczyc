@@ -3,6 +3,7 @@ angular.module('jakPoliczycApp',
         'ngMockE2E',
         'ngCookies',
         'ngSanitize',
+        'angular-jwt',
 
         'ui.bootstrap',
         'ui.router',

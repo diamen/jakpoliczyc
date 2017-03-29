@@ -1,3 +1,40 @@
-<div>
-    <h2>Ekran logowania</h2>
+<div class="login">
+
+    <h2>{{$root.language.loginScreen}}</h2>
+
+    <form novalidate name="form" ng-submit="login(username, password)" class="form-horizontal">
+
+        <p class="jpnote" ng-bind-html="$root.language.loginNote"></p>
+
+        <div class="form-group">
+            <label for="username" class="cols-sm-2 control-label">{{$root.language.username}}</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" ng-class="form.username.$dirty && form.username.$error.required ? 'jperror' : ''"
+                           name="username" ng-model="username" id="username"  placeholder="{{$root.language.loginUserInput}}" required/>
+                </div>
+            </div>
+            <div ng-show="form.username.$error.required && form.username.$dirty" class="jperror">{{$root.language.errUsername}}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="cols-sm-2 control-label">{{$root.language.password}}</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="password" class="form-control"  ng-class="form.password.$dirty && form.password.$error.required ? 'jperror' : ''"
+                           name="password" id="password" ng-model="password"  placeholder="{{$root.language.loginPassInput}}" required/>
+                </div>
+            </div>
+            <div ng-show="form.password.$error.required && form.password.$dirty" class="jperror">{{$root.language.errPassword}}</div>
+        </div>
+
+        <div class="form-group">
+            <input ng-disabled="form.username.$invalid || form.password.$invalid" id="submit"
+                   class="btn btn-primary btn-lg btn-block form-button" type="submit" value="Zaloguj"/>
+            <div ng-show="authError && form.username.$pristine && form.password.$pristine"
+                 class="jperror">{{$root.language.errAuth}}</div>
+        </div>
+    </form>
 </div>

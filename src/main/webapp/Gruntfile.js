@@ -14,6 +14,7 @@ module.exports = function (grunt) {
         /* Libraries */
         'libraries/angular/angular.min.js',
         'libraries/angular-cookies/angular-cookies.js',
+        'libraries/angular-jwt/dist/angular-jwt.js',
         'libraries/mspace/mspace.js',
         'libraries/ui-bootstrap/ui-bootstrap-tpls-2.0.0.min.js',
         'libraries/ui-router/angular-ui-router.min.js',
@@ -53,6 +54,7 @@ module.exports = function (grunt) {
         'scripts/controllers/addCtrl.js',
         'scripts/controllers/articleCtrl.js',
         'scripts/controllers/articlesCtrl.js',
+        'scripts/controllers/loginCtrl.js',
         'scripts/controllers/modalCtrl.js',
         'scripts/controllers/singleStorageCtrl.js',
         'scripts/controllers/storageCtrl.js',

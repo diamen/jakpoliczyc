@@ -8,13 +8,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtils {
 
+    static final String CLAIM_KEY_AUTHORITIES = "authorities";
     static final String CLAIM_KEY_AUDIENCE = "audience";
     static final String CLAIM_KEY_CREATED = "created";
 
@@ -83,6 +86,17 @@ public class JwtTokenUtils {
         return audience;
     }
 
+    public String getAuthoritiesFromToken(String token) {
+        String authorities;
+        try {
+            final Claims claims = getClaimsFromToken(token);
+            authorities = (String) claims.get(CLAIM_KEY_AUTHORITIES);
+        } catch (Exception e) {
+            authorities = null;
+        }
+        return authorities;
+    }
+
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
@@ -127,14 +141,12 @@ public class JwtTokenUtils {
     }
 
     public String generateToken(UserDetails userDetails, Device device) {
-        Map<String, Object> claims = new ClassLoaderRepository.SoftHashMap();
-        claims.put(CLAIM_KEY_AUDIENCE, generateAudience(device));
-        claims.put(CLAIM_KEY_CREATED, new Date());
-
         return Jwts.builder().setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(getExpirationDate())
                 .setSubject(userDetails.getUsername())
                 .signWith(signatureAlgorithm, secret)
+                .claim(CLAIM_KEY_AUTHORITIES, userDetails.getAuthorities().stream().map(e -> e.getAuthority()).collect(Collectors.joining(",")))
+                .claim(CLAIM_KEY_AUDIENCE, generateAudience(device))
                 .compact();
     }
 

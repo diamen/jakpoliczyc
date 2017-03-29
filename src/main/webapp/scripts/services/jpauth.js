@@ -1,17 +1,13 @@
 angular.module('jakPoliczycServices')
-    .service("jpauth", ['$http', function($http) {
+    .service("jpauth", ['$http', '$cookieStore', 'jwtHelper', function($http, $cookieStore, jwtHelper) {
 
-        var roles;
+        var _roles = [];
 
-        var login = function (username, password, callback) {
-            $http({
+        var login = function (username, password) {
+            return $http({
                 data: { username: username, password: password },
                 method: 'POST',
                 url: '/login'
-            }).then(function success(response) {
-                callback(response.data.token);
-            }, function error() {
-                throw new Error("HTTP error");
             });
         };
 
@@ -27,11 +23,20 @@ angular.module('jakPoliczycServices')
         };
 
         var getRoles = function () {
-          return roles;
+            var token = $cookieStore.get("TOKEN");
+            if (token) {
+                var auth = jwtHelper.decodeToken(token).authorities;
+                if (auth.indexOf(",") != -1) {
+                    angular.copy(auth.split(","), _roles);
+                } else {
+                    _roles.push(auth);
+                }
+            }
+            return _roles;
         };
 
-        var hasRole = function(role) {
-            return roles.indexOf(role) != -1;
+        var hasRole = function(roles) {
+            return _.intersection(_roles, roles).length == roles.length;
         };
 
         return {

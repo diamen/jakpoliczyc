@@ -19,6 +19,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.jakpoliczyc.security.JwtTokenUtils;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -81,11 +82,29 @@ public class JwtTokenUtilsTest {
         assertThat(givenExpiration).isEqualToIgnoringMillis(expectedExpiration);
     }
 
+    @Test
+    public void shouldDecryptAuthoritiesFromToken() {
+        // given
+        final String expectedRole = "ROLE_ADMIN";
+        final String token = jwtTokenUtils.generateToken(getUserDetails("any"), getDevice());
+
+        // when
+        final String givenRole = jwtTokenUtils.getAuthoritiesFromToken(token);
+
+        // then
+        assertThat(givenRole).isEqualTo(expectedRole);
+    }
+
     private UserDetails getUserDetails(String username) {
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                return null;
+                return Arrays.asList(new GrantedAuthority() {
+                    @Override
+                    public String getAuthority() {
+                        return "ROLE_ADMIN";
+                    }
+                });
             }
 
             @Override

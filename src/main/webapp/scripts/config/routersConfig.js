@@ -38,7 +38,7 @@ angular.module('jakPoliczycRouters', [])
                     }
                 },
                 data: {
-                    role: 'ROLE_USER'
+                    roles: ['ROLE_ADMIN']
                 }
             })
 
@@ -49,6 +49,9 @@ angular.module('jakPoliczycRouters', [])
                         controller: "storageCtrl",
                         templateUrl: "views/storage.html"
                     }
+                },
+                data: {
+                    roles: ['ROLE_ADMIN']
                 }
             })
 
@@ -59,12 +62,16 @@ angular.module('jakPoliczycRouters', [])
                         controller: "singleStorageCtrl",
                         templateUrl: "views/single-storage.html"
                     }
+                },
+                data: {
+                    roles: ['ROLE_ADMIN']
                 }
             })
 
             /* LOGIN SECTION */
             .state("login", {
                 url: "/login",
+                controller: "loginCtrl",
                 templateUrl: "views/login.html"
             })
 

@@ -3,10 +3,7 @@
         <span>
             <i id="expander" ng-if="!smallScreen" class="fa fa-2x" invoke="invoke" main-id="#tags" slide-toggle=".slideable" ng-model="animation.expanded" ng-class="animation.expanded ? 'fa-hand-o-up' : 'fa-hand-o-down'" aria-hidden="true" uib-tooltip-html="animation.expanded ? animation.collapsedText : animation.expandedText"></i>
         </span>
-        <span id="login" class="row-s">
-            Zalogowany jako <strong>admin</strong>
-            <i class="fa fa-user fa-2x" uib-tooltip="Logowanie" aria-hidden="true"></i>
-        </span>
+        <button ng-click="goLogin()" style="float: right; display: inherit" class="btn btn-default">Zaloguj</button>
         <span class="row-s">
             <i class="fa fa-home fa-3x" aria-hidden="true" uib-tooltip="Home" ng-click="goHome()"></i>
             <i class="fa fa-bars fa-3x" aria-hidden="true" uib-tooltip="Menu" ng-click="openMenu()"></i>
@@ -18,7 +15,6 @@
             <input class="form-control row-s" typeahead-on-select="unfocus()" ng-focus="focus()" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag for tag in tags | filter:$viewValue | limitTo: 5" type="text" id="tag">
         </span>
     </div>
-    <jp-login login-id="#login" is-admin="isAdmin" add-redirect="goAdd" storage-redirect="goStorage"></jp-login>
     <ul ng-class="isTagsOpened ? 'show-s' : 'hide-s'" class="tagger slideable" id="tags">
         <section style="display: table;" class="row-s">
             <button ng-click="untickAll()" class="btn btn-default col-s-6 show-s">{{$root.language.clear}}</button>

@@ -47,6 +47,10 @@ angular.module('jakPoliczycControllers')
             $state.go("articles.id", { id: id });
         };
 
+        $scope.goLogin = function () {
+          $state.go("login");
+        };
+
         $scope.goStorage = function () {
           $state.go("articles.storage");
         };

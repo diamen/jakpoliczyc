@@ -1,6 +1,7 @@
 $background-color: #fbfbfb;
 $border-color: #a0a0a0;
 $error-color: #f52;
+$note-color: #565656;
 $opacity: .57;
 $selected-color: #007cff;
 
@@ -22,6 +23,7 @@ $selected-color: #007cff;
   body {
     height: 100%;
     position: absolute;
+    width: 100%;
   }
 }
 
@@ -114,6 +116,12 @@ body {
   background-color: $background-color;
   border: 1px solid $border-color;
   padding: 10px 5px;
+}
+
+.jpnote {
+  color: $note-color;
+  font-size: .95em;
+  text-align: justify;
 }
 
 .jpselected {
