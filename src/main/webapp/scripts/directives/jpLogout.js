@@ -13,6 +13,7 @@ angular.module('jakPoliczycDirectives')
                     scope.logout = function () {
                         jpauth.logout(function () {
                             scope.$emit("logout-up");
+                            scope.goHome();
                         });
                     };
                     fn(scope);

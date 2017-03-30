@@ -12,6 +12,7 @@ angular.module('jakPoliczycServices')
         };
 
         var logout = function (callback) {
+            _roles = [];
             $cookieStore.remove("TOKEN");
             callback();
         };
