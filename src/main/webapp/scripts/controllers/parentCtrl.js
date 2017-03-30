@@ -28,6 +28,14 @@ angular.module('jakPoliczycControllers')
             $scope.$broadcast('unselect-down');
         });
 
+        $scope.$on('login-up', function () {
+           $scope.$broadcast('login-down');
+        });
+
+        $scope.$on('logout-up', function () {
+           $scope.$broadcast('logout-down');
+        });
+
         /* States */
         $scope.goHome = function () {
             $timeout(function () {

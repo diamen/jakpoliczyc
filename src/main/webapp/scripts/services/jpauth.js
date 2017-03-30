@@ -12,14 +12,8 @@ angular.module('jakPoliczycServices')
         };
 
         var logout = function (callback) {
-            $http({
-                method: 'POST',
-                url: '/logout'
-            }).then(function success(response) {
-                callback(response.data);
-            }, function error() {
-                throw new Error("HTTP error");
-            });
+            $cookieStore.remove("TOKEN");
+            callback();
         };
 
         var getRoles = function () {
@@ -39,9 +33,19 @@ angular.module('jakPoliczycServices')
             return _.intersection(_roles, roles).length == roles.length;
         };
 
+        var isLogin = function () {
+            if ($cookieStore.get("TOKEN")) {
+                if (jwtHelper.decodeToken($cookieStore.get("TOKEN")).sub) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
         return {
             getRoles: getRoles,
             hasRole: hasRole,
+            isLogin: isLogin,
             login: login,
             logout: logout
         };
