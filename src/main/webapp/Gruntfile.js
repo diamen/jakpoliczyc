@@ -68,6 +68,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpcategory.js',
         'scripts/directives/jpcategoryInput.js',
         'scripts/directives/jpcontact.js',
+        'scripts/directives/jpHasRoles.js',
         'scripts/directives/jpIsLogin.js',
         'scripts/directives/jpIsNotLogin.js',
         'scripts/directives/jplogin.js',

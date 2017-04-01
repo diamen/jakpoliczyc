@@ -17,20 +17,27 @@ angular.module('jakPoliczycServices')
             callback();
         };
 
-        var getRoles = function () {
+        var initRoles = function () {
             var token = $cookieStore.get("TOKEN");
-            if (token) {
-                var auth = jwtHelper.decodeToken(token).authorities;
-                if (auth.indexOf(",") != -1) {
-                    angular.copy(auth.split(","), _roles);
-                } else {
-                    _roles.push(auth);
-                }
+            var auth = jwtHelper.decodeToken(token).authorities;
+            if (auth.indexOf(",") != -1) {
+                angular.copy(auth.split(","), _roles);
+            } else {
+                _roles.push(auth);
+            }
+        };
+
+        var getRoles = function () {
+            if (_roles.length === 0 && $cookieStore.get("TOKEN")) {
+                initRoles();
             }
             return _roles;
         };
 
-        var hasRole = function(roles) {
+        var hasRoles = function(roles) {
+            if (_roles.length === 0 && $cookieStore.get("TOKEN")) {
+                initRoles();
+            }
             return _.intersection(_roles, roles).length == roles.length;
         };
 
@@ -45,7 +52,7 @@ angular.module('jakPoliczycServices')
 
         return {
             getRoles: getRoles,
-            hasRole: hasRole,
+            hasRoles: hasRoles,
             isLogin: isLogin,
             login: login,
             logout: logout

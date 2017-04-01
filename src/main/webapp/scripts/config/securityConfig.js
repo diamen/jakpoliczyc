@@ -21,7 +21,7 @@ angular.module('jakPoliczycApp')
                    $state.go(loginState);
                    return;
                }
-               if (!jpauth.hasRole(toState.data.roles)) {
+               if (!jpauth.hasRoles(toState.data.roles)) {
                    event.preventDefault();
                    $state.go("error", { no: 403 });
                    return;
