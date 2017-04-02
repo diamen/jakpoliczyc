@@ -1,21 +1,108 @@
 $header-color: #fff;
 $header-shadow-color: #bbb;
+$header-userdetails-border-color: #d6d7d8;
+$header-userdetails-color: #f7f7f7;
 
 header[role="banner"] {
   background-color: $header-color;
   box-shadow: 0 0 .3125em $header-shadow-color inset;
-  cursor: pointer;
-  position: relative;
   z-index: 2;
+}
 
-  div {
-    padding: .3125em 0;
-    text-align: center;
-  }
+.header-space {
+  float: left;
+  padding: .3125em 0;
+  text-align: center;
+  width: 50%;
 
   img {
+    cursor: pointer;
     max-height: 6.5em;
     max-width: 100%;
+  }
+
+  ul {
+    background-color: white;
+    border: 1px solid $header-userdetails-border-color;
+    border-radius: 2px;
+    display: none;
+    font-size: .85em;
+    list-style: none;
+    margin-top: 13px;
+    padding: 5px 0;
+    position: absolute;
+    right: 8px;
+    text-align: left;
+    z-index: 1001;
+
+    &:after, &::after, &:before, &::before {
+      border: solid transparent;
+      bottom: 100%;
+      content: " ";
+      height: 0;
+      position: absolute;
+      width: 0;
+    }
+
+    &:before, &::before {
+      border-bottom-color: #d6d7d8;
+      border-width: 9px;
+      right: 9px;
+    }
+
+    &:after, &::after {
+      border-bottom-color: white;
+      border-width: 8px;
+      right: 10px;
+    }
+  }
+
+  li {
+    border-bottom: 1px solid $header-userdetails-border-color;
+    cursor: pointer;
+    margin: 1px 2px;
+    padding: 0 8px;
+
+    &:first-child {
+      cursor: auto;
+    }
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+
+.user-details {
+  background-color: $header-userdetails-color;
+  border: 1px solid $header-userdetails-border-color;
+  border-radius: 2px;
+  display: table;
+  float: right;
+  margin-right: 8px;
+  margin-top: 2px;
+  padding: 5px;
+
+  div {
+    display: table-cell;
+    padding: 0 3px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  span {
+    font-size: .85em;
+  }
+
+  a {
+    color: gray;
+    cursor: pointer;
+    display: block;
+    font-size: .75em;
+    width: 100%;
+  }
+
+  i.fa-caret-down {
+    cursor: pointer;
   }
 }
 

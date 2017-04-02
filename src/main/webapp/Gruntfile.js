@@ -60,6 +60,7 @@ module.exports = function (grunt) {
         'scripts/controllers/storageCtrl.js',
         'scripts/controllers/subscribeCtrl.js',
         'scripts/controllers/tagCtrl.js',
+        'scripts/controllers/userDetailsCtrl.js',
 
         /* Directives */
         'scripts/directives/directive.js',
@@ -67,6 +68,7 @@ module.exports = function (grunt) {
         'scripts/directives/jparticle.js',
         'scripts/directives/jpcategory.js',
         'scripts/directives/jpcategoryInput.js',
+        'scripts/directives/jpClickOutside.js',
         'scripts/directives/jpcontact.js',
         'scripts/directives/jpHasRoles.js',
         'scripts/directives/jpIsLogin.js',
@@ -76,6 +78,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpmenu.js',
         'scripts/directives/jpnode.js',
         'scripts/directives/jppostarea.js',
+        'scripts/directives/jpToggle.js',
         'scripts/directives/mathjaxBind.js',
         'scripts/directives/slideable.js',
         'scripts/directives/slideToggle.js',

@@ -1,27 +1,10 @@
 <div ng-controller="tagCtrl" class="tagparent">
     <div class="tagger">
-        <span jp-has-roles="ROLE_ADMIN">
-            <i id="expander" ng-if="!smallScreen" class="fa fa-2x" invoke="invoke" main-id="#tags" slide-toggle=".slideable" ng-model="animation.expanded" ng-class="animation.expanded ? 'fa-hand-o-up' : 'fa-hand-o-down'" aria-hidden="true" uib-tooltip-html="animation.expanded ? animation.collapsedText : animation.expandedText"></i>
-        </span>
-        <button ng-click="goLogin()" jp-is-not-login style="float: right; display: inherit" class="btn btn-default">Zaloguj</button>
-        <button jp-logout jp-is-login style="float: right; display: inherit" class="btn btn-default">Wyloguj</button>
         <span class="row-s">
             <i class="fa fa-home fa-3x" aria-hidden="true" uib-tooltip="Home" ng-click="goHome()"></i>
             <i class="fa fa-bars fa-3x" aria-hidden="true" uib-tooltip="Menu" ng-click="openMenu()"></i>
             <i class="fa fa-tags fa-3x" aria-hidden="true" uib-tooltip="Tags" ng-click="openTags()"></i>
             <i class="fa fa-eraser fa-3x" aria-hidden="true" uib-tooltip="Czyść" ng-click="clear()"></i>
         </span>
-        <span class="row-s">
-            <label class="row-s" for="tag">Wyszukiwanie po tagach</label>
-            <input class="form-control row-s" typeahead-on-select="unfocus()" ng-focus="focus()" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag for tag in tags | filter:$viewValue | limitTo: 5" type="text" id="tag">
-        </span>
     </div>
-    <ul ng-class="isTagsOpened ? 'show-s' : 'hide-s'" class="tagger slideable" id="tags">
-        <section style="display: table;" class="row-s">
-            <button ng-click="untickAll()" class="btn btn-default col-s-6 show-s">{{$root.language.clear}}</button>
-            <button ng-click="closeMenu()" class="btn btn-default col-s-6 show-s">{{$root.language.close}}</button>
-        </section>
-        <li class="x hide-s" ng-click="untickAll()" uib-tooltip="Odznacz tagi" tooltip-placement="bottom">X</li>
-        <li ng-class="selectedTags[$index] ? 'selected' : 'unselected'" class="selected" ng-click="tick($index)" ng-init="render()" ng-repeat="tag in tags">{{tag.name}}</li>
-    </ul>
 </div>

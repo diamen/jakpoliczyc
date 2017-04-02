@@ -41,6 +41,12 @@ angular.module('jakPoliczycServices')
             return _.intersection(_roles, roles).length == roles.length;
         };
 
+        var getUsername = function () {
+            if ($cookieStore.get("TOKEN")) {
+                return jwtHelper.decodeToken($cookieStore.get("TOKEN")).sub;
+            }
+        };
+
         var isLogin = function () {
             if ($cookieStore.get("TOKEN")) {
                 if (jwtHelper.decodeToken($cookieStore.get("TOKEN")).sub) {
@@ -51,6 +57,7 @@ angular.module('jakPoliczycServices')
         };
 
         return {
+            getUsername: getUsername,
             getRoles: getRoles,
             hasRoles: hasRoles,
             isLogin: isLogin,

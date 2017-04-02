@@ -1,7 +1,29 @@
 <div>
-    <img src="../resources/gfx/logo320w.png"
-        srcset="../resources/gfx/logo320w.png,
-                ../resources/gfx/logo500w.png"
-        sizes="(min-width: 30em) 30em"
-        alt="logo"/>
+    <div class="header-space">
+        <img ng-click="goHome()"
+            src="../resources/gfx/logo320w.png"
+            srcset="../resources/gfx/logo320w.png,
+                    ../resources/gfx/logo500w.png"
+            sizes="(min-width: 30em) 30em"
+            alt="logo"/>
+    </div>
+    <div class="header-space">
+        <div ng-controller="userDetailsCtrl" class="user-details">
+            <div jp-is-login>
+                <i class="fa fa-2x fa-user" aria-hidden="true"></i>
+            </div>
+            <div>
+                <span jp-is-login>{{$root.language.welcome}}, <strong>{{username}}</strong></span>
+                <span jp-is-not-login ng-bind-html="$root.language.notLogin"></span>
+                <i jp-is-login id="caret" jp-toggle="#dropdown" class="fa fa-caret-down" aria-hidden="true"></i>
+                <a href jp-is-login jp-logout>{{$root.language.logout2}}</a>
+                <a href jp-is-not-login ng-click="goLogin()">{{$root.language.login2}}</a>
+                <ul jp-is-login id="dropdown" jp-click-outside="#caret">
+                    <li><strong>{{$root.language.actions}}</strong></li>
+                    <li ng-click="goAdd()" jp-has-roles="ROLE_ADMIN">{{$root.language.artAdd}}</li>
+                    <li ng-click="goStorage()" jp-has-roles="ROLE_ADMIN">{{$root.language.stoReview}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
