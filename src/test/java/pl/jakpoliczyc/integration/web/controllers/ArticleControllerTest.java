@@ -1,5 +1,6 @@
 package pl.jakpoliczyc.integration.web.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -7,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,26 +18,25 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Story;
-import pl.jakpoliczyc.dao.managers.ArticleManager;
-import pl.jakpoliczyc.dao.repos.ArticleServiceImpl;
+import pl.jakpoliczyc.dao.services.ArticleServiceImpl;
 import pl.jakpoliczyc.integration.web.WebTestConfig;
 import pl.jakpoliczyc.web.controllers.ArticleController;
+import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import javax.servlet.ServletContext;
 import java.util.Arrays;
 
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyObject;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ArticleControllerTest extends WebTestConfig {
-
-    @SuppressWarnings("unused")
-    @Mock
-    private ArticleManager articleManager;
 
     @Spy
     private ArticleServiceImpl articleService;
@@ -117,15 +116,13 @@ public class ArticleControllerTest extends WebTestConfig {
     }
 
     @Test
-    public void shouldReturnCreatedStatusWhenRecordIsSendValidObject() throws Exception {
+    public void shouldReturnCreatedStatusWhenSentArticleIsValidObject() throws Exception {
         // given
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
         storyMenuTagDto.setMenus(Arrays.asList(new MenuDto()));
         storyMenuTagDto.setStory(new Story());
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
-        String requestJson = objectWriter.writeValueAsString(storyMenuTagDto);
+        String requestJson = generateRequest(storyMenuTagDto);
+        doNothing().when(articleService).save(anyObject());
 
         // when - then
         mockMvc.perform(post("/articles")
@@ -135,15 +132,12 @@ public class ArticleControllerTest extends WebTestConfig {
     }
 
     @Test
-    public void shouldReturnBadRequestWhenValidationNotPass() throws Exception {
+    public void shouldReturnBadRequestWhenValidationOfArticleNotPass() throws Exception {
         // given
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
         storyMenuTagDto.setMenus(Arrays.asList(new MenuDto()));
         storyMenuTagDto.setStory(null);
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
-        String requestJson = objectWriter.writeValueAsString(storyMenuTagDto);
+        String requestJson = generateRequest(storyMenuTagDto);
 
         // when - then
         mockMvc.perform(post("/articles")
@@ -152,4 +146,57 @@ public class ArticleControllerTest extends WebTestConfig {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void shouldReturnBadRequestWhenCommentIsEmpty() throws Exception {
+        // given
+        CommentDto commentDto = new CommentDto();
+        commentDto.setAuthor("");
+        commentDto.setContent("");
+        String requestJson = generateRequest(commentDto);
+
+        // when - then
+        mockMvc.perform(post("/articles/1/comment")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenCommentIsNull() throws Exception {
+        // given
+        CommentDto commentDto = new CommentDto();
+        commentDto.setAuthor(null);
+        commentDto.setContent(null);
+        String requestJson = generateRequest(commentDto);
+
+        // when - then
+        mockMvc.perform(post("/articles/1/comment")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnCreatedStatusWhenSentCommentIsValidObject() throws Exception {
+        // given
+        CommentDto commentDto = new CommentDto();
+        commentDto.setAuthor("arnold");
+        commentDto.setContent("Siemka, fajna stronka");
+        String requestJson = generateRequest(commentDto);
+        doNothing().when(articleService).save(anyLong(), anyObject());
+
+        // when - then
+        mockMvc.perform(post("/articles/1/comment")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestJson))
+                .andExpect(status().isCreated());
+    }
+
+    private String generateRequest(Object object) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
+        String requestJson = objectWriter.writeValueAsString(object);
+        return requestJson;
+    }
 }

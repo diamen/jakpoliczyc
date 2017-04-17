@@ -5,13 +5,12 @@ angular.module('jakPoliczycDirectives')
             priority: 1001,
             terminal: true,
             scope: true,
-            compile: function (elem) {
-                elem.removeAttr('jp-is-not-login');
-                elem.attr('ng-hide', 'login');
-                var fn = $compile(elem);
-                return function (scope) {
+            compile: function () {
+                return function (scope, element) {
                     scope.login = false;
-                    fn(scope);
+                    element.removeAttr('jp-is-not-login');
+                    element.attr('ng-hide', 'login');
+                    $compile(element)(scope);
 
                     if (jpauth.isLogin()) {
                         scope.login = true;

@@ -1,18 +1,19 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jppostarea', [function () {
+    .directive('jppostarea', ['$rootScope', function ($rootScope) {
         return {
             restrict: 'E',
             scope: false,
             templateUrl: 'views/templates/jppostarea.html',
             link: function(scope) {
+                scope.add = {};
                 scope.add.content = "";
 
                 scope.appendLatex = function() {
-                    append("<latex></latex>");
+                    append("<latex>" + $rootScope.language.codeLatex + "</latex>");
                 };
 
                 scope.appendPhoto = function () {
-                    append("<photo>Wklej linka</photo>");
+                    append("<photo>" + $rootScope.language.codePhoto + "</photo>");
                 };
 
                 scope.preview = function() {
@@ -23,6 +24,7 @@ angular.module('jakPoliczycDirectives')
                 };
 
                 function append(value) {
+                    scope.add.content = scope.add.content || "";
                     scope.add.content += value;
                 }
 

@@ -1,4 +1,4 @@
-package pl.jakpoliczyc.integration.dao.managers;
+package pl.jakpoliczyc.integration.dao.services;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
@@ -14,6 +14,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
@@ -27,15 +28,18 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Article;
+import pl.jakpoliczyc.dao.entities.Comment;
 import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Story;
-import pl.jakpoliczyc.dao.managers.ArticleManager;
-import pl.jakpoliczyc.dao.repos.ArticleService;
 import pl.jakpoliczyc.dao.repos.MenuService;
 import pl.jakpoliczyc.dao.repos.TagService;
+import pl.jakpoliczyc.dao.services.ArticleService;
+import pl.jakpoliczyc.dao.services.CommentService;
+import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -46,13 +50,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("TEST")
 @RunWith(JUnitParamsRunner.class)
-@ContextConfiguration(locations = {"classpath:test-db-config.xml", "classpath:test-beans.xml"})
+@ContextConfiguration(locations = {"classpath:test-db-config.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @DatabaseSetup(value = "/fake.xml", type = DatabaseOperation.CLEAN_INSERT)
-@DbUnitConfiguration(dataSetLoader = ArticleManagerTest.Loader.class)
-public class ArticleManagerTest {
+@DbUnitConfiguration(dataSetLoader = ArticleServiceTest.Loader.class)
+public class ArticleServiceTest {
 
     @ClassRule
     public static final SpringClassRule SCR = new SpringClassRule();
@@ -63,7 +67,7 @@ public class ArticleManagerTest {
     public static class Loader extends AbstractDataSetLoader {
         @Override
         protected IDataSet createDataSet(Resource resource) throws Exception {
-            return ArticleManagerTest.getDataset();
+            return ArticleServiceTest.getDataset();
         }
     }
 
@@ -109,14 +113,14 @@ public class ArticleManagerTest {
     }
 
     @Autowired
-    private ArticleManager articleManager;
+    private ArticleService articleService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     @Qualifier("menuServiceStub")
     private MenuService menuService;
-
-    @Autowired
-    private ArticleService articleService;
 
     @Autowired
     private TagService tagService;
@@ -150,13 +154,16 @@ public class ArticleManagerTest {
     @Transactional
     @Test
     @Parameters
-    public void shouldListBeIncreasedOnlyByElementsWithIdEqualedToZero(List<MenuDto> param) {
+    public void shouldListBeIncreasedOnlyByElementsWithIdEqualedToZero(List<MenuDto> param) throws Exception {
         // given
         int sizeBefore = menuService.findAll().size();
         int noOfElementsWithIdEqualedToZero = param.stream().filter(e -> e.getId() == 0).collect(Collectors.toList()).size();
 
         // when
-        Menu menu = articleManager.prepareMenu(param);
+        Method method = ((Advised) articleService).getTargetSource().getTarget().getClass().getDeclaredMethod("prepareMenu", new Class[] {List.class});
+        method.setAccessible(true);
+        Menu menu = (Menu) method.invoke(((Advised) articleService).getTargetSource().getTarget(), param);
+        method.setAccessible(false);
         if (menu.getId() == 0) {
             menuService.save(menu);
         }
@@ -190,7 +197,7 @@ public class ArticleManagerTest {
         int sizeBefore = menuService.findAll().size();
 
         // when
-        articleManager.save(storyMenuTagDto);
+        articleService.save(storyMenuTagDto);
 
         // then
         int sizeAfter = menuService.findAll().size();
@@ -212,7 +219,7 @@ public class ArticleManagerTest {
         int tagsBefore = tagService.findAll().size();
 
         // when
-        articleManager.save(storyMenuTagDto);
+        articleService.save(storyMenuTagDto);
 
         // then
         int sizeAfter = tagService.findAll().size();
@@ -234,7 +241,7 @@ public class ArticleManagerTest {
         int sizeBefore = articleService.findAll().size();
 
         // when
-        articleManager.save(storyMenuTagDto);
+        articleService.save(storyMenuTagDto);
         int sizeAfter = articleService.findAll().size();
 
         // then
@@ -244,7 +251,7 @@ public class ArticleManagerTest {
     @Rollback
     @Transactional
     @Test
-    public void shouldInsertedArticleHasReferenceToAlreadyExistedTag() {
+    public void shouldInsertedArticleHasReferenceToAlreadyExistingTag() {
         // given
         List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();
         Story story = new Story();
@@ -255,11 +262,32 @@ public class ArticleManagerTest {
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, tags, existingMenus);
 
         // when
-        articleManager.save(storyMenuTagDto);
+        articleService.save(storyMenuTagDto);
 
         // then
-        Article currentlyAddedArticle = articleService.find(articleService.findAll().size());
+        Article currentlyAddedArticle = articleService.findAll().get(articleService.findAll().size() - 1);
         assertThat(currentlyAddedArticle.getTags().size()).isEqualTo(tags.size());
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldListOfCommentsDecreaseAfterRemove() {
+        // given
+        CommentDto commentDto = new CommentDto();
+        commentDto.setContent("blabla");
+        commentDto.setAuthor("author");
+
+        List<Article> articles = articleService.findAll();
+        articleService.save(articles.get(0).getId(), commentDto);
+        List<Comment> comments = articleService.findAll().get(0).getComments().stream().collect(Collectors.toList());
+        int sizeBefore = articleService.findAll().get(0).getComments().size();
+
+        // when
+        articleService.removeComment(articles.get(0).getId(), comments.get(0).getId());
+
+        // then
+        assertThat(sizeBefore).isGreaterThan(articleService.findAll().get(0).getComments().size());
     }
 
 }

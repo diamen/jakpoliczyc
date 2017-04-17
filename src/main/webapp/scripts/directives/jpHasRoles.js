@@ -2,8 +2,6 @@ angular.module('jakPoliczycDirectives')
     .directive('jpHasRoles', ['$compile', 'jpauth', function ($compile, jpauth) {
         return {
             restrict: 'A',
-            priority: 1001,
-            terminal: true,
             scope: true,
             compile: function (elem, attr) {
                 var roles = [];
@@ -13,13 +11,11 @@ angular.module('jakPoliczycDirectives')
                 console.log(attr);
                 console.log(roles);
 
-                elem.removeAttr('jp-has-roles');
-                elem.attr('ng-show', 'show');
-                var fn = $compile(elem);
-
-                return function (scope) {
+                return function (scope, element) {
                     scope.show = false;
-                    fn(scope);
+                    element.removeAttr('jp-has-roles');
+                    element.attr('ng-show', 'show');
+                    $compile(element)(scope);
 
                     var hasRoles = function (r) {
                         scope.show = jpauth.hasRoles(r);

@@ -4,7 +4,7 @@ import pl.jakpoliczyc.dao.entities.Comment;
 
 import java.util.List;
 
-public interface CommentService {
+public interface CommentRepository {
     List<Comment> findAll();
     void remove(long id);
 }

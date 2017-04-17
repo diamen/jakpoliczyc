@@ -1,13 +1,18 @@
-package pl.jakpoliczyc.dao.managers;
+package pl.jakpoliczyc.dao.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Article;
+import pl.jakpoliczyc.dao.entities.Comment;
 import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Tag;
-import pl.jakpoliczyc.dao.repos.ArticleService;
+import pl.jakpoliczyc.dao.repos.ArticleRepository;
+import pl.jakpoliczyc.dao.repos.CommentRepository;
 import pl.jakpoliczyc.dao.repos.MenuService;
 import pl.jakpoliczyc.dao.repos.TagService;
+import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
@@ -15,10 +20,12 @@ import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
-public class ArticleManager {
+@Transactional
+@Service("articleServiceImpl")
+public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
-    private ArticleService articleService;
+    private ArticleRepository articleRepository;
 
     @Autowired
     private MenuService menuService;
@@ -26,6 +33,7 @@ public class ArticleManager {
     @Autowired
     private TagService tagService;
 
+    @Override
     @Transactional
     public void save(StoryMenuTagDto wrapper) {
         Menu menu = prepareMenu(wrapper.getMenus());
@@ -34,10 +42,26 @@ public class ArticleManager {
         article.setMenu(menu);
         article.setTags(wrapper.getTags() != null ? prepareTags(wrapper.getTags()) : null);
         article.setAddedDate(new Date());
-        articleService.insert(article);
+        articleRepository.insertArticle(article);
     }
 
-    public List<Tag> prepareTags(List<String> names) {
+    @Override
+    @Transactional
+    public void save(long articleId, CommentDto commentDto) {
+        Comment comment = new Comment();
+        comment.setAuthor(commentDto.getAuthor());
+        comment.setContent(commentDto.getContent());
+        comment.setAddedDate(new Date());
+        articleRepository.insertComment(articleId, comment);
+    }
+
+    @Override
+    @Transactional
+    public void removeComment(long articleId, long commentId) {
+        articleRepository.removeComment(articleId, commentId);
+    }
+
+    private List<Tag> prepareTags(List<String> names) {
         return names.stream().map(e -> {
             Optional<Tag> tagOptional = tagService.findByName(e);
             if (tagOptional.isPresent()) {
@@ -51,8 +75,8 @@ public class ArticleManager {
         }).collect(Collectors.toList());
     }
 
-    @Transactional
-    public Menu prepareMenu(List<MenuDto> wrappers) {
+    @Transactional(readOnly = true)
+    private Menu prepareMenu(List<MenuDto> wrappers) {
         MenuDto lastNotZero = wrappers.stream().filter(e -> e.id > 0).max((e1, e2) -> wrappers.indexOf(e1) - wrappers.indexOf(e2)).get();
         List<MenuDto> menuToInsert = wrappers.stream().filter(e -> e.getId() == 0).collect(Collectors.toList());
         Menu lastExist = menuService.find(lastNotZero.getId());
@@ -81,5 +105,17 @@ public class ArticleManager {
         }
 
         return firstNotExist;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Article find(long id) {
+        return articleRepository.find(id);
+    }
+
+    @Override
+    @Transactional
+    public List<Article> findAll() {
+        return articleRepository.findAll();
     }
 }

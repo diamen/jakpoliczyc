@@ -21,6 +21,8 @@ module.exports = function (grunt) {
         'libraries/angular-mocks/angular-mocks.js',
         'libraries/angular-sanitize/angular-sanitize.js',
         'libraries/angular-ui-tree/dist/angular-ui-tree.js',
+        'libraries/jsPDF/dist/jspdf.debug.js',
+        'libraries/html2canvas/dist/html2canvas.js',
         'libraries/underscore/underscore.js',
 
         /* Browser support */
@@ -65,7 +67,6 @@ module.exports = function (grunt) {
         /* Directives */
         'scripts/directives/directive.js',
         'scripts/directives/jpadd.js',
-        'scripts/directives/jparticle.js',
         'scripts/directives/jpcategory.js',
         'scripts/directives/jpcategoryInput.js',
         'scripts/directives/jpClickOutside.js',
@@ -87,6 +88,7 @@ module.exports = function (grunt) {
          -----Validators*/
         'scripts/directives/validators/jpalphanumeric.js',
         'scripts/directives/validators/jpcharacters.js',
+        'scripts/directives/validators/jpurls.js',
 
         /* Factories */
         'scripts/factories/factory.js',
@@ -99,7 +101,7 @@ module.exports = function (grunt) {
         'scripts/services/articleService.js',
         'scripts/services/jpartfilter.js',
         'scripts/services/jpauth.js',
-        'scripts/services/jpvalidator.js',
+        'scripts/services/jpPdfService.js',
         'scripts/services/menuService.js',
         'scripts/services/modalService.js'
     ];

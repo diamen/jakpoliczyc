@@ -3,7 +3,7 @@ package pl.jakpoliczyc.config;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import pl.jakpoliczyc.dao.managers.ArticleManager;
+import pl.jakpoliczyc.dao.services.ArticleServiceImpl;
 
 @Configuration
 @PropertySources({
@@ -20,11 +20,6 @@ public class RootConfig {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
-    }
-
-    @Bean
-    public ArticleManager articleManager() {
-        return new ArticleManager();
     }
 
 }

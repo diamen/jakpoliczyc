@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.jakpoliczyc.dao.entities.Article;
-import pl.jakpoliczyc.dao.managers.ArticleManager;
-import pl.jakpoliczyc.dao.repos.ArticleService;
+import pl.jakpoliczyc.dao.services.ArticleService;
 import pl.jakpoliczyc.web.common.View;
+import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import javax.validation.Valid;
@@ -22,9 +22,6 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
-
-    @Autowired
-    private ArticleManager articleManager;
 
     @JsonView(View.Compress.class)
     @ResponseBody
@@ -38,19 +35,35 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/articles/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/articles/{id:[0-9]*}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getArticle(@PathVariable long id) {
         Article article = articleService.find(id);
         if (article == null) {
             throw new ResourceNotFoundException(String.format("Article with id %d not found", id));
         }
-        return new ResponseEntity<>(articleService.find(id), HttpStatus.OK);
+        return new ResponseEntity<>(article, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/articles", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> saveArticle(@Valid @RequestBody StoryMenuTagDto storyMenuTagDto) {
-        articleManager.save(storyMenuTagDto);
+        articleService.save(storyMenuTagDto);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/articles/{id:[0-9]*}/comment", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> saveComment(@PathVariable long id, @Valid @RequestBody CommentDto commentDto) {
+        articleService.save(id, commentDto);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseBody
+    @RequestMapping(value = "/articles/{articleId:[0-9]*}/comment/{commentId:[0-9]*}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteArticle(@PathVariable long articleId, @PathVariable long commentId) {
+        articleService.removeComment(articleId, commentId);
+        return new ResponseEntity<Object>(null, HttpStatus.OK);
+    }
+
 }

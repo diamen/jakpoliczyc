@@ -1,0 +1,55 @@
+package pl.jakpoliczyc.dao.repos;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import pl.jakpoliczyc.dao.entities.Article;
+import pl.jakpoliczyc.dao.entities.Comment;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
+
+@Transactional
+@Repository
+public class ArticleRepositoryImpl implements ArticleRepository {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    @Transactional
+    public List<Article> findAll() {
+        return entityManager.createQuery("SELECT e FROM ARTICLES e", Article.class).getResultList();
+    }
+
+    @Override
+    public Article find(long id) {
+        return entityManager.find(Article.class, id);
+    }
+
+    public void insertArticle(Article article) {
+        entityManager.persist(article);
+    }
+
+    @Override
+    public void removeArticle(long id) {
+        Article article = entityManager.find(Article.class, id);
+        entityManager.remove(article);
+    }
+
+    @Override
+    @Transactional
+    public void removeComment(long articleId, long commentId) {
+        Article article = entityManager.find(Article.class, articleId);
+        Comment comment = article.getComments().stream().filter(e -> e.getId() == commentId).findFirst().get();
+        entityManager.remove(comment);
+        article.getComments().remove(comment);
+    }
+
+    @Override
+    public void insertComment(long articleId, Comment comment) {
+        Article article = entityManager.find(Article.class, articleId);
+        article.getComments().add(comment);
+        entityManager.persist(article);
+    }
+}

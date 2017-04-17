@@ -14,6 +14,8 @@ PL = {
     clear:          "Czyść",
     close:          "Zamknij",
     collapse:       "Zwiń",
+    codeLatex:      "Umieść kod LaTeX",
+    codePhoto:      "Umieść link do grafiki",
     comments:       "Komentarze",
     commentContent: "Treść komentarza",
     commentLimit:   "Przekroczyłeś długość komentarza! Max 500 znaków!",

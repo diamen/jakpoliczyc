@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
-import pl.jakpoliczyc.dao.repos.CommentService;
+import pl.jakpoliczyc.dao.repos.CommentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,13 +29,13 @@ import static org.assertj.core.api.Assertions.assertThat;
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @DatabaseSetup("/fake.xml")
-@DbUnitConfiguration(dataSetLoader = CommentServiceTest.Loader.class)
-public class CommentServiceTest {
+@DbUnitConfiguration(dataSetLoader = CommentRepositoryTest.Loader.class)
+public class CommentRepositoryTest {
 
     public static class Loader extends AbstractDataSetLoader {
         @Override
         protected IDataSet createDataSet(Resource resource) throws Exception {
-            return CommentServiceTest.getDataset();
+            return CommentRepositoryTest.getDataset();
         }
     }
 
@@ -47,17 +47,17 @@ public class CommentServiceTest {
     }
 
     @Autowired
-    private CommentService commentService;
+    private CommentRepository commentRepository;
 
     @Transactional
     @Test
     public void shouldListSizeDecreaseAfterRemove() {
         // given
-        int sizeBefore = commentService.findAll().size();
+        int sizeBefore = commentRepository.findAll().size();
 
         // when
-        commentService.remove(1);
-        int sizeAfter = commentService.findAll().size();
+        commentRepository.remove(1);
+        int sizeAfter = commentRepository.findAll().size();
 
         // then
         assertThat(sizeBefore).isGreaterThan(sizeAfter);

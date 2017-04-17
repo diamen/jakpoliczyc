@@ -17,7 +17,7 @@ import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Comment;
 import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Story;
-import pl.jakpoliczyc.dao.repos.ArticleService;
+import pl.jakpoliczyc.dao.repos.ArticleRepository;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -32,10 +32,10 @@ import static org.assertj.core.api.Assertions.assertThat;
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @DatabaseSetup(value = "/sql-data.xml")
-public class ArticleServiceTest {
+public class ArticleRepositoryTest {
 
     @Autowired
-    private ArticleService articleService;
+    private ArticleRepository articleRepository;
 
     private Article getTestData() {
         Article article = new Article();
@@ -89,11 +89,11 @@ public class ArticleServiceTest {
     @Test
     public void shouldListSizeIncreaseAfterInsert() {
         // given
-        int sizeBefore = articleService.findAll().size();
+        int sizeBefore = articleRepository.findAll().size();
 
         // when
-        articleService.insert(getTestData());
-        int sizeAfter = articleService.findAll().size();
+        articleRepository.insertArticle(getTestData());
+        int sizeAfter = articleRepository.findAll().size();
 
         // then
         assertThat(sizeBefore).isLessThan(sizeAfter);
@@ -104,14 +104,14 @@ public class ArticleServiceTest {
     @Test
     public void shouldListSizeDecreaseAfterRemove() {
         // given
-        articleService.insert(getTestData());
-        List<Article> articles = articleService.findAll();
+        articleRepository.insertArticle(getTestData());
+        List<Article> articles = articleRepository.findAll();
         int sizeBefore = articles.size();
         long articleId = articles.get(0).getId();
 
         // when
-        articleService.remove(articleId);
-        int sizeAfter = articleService.findAll().size();
+        articleRepository.removeArticle(articleId);
+        int sizeAfter = articleRepository.findAll().size();
 
         // then
         assertThat(sizeBefore).isGreaterThan(sizeAfter);
@@ -122,14 +122,67 @@ public class ArticleServiceTest {
     @Test
     public void shouldInsertOfArticleWithItsDependencies() {
         // given
-        int sizeBefore = articleService.findAll().size();
+        int sizeBefore = articleRepository.findAll().size();
 
         // when
-        articleService.insert(getInsertData());
-        int sizeAfter = articleService.findAll().size();
+        articleRepository.insertArticle(getInsertData());
+        int sizeAfter = articleRepository.findAll().size();
 
         // then
         assertThat(sizeBefore).isLessThan(sizeAfter);
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldInsertNewCommentWhenCommentsAlreadyExist() {
+        // given
+        articleRepository.insertArticle(getTestData());
+        Article article = articleRepository.findAll().get(0);
+        int sizeBefore = article.getComments() != null ? article.getComments().size() : 0;
+        Comment comment = new Comment();
+        comment.setAuthor("arnold");
+        comment.setContent("Siema, fajna strona");
+        comment.setAddedDate(new Date());
+
+        // when
+        List<Article> articles = articleRepository.findAll();
+        articleRepository.insertComment(articles.get(articles.size() - 1).getId(), comment);
+        int sizeAfter = articleRepository.findAll().get(0).getComments().size();
+
+        // then
+        assertThat(sizeBefore + 1).isEqualTo(sizeAfter);
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldInsertNewCommentWhenCommentsDontExist() {
+        // given
+        long id = 1l;
+        Article article = new Article();
+        article.setId(id);
+        article.setAddedDate(new Date());
+        Story story = new Story();
+        story.setTitle("blabla");
+        story.setContent("blabla");
+        story.setIntro("blabla");
+        article.setStory(story);
+        Menu menu = new Menu();
+        menu.setName("Fizyka");
+        article.setMenu(menu);
+        articleRepository.insertArticle(article);
+
+        Comment comment = new Comment();
+        comment.setAddedDate(new Date());
+        comment.setAuthor("arnold");
+        comment.setContent("Siema, fajny artykuł");
+
+        // when
+        articleRepository.insertComment(id, comment);
+
+        // then
+        assertThat(1).isEqualTo(articleRepository.findAll().get(0).getComments().size());
     }
 
 }

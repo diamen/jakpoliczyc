@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import pl.jakpoliczyc.dao.entities.Story;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StoryMenuTagDto {
+public class StoryMenuTagDto implements Serializable {
 
     @NotNull
     private Story story;

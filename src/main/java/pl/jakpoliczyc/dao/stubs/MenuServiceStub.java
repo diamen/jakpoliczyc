@@ -17,11 +17,13 @@ public class MenuServiceStub implements MenuService {
     private EntityManager entityManager;
 
     @Override
+    @Transactional(readOnly = true)
     public Menu find(long id) {
-        return null;
+        return entityManager.find(Menu.class, id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Menu> findAll() {
         return entityManager.createQuery("SELECT e FROM Menu e", Menu.class).getResultList();
     }

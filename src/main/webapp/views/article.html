@@ -1,1 +1,50 @@
-<jparticle ng-if="ready" article="{{article}}" add="addComment(author, content)"></jparticle>
+<article class="jparticle" ng-if="ready">
+    <header>
+        <div>
+            <span class="author">{{article.author}}</span>
+            <span class="date">{{article.date | date: 'HH:mm dd/MM/yyyy'}}</span>
+        </div>
+        <h2 id="title" contenteditable="false">{{article.title}}</h2>
+        <div>
+            <button ng-show="isEditable" class="btn btn-default" ng-click="submit()">{{$root.language.submit}}</button>
+            <button ng-hide="isEditable" class="btn btn-default" ng-click="edit()">{{$root.language.edit}}</button>
+            <button ng-show="isEditable" class="btn btn-default" ng-click="cancel()">{{$root.language.cancel}}</button>
+        </div>
+    </header>
+
+    <div class="tags">
+        <span ng-hide="angular.isUndefined(article.tags) || article.tags.length === 0">{{$root.language.tagsS}}</span><span ng-repeat="tag in article.tags">{{tag.name}}</span>
+    </div>
+    <p id="intro" contenteditable="false" class="intro">{{article.story.intro}}</p>
+    <p id="content" mathjax-bind content="{{ncontent}}" contenteditable="false" class="content"></p>
+    <div class="footer">
+        <span>{{$root.language.comments}} [{{article.comments.length}}]</span>
+        <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>
+        <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.pdfDownload}}" ng-click="getPdf(id)"></i>
+    </div>
+    <form novalidate ng-submit="nadd(usercom.author, usercom.content)" name="form" class="add">
+        <div class="form-group">
+            <label for="commentcontent">{{$root.language.addComment}}</label>
+            <textarea name="content" ng-class="form.content.$error.jpurls || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.content"
+                      class="form-control" id="commentcontent" placeholder="{{$root.language.commentContent}}" rows="3"
+                      ng-minlength="3" ng-maxlength="500" ng-trim="true" required jpurls></textarea>
+            <div ng-show="form.content.$error.jpurls" class="jperror">{{$root.language.urlPrevent}}</div>
+            <div ng-show="form.content.$error.maxlength" class="jperror">{{$root.language.commentLimit}}</div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">{{$root.language.username}}</span>
+            <input name="username" ng-class="form.content.$error.pattern || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.author"
+                   class="form-control" placeholder="{{$root.language.username}}"
+                   aria-describedby="basic-addon1" ng-minlength="3" ng-maxlength="15" ng-trim="true" required jpalphanumeric>
+            <span class="input-group-btn">
+                <input ng-click="addComment(usercom.author, usercom.content)" ng-disabled="form.username.$invalid || form.username.$error.jpalphanumeric || form.content.$invalid" id="submit" class="btn btn-secondary" type="submit">{{$root.language.add}}</input>
+            </span>
+        </div>
+        <div ng-show="form.username.$error.jpalphanumeric" class="jperror">{{$root.language.errSings}}</div>
+        <div ng-show="form.username.$error.maxlength" class="jperror">{{$root.language.errExceed}}</div>
+    </form>
+    <div class="comment" ng-repeat="comment in article.comments">
+        <div><span>#{{$index + 1}}</span><strong>{{comment.author}}</strong> {{$root.language.wrote}} {{comment.addedDate | date: 'HH:mm dd/MM/yyyy'}}:</div>
+        <button jp-has-roles="ROLE_ADMIN" ng-click="deleteComment(comment.id)" class="btn btn-default">{{$root.language.remove}}</button>{{comment.content}}
+    </div>
+</article>
