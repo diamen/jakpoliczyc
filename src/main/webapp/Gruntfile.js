@@ -69,6 +69,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpadd.js',
         'scripts/directives/jpcategory.js',
         'scripts/directives/jpcategoryInput.js',
+        'scripts/directives/jpContentEditable.js',
         'scripts/directives/jpClickOutside.js',
         'scripts/directives/jpcontact.js',
         'scripts/directives/jpHasRoles.js',

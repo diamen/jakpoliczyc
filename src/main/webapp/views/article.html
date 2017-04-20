@@ -4,7 +4,7 @@
             <span class="author">{{article.author}}</span>
             <span class="date">{{article.date | date: 'HH:mm dd/MM/yyyy'}}</span>
         </div>
-        <h2 id="title" contenteditable="false">{{article.title}}</h2>
+        <h2 id="title" contenteditable="false" data-jp-content-editable ng-model="article.story.title"></h2>
         <div>
             <button ng-show="isEditable" class="btn btn-default" ng-click="submit()">{{$root.language.submit}}</button>
             <button ng-hide="isEditable" class="btn btn-default" ng-click="edit()">{{$root.language.edit}}</button>
@@ -12,11 +12,13 @@
         </div>
     </header>
 
+    <jpcategory ng-if="isEditable && menu" items="{{menu}}"></jpcategory>
+
     <div class="tags">
-        <span ng-hide="angular.isUndefined(article.tags) || article.tags.length === 0">{{$root.language.tagsS}}</span><span ng-repeat="tag in article.tags">{{tag.name}}</span>
+        <span ng-hide="angular.isUndefined(article.tags) || article.tags.length === 0">{{$root.language.tagsS}}</span><span id="tags" contenteditable="false" data-jp-content-editable ng-model="article.tags"></span>
     </div>
-    <p id="intro" contenteditable="false" class="intro">{{article.story.intro}}</p>
-    <p id="content" mathjax-bind content="{{ncontent}}" contenteditable="false" class="content"></p>
+    <p id="intro" class="intro" contenteditable="false" data-jp-content-editable ng-model="article.story.intro"></p>
+    <p id="content" class="content" mathjax-bind process="{{!isEditable}}" content="{{article.ncontent}}" contenteditable="false" data-jp-content-editable ng-model="article.ncontent"></p>
     <div class="footer">
         <span>{{$root.language.comments}} [{{article.comments.length}}]</span>
         <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>

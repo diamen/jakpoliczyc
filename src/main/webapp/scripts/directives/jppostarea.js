@@ -9,11 +9,11 @@ angular.module('jakPoliczycDirectives')
                 scope.add.content = "";
 
                 scope.appendLatex = function() {
-                    append("<latex>" + $rootScope.language.codeLatex + "</latex>");
+                    append("[latex]" + $rootScope.language.codeLatex + "[/latex]");
                 };
 
                 scope.appendPhoto = function () {
-                    append("<photo>" + $rootScope.language.codePhoto + "</photo>");
+                    append("[photo]" + $rootScope.language.codePhoto + "[/photo]");
                 };
 
                 scope.preview = function() {

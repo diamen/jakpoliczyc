@@ -32,6 +32,12 @@ angular.module('jakPoliczycServices')
                     method: 'DELETE',
                     url: '/articles/' + articleId + '/comment/' + commentId
                 })
+            },
+            prepareTags: function (input) {
+                return input.trim().split(" ").map(function(tag) {
+                    tag = tag.trim();
+                    return tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase();
+                });
             }
         }
 

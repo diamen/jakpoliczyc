@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpadd', ['jpstorage', function(jpstorage) {
+    .directive('jpadd', ['jpstorage', 'articleService', function(jpstorage, articleService) {
         return {
             restrict: 'E',
             scope: true,
@@ -22,10 +22,7 @@ angular.module('jakPoliczycDirectives')
 
                     if (noOfMenus === noOfMenusElem) {
                         if (scope.add.tags && angular.isString(scope.add.tags) && (scope.add.tags.length > 0)) {
-                            var tags = scope.add.tags.trim().split(" ").map(function(tag) {
-                                tag = tag.trim();
-                                return tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase();
-                            });
+                            var tags = articleService.prepareTags(scope.add.tags);
                         }
                         var request = {
                             story: {

@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('articleCtrl', function($scope, $http, $stateParams, $window, articleService, jpPdfService) {
+    .controller('articleCtrl', function($scope, $http, $stateParams, $window, articleService, jpPdfService, jpstorage) {
 
         var editables = [];
         $scope.id = parseInt($stateParams.id, 10);
@@ -15,7 +15,8 @@ angular.module('jakPoliczycControllers')
                     $scope.ready = true;
                     $scope.article = response.data;
                     $scope.article.author = 'anonim';
-                    $scope.ncontent = $scope.article.story.content;
+                    $scope.article.ncontent = $scope.article.story.content;
+                    $scope.article.tags = $scope.article.tags.map(function(e) { return e.name; }).join(' ');
                 })
         };
         $scope.getSingle($scope.id);
@@ -28,7 +29,22 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.submit = function () {
-            // TODO
+            jpstorage.clear('menus');
+            $scope.$broadcast('publish-down');
+            var tags = $scope.article.tags;
+            if (tags && angular.isString(tags) && tags.length > 0) {
+                tags = articleService.prepareTags(tags);
+            }
+            var request = {
+                story: {
+                    title: $scope.article.story.title,
+                    intro: $scope.article.story.intro,
+                    content: $scope.article.ncontent
+                },
+                menus: jpstorage.retrieve('menus'),
+                tags: tags
+            };
+            articleService.postArticle(request);
         };
 
         $scope.edit = function () {
