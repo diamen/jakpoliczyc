@@ -52,6 +52,13 @@ public class ArticleController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/articles/{id:[0-9]*}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteArticle(@PathVariable long id) {
+        articleService.delete(id);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/articles/{id:[0-9]*}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateArticle(@PathVariable long id, @Valid @RequestBody StoryMenuTagDto storyMenuTagDto) {
         articleService.update(id, storyMenuTagDto);
@@ -69,7 +76,7 @@ public class ArticleController {
     @ResponseBody
     @RequestMapping(value = "/articles/{articleId:[0-9]*}/comment/{commentId:[0-9]*}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteArticle(@PathVariable long articleId, @PathVariable long commentId) {
-        articleService.removeComment(articleId, commentId);
+        articleService.delete(articleId, commentId);
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
 

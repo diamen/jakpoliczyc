@@ -56,6 +56,7 @@ PL = {
     logout:         "Wyloguj",
     logout2:        "wyloguj",
     msgArtUpt:      "Czy chcesz zaktualizować artykuł?",
+    msgArtRem:      "Czy chcesz usunąć artykuł? Uwaga! Artykuł zostanie usunięty na stałe!",
     msgPublish:     "Czy chcesz opublikować artykuł?",
     msgSaveSto:     "Czy chcesz zapisać dotychczasowe pracę i dokończyć później? Uwaga! Wyniki nie zostaną opublikowane!",
     msgSubscribe:   "Czy chcesz dołączyć do listy subskrybentów i otrzymywać wiadomości mailowe nt nowości na stronie?",

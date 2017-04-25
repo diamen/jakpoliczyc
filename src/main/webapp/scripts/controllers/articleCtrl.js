@@ -66,8 +66,12 @@ angular.module('jakPoliczycControllers')
             modalService.execute(function() { $window.location.reload(); }, $scope.language.msgUpdCancel);
         };
 
-        $scope.remove = function () {
-            // TODO
+        $scope.delete = function () {
+            modalService.execute(function(id) {
+                articleService.deleteArticle(id).then(function success() {
+                    $scope.goHome();
+                });
+            }, $scope.language.msgArtRem, $scope.id);
         };
 
         function toggleEditable(state) {

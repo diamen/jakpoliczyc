@@ -30,7 +30,7 @@ public class Article {
     @JoinColumn(name = "MENU_ID", nullable = false)
     private Menu menu;
     @JsonManagedReference
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     private Collection<Comment> comments;
     @JsonView(View.Compress.class)
     @ManyToMany

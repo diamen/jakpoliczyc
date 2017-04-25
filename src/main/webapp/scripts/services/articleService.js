@@ -18,6 +18,12 @@ angular.module('jakPoliczycServices')
                     data: data
                 });
             },
+            deleteArticle: function (id) {
+                return $http({
+                    method: 'DELETE',
+                    url: '/articles/' + id
+                });
+            },
             getSingle: function (id) {
                 return $http({
                     method: 'GET',

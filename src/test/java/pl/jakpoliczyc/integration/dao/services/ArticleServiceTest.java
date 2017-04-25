@@ -284,10 +284,46 @@ public class ArticleServiceTest {
         int sizeBefore = articleService.findAll().get(0).getComments().size();
 
         // when
-        articleService.removeComment(articles.get(0).getId(), comments.get(0).getId());
+        articleService.delete(articles.get(0).getId(), comments.get(0).getId());
 
         // then
         assertThat(sizeBefore).isGreaterThan(articleService.findAll().get(0).getComments().size());
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldListOfArticlesDecreaseAfterRemove() {
+        // given
+        int sizeBefore = articleService.findAll().size();
+
+        // when
+        articleService.delete(1);
+
+        // then
+        int sizeAfter = articleService.findAll().size();
+        assertThat(sizeBefore).isGreaterThan(sizeAfter);
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldListOfArticlesWithCommentsDecreaseAfterRemove() {
+        // given
+        List<Article> articles = articleService.findAll();
+        CommentDto commentDto = new CommentDto();
+        commentDto.setContent("blabla");
+        commentDto.setAuthor("author");
+        articleService.save(1, commentDto);
+        int sizeBefore = articleService.findAll().size();
+
+        // when
+        articleService.find(1);
+        articleService.delete(1);
+
+        // then
+        int sizeAfter = articleService.findAll().size();
+        assertThat(sizeBefore).isGreaterThan(sizeAfter);
     }
 
 }

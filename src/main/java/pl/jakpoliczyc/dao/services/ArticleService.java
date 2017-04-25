@@ -9,8 +9,9 @@ import java.util.List;
 public interface ArticleService {
     void save(StoryMenuTagDto wrapper);
     void update(long articleId, StoryMenuTagDto wrapper);
+    void delete(long articleId);
     void save(long articleId, CommentDto wrapper);
-    void removeComment(long articleId, long commentId);
+    void delete(long articleId, long commentId);
     Article find(long id);
     List<Article> findAll();
 }

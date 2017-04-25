@@ -58,6 +58,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional
+    public void delete(long articleId) {
+        articleRepository.removeArticle(articleId);
+    }
+
+    @Override
+    @Transactional
     public void save(long articleId, CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setAuthor(commentDto.getAuthor());
@@ -68,7 +74,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional
-    public void removeComment(long articleId, long commentId) {
+    public void delete(long articleId, long commentId) {
         articleRepository.removeComment(articleId, commentId);
     }
 
