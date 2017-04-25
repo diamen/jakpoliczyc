@@ -51,6 +51,13 @@ public class ArticleController {
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/articles/{id:[0-9]*}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateArticle(@PathVariable long id, @Valid @RequestBody StoryMenuTagDto storyMenuTagDto) {
+        articleService.update(id, storyMenuTagDto);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
     @ResponseBody
     @RequestMapping(value = "/articles/{id:[0-9]*}/comment", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> saveComment(@PathVariable long id, @Valid @RequestBody CommentDto commentDto) {

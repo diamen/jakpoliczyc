@@ -47,6 +47,17 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional
+    public void update(long articleId, StoryMenuTagDto wrapper) {
+        Article article = articleRepository.find(articleId);
+        Menu menu = prepareMenu(wrapper.getMenus());
+        article.setStory(wrapper.getStory());
+        article.setMenu(menu);
+        article.setTags(wrapper.getTags() != null ? prepareTags(wrapper.getTags()) : null);
+        articleRepository.insertArticle(article);
+    }
+
+    @Override
+    @Transactional
     public void save(long articleId, CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setAuthor(commentDto.getAuthor());

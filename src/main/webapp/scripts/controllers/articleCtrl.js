@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('articleCtrl', function($scope, $http, $stateParams, $window, articleService, jpPdfService, jpstorage) {
+    .controller('articleCtrl', function($scope, $http, $stateParams, $window, articleService, jpPdfService, jpstorage, modalService) {
 
         var editables = [];
         $scope.id = parseInt($stateParams.id, 10);
@@ -44,7 +44,11 @@ angular.module('jakPoliczycControllers')
                 menus: jpstorage.retrieve('menus'),
                 tags: tags
             };
-            articleService.postArticle(request);
+            modalService.execute(function(data) {
+                articleService.updateArticle(data.id, data.request).then(function success() {
+                    $scope.goHome();
+                });
+            }, $scope.language.msgArtUpt, {'id': $scope.id, 'request': request});
         };
 
         $scope.edit = function () {
@@ -59,7 +63,7 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.cancel = function () {
-            $window.location.reload();
+            modalService.execute(function() { $window.location.reload(); }, $scope.language.msgUpdCancel);
         };
 
         $scope.remove = function () {

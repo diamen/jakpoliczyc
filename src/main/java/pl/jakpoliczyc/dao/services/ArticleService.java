@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ArticleService {
     void save(StoryMenuTagDto wrapper);
+    void update(long articleId, StoryMenuTagDto wrapper);
     void save(long articleId, CommentDto wrapper);
     void removeComment(long articleId, long commentId);
     Article find(long id);

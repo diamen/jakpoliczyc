@@ -10,6 +10,14 @@ angular.module('jakPoliczycServices')
                     data: data
                 });
             },
+            updateArticle: function(id, data) {
+                return $http({
+                    method: 'PUT',
+                    url: '/articles/' + id,
+                    headers: {'Content-Type': 'application/json'},
+                    data: data
+                });
+            },
             getSingle: function (id) {
                 return $http({
                     method: 'GET',
