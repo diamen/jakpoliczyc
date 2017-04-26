@@ -17,7 +17,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     private EntityManager entityManager;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Article> findAll() {
         return entityManager.createQuery("SELECT e FROM ARTICLES e", Article.class).getResultList();
     }

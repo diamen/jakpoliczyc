@@ -1,12 +1,12 @@
 angular.module('jakPoliczycControllers')
-    .controller('subscribeCtrl', function($scope, modalService) {
+    .controller('subscribeCtrl', function($scope, subscribeService, modalService) {
 
-        $scope.subscribe = function () {
-          // TODO
+        $scope.subscribe = function (email) {
+            subscribeService.insertOrRemoveSubscriber({'email' : email});
         };
 
-        $scope.openModal = function () {
-            modalService.execute($scope.subscribe, $scope.language.msgSubscribe);
+        $scope.openModal = function (email) {
+            modalService.execute($scope.subscribe, $scope.language.msgSubscribe, email);
         };
 
     });

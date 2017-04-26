@@ -1,5 +1,9 @@
 package pl.jakpoliczyc.integration.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Configuration;
@@ -18,4 +22,13 @@ import pl.jakpoliczyc.integration.dao.DbTestConfig;
 @Configuration
 @WebAppConfiguration
 public class WebTestConfig extends DbTestConfig {
+
+    public String generateRequest(Object object) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
+        String requestJson = objectWriter.writeValueAsString(object);
+        return requestJson;
+    }
+
 }

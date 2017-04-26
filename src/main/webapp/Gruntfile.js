@@ -104,7 +104,8 @@ module.exports = function (grunt) {
         'scripts/services/jpauth.js',
         'scripts/services/jpPdfService.js',
         'scripts/services/menuService.js',
-        'scripts/services/modalService.js'
+        'scripts/services/modalService.js',
+        'scripts/services/subscribeService.js'
     ];
 
     grunt.initConfig({

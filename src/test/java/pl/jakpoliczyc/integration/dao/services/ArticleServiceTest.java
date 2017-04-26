@@ -116,9 +116,6 @@ public class ArticleServiceTest {
     private ArticleService articleService;
 
     @Autowired
-    private CommentService commentService;
-
-    @Autowired
     @Qualifier("menuServiceStub")
     private MenuService menuService;
 

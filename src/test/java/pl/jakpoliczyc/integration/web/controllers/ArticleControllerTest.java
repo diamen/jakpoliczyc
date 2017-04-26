@@ -192,11 +192,4 @@ public class ArticleControllerTest extends WebTestConfig {
                 .andExpect(status().isCreated());
     }
 
-    private String generateRequest(Object object) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
-        String requestJson = objectWriter.writeValueAsString(object);
-        return requestJson;
-    }
 }
