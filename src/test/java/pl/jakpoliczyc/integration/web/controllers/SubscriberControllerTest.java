@@ -13,18 +13,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.jakpoliczyc.dao.entities.Subscriber;
-import pl.jakpoliczyc.dao.entities.Tag;
 import pl.jakpoliczyc.dao.services.SubscriberService;
 import pl.jakpoliczyc.integration.web.WebTestConfig;
 import pl.jakpoliczyc.web.controllers.SubscriberController;
 
 import javax.servlet.ServletContext;
-import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

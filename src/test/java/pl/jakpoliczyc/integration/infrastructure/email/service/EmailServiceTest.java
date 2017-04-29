@@ -56,7 +56,7 @@ public class EmailServiceTest extends WebTestConfig {
         final String content = "TEST CONTENT";
 
         // when
-        emailService.sendEmail(receivers, title, content);
+        emailService.sendEmail(null, receivers, title, content);
 
         // then
         Message[] messages = testSmtp.getReceivedMessages();

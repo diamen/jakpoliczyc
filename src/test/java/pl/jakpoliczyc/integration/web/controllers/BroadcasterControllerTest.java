@@ -25,6 +25,7 @@ import pl.jakpoliczyc.infrastructure.email.service.BroadcastService;
 import pl.jakpoliczyc.integration.web.WebTestConfig;
 import pl.jakpoliczyc.web.controllers.BroadcasterController;
 import pl.jakpoliczyc.web.dto.EmailContentDto;
+import pl.jakpoliczyc.web.dto.EmailDto;
 
 import javax.servlet.ServletContext;
 
@@ -84,8 +85,19 @@ public class BroadcasterControllerTest extends WebTestConfig {
     }
 
     @Test
+    public void shouldReturnCreatedWhenEmailIsSentViaContactForm() throws Exception {
+        EmailDto emailDto = new EmailDto("mstopa23@gmail.com", "title", "content");
+
+        // when - then
+        mockMvc.perform(post("/contact")
+                .content(generateRequest(emailDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
     @Parameters
-    public void shouldFailOnValidation(EmailContentDto dto) throws Exception {
+    public void shouldFailOnBroadcastValidation(EmailContentDto dto) throws Exception {
         // given - when - then
         mockMvc.perform(post("/broadcaster")
             .content(generateRequest(dto))
@@ -93,7 +105,7 @@ public class BroadcasterControllerTest extends WebTestConfig {
             .andExpect(status().isBadRequest());
     }
 
-    public Object[] parametersForShouldFailOnValidation() {
+    public Object[] parametersForShouldFailOnBroadcastValidation() {
         return $(
                 $(new EmailContentDto("title", null)),
                 $(new EmailContentDto("", "")),
@@ -101,6 +113,29 @@ public class BroadcasterControllerTest extends WebTestConfig {
                 $(new EmailContentDto(null, "rrorr")),
                 $(new EmailContentDto(null, null)),
                 $(new EmailContentDto("", ""))
+        );
+    }
+
+    @Test
+    @Parameters
+    public void shouldFailOnContactValidation(EmailDto dto) throws Exception {
+        // given - when - then
+        mockMvc.perform(post("/contact")
+                .content(generateRequest(dto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    public Object[] parametersForShouldFailOnContactValidation() {
+        return $(
+                $(new EmailDto("mstopa23@gmail.com", "title", null)),
+                $(new EmailDto("", "", "")),
+                $(new EmailDto(null, "", "content")),
+                $(new EmailDto("mstopa23@gmail.com", null, "rrorr")),
+                $(new EmailDto("", null, null)),
+                $(new EmailDto(null, "", "")),
+                $(new EmailDto("mstopa23.com", "title", "content")),
+                $(new EmailDto("@gmail.com", "title", "content"))
         );
     }
 

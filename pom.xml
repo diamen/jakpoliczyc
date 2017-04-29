@@ -116,6 +116,12 @@
             <version>1.1.5.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+
         <!-- Persistence Provider -->
 
         <dependency>

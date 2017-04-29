@@ -9,6 +9,14 @@ angular.module('jakPoliczycServices')
                     headers: {'Content-Type': 'application/json'},
                     data: data
                 });
+            },
+            contact: function (data) {
+                return $http({
+                    method: 'POST',
+                    url: '/contact',
+                    headers: {'Content-Type': 'application/json'},
+                    data: data
+                })
             }
         }
 

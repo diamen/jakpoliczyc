@@ -1,5 +1,6 @@
 package pl.jakpoliczyc.infrastructure.email.service.impl;
 
+import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.jakpoliczyc.infrastructure.email.service.EmailService;
@@ -26,8 +27,7 @@ public class EmailServiceImpl implements EmailService {
     private static final String protocol = "smtp";
 
     @Override
-    public void sendEmail(List<String> emailAddressesTo, String subject, String content) throws MessagingException {
-
+    public void sendEmail(String from, List<String> emailAddressesTo, String subject, String content) throws MessagingException {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", smtpHost);
@@ -44,15 +44,20 @@ public class EmailServiceImpl implements EmailService {
         mailMessage.setFrom(new InternetAddress(smtpUsername));
         mailMessage.setRecipients(Message.RecipientType.TO,
                 emailAddressesTo.stream().map(e -> { try {
-                        return new InternetAddress(e);
-                    } catch (AddressException e1) {
-                        // TODO logger
-                    }
+                    return new InternetAddress(e);
+                } catch (AddressException e1) {
+                    // TODO logger
+                }
                     return null;
                 }).toArray(Address[]::new));
-        mailMessage.setSubject(subject);
+        mailMessage.setSubject("[JakPoliczyć] " + subject);
+        if (!StringUtils.isNullOrEmpty(from)) {
+            content = "[Wiadomość wysłana przez " + from + "]\n\n" + content;
+        }
         mailMessage.setText(content);
-        mailMessage.setHeader("Content-Type", "text/html");
+        if (StringUtils.isNullOrEmpty(from)) {
+            mailMessage.setHeader("Content-Type", "text/html");
+        }
         Transport transport = session.getTransport(protocol);
         transport.connect(smtpHost, smtpUsername, smtpPassword);
         transport.sendMessage(mailMessage, mailMessage.getAllRecipients());

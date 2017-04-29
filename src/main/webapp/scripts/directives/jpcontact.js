@@ -1,12 +1,11 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpcontact', ['$sanitize', function($sanitize) {
+    .directive('jpcontact', ['$sanitize', 'broadcasterService', function($sanitize, broadcasterService) {
 
         var ctrl = function () {
             var vm = this;
 
-            vm.send = function () {
-              console.log('contact');
-              // TODO
+            vm.send = function (address, title, content) {
+                broadcasterService.contact({'address': address, 'title': title, 'content': content});
             };
         };
 
