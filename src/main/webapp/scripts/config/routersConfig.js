@@ -68,6 +68,17 @@ angular.module('jakPoliczycRouters', [])
                 }
             })
 
+            /* BROADCAST SECTION */
+            .state("broadcast", {
+                url: "/broadcast",
+                controller: "broadcasterCtrl",
+                templateUrl: "views/broadcaster.html",
+
+                data: {
+                    roles: ['ROLE_ADMIN']
+                }
+            })
+
             /* LOGIN SECTION */
             .state("login", {
                 url: "/login",

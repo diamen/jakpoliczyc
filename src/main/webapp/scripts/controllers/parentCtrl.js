@@ -63,6 +63,10 @@ angular.module('jakPoliczycControllers')
           $state.go("articles.storage");
         };
 
+        $scope.goBroadcast = function () {
+          $state.go("broadcast");
+        };
+
         $scope.goSingleStorage = function (id) {
           $state.go("articles.storage.id", { id: id });
         };

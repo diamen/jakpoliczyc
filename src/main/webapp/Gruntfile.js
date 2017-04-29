@@ -24,6 +24,8 @@ module.exports = function (grunt) {
         'libraries/jsPDF/dist/jspdf.debug.js',
         'libraries/html2canvas/dist/html2canvas.js',
         'libraries/underscore/underscore.js',
+        'libraries/trix/trix.js',
+        'libraries/angular-trix/dist/angular-trix.js',
 
         /* Browser support */
         'scripts/browsersupport.js',
@@ -56,6 +58,7 @@ module.exports = function (grunt) {
         'scripts/controllers/addCtrl.js',
         'scripts/controllers/articleCtrl.js',
         'scripts/controllers/articlesCtrl.js',
+        'scripts/controllers/broadcasterCtrl.js',
         'scripts/controllers/loginCtrl.js',
         'scripts/controllers/modalCtrl.js',
         'scripts/controllers/singleStorageCtrl.js',
@@ -100,6 +103,7 @@ module.exports = function (grunt) {
         /* Services */
         'scripts/services/service.js',
         'scripts/services/articleService.js',
+        'scripts/services/broadcasterService.js',
         'scripts/services/jpartfilter.js',
         'scripts/services/jpauth.js',
         'scripts/services/jpPdfService.js',

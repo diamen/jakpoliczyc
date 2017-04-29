@@ -1,4 +1,7 @@
 insert into configuration (keyy, value) values ('OK', 'OK VALUE');
+insert into configuration (keyy, value) values ('EMAIL', 'mstopa23@gmail.com');
+
+insert into subscribers (email) values ('micstobinski@gmail.com');
 
 insert into tags (id, name) values ( 1, 'Algebra' );
 insert into tags (id, name) values ( 2, 'Bryły' );

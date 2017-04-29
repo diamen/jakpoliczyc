@@ -4,6 +4,7 @@ angular.module('jakPoliczycApp',
         'ngCookies',
         'ngSanitize',
         'angular-jwt',
+        'angularTrix',
 
         'ui.bootstrap',
         'ui.router',
