@@ -5,6 +5,7 @@ import junitparams.Parameters;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.jakpoliczyc.config.RootConfig;
 import pl.jakpoliczyc.config.WebConfiguration;
+import pl.jakpoliczyc.infrastructure.email.service.BroadcastService;
 import pl.jakpoliczyc.integration.web.WebTestConfig;
 import pl.jakpoliczyc.web.controllers.BroadcasterController;
 import pl.jakpoliczyc.web.dto.EmailContentDto;
@@ -42,6 +44,9 @@ public class BroadcasterControllerTest extends WebTestConfig {
 
     @Rule
     public final SpringMethodRule springMethodRule = new SpringMethodRule();
+
+    @Mock
+    private BroadcastService broadcastService;
 
     @InjectMocks
     private BroadcasterController broadcasterController;
