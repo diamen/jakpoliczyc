@@ -28,6 +28,11 @@
 </head>
 <body ng-controller="parentCtrl">
 
+    <div class="jpalerts">
+        <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')"
+             close="closeAlert($index)">{{alert.msg}}</div>
+    </div>
+
     <header role="banner" class="header" ng-include="'views/header.html'"></header>
     <div ng-include="'views/tagger.html'"></div>
     <div class="jpcontainer slideable">

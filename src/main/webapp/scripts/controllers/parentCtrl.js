@@ -85,6 +85,15 @@ angular.module('jakPoliczycControllers')
             $scope.$broadcast('unselect-down');
         };
 
+        /* Alerts */
+        $scope.addAlert = function (alert) {
+            $scope.alerts.push(alert);
+        };
+
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
+
         /* RWD */
         $timeout(angular.element($window).bind('resize', function() {
             $scope.smallScreen = isSmallScreen();

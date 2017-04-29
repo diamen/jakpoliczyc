@@ -2,6 +2,8 @@ PL = {
     actions:        "Akcje",
     add:            "Dodaj",
     addComment:     "Dodaj komentarz",
+    alertMailAdd:   "Dodano podany email do listy subskrybentów",
+    alertMailExist: "Podany email był już na liście subskrybentów i został z niej usunięty",
     artAdd:         "Dodaj nowy artykuł",
     artContent:     "Treść artykułu",
     artIntro:       "Wprowadzenie do artykułu",
