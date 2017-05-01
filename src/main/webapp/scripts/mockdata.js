@@ -532,17 +532,17 @@ angular.module('jakPoliczycApp')
 //        $httpBackend.whenGET('/menu').respond(mockMenu);
 //        $httpBackend.whenGET('/tags').respond(mockTags);
 //        $httpBackend.whenGET('/articles').respond(mockArticles);
-        $httpBackend.whenGET('/storage').respond(mockStorage);
-
-        $httpBackend.whenGET(/\/storage\/(.+)/).respond(function(method, url) {
-            var url_parts = url.split('/');
-            var id = parseInt(url_parts[url_parts.length - 1], 10);
-
-            if (isNaN(id))
-                throw new Error("HTTP request");
-
-            return [200, jpartfilter(mockStorage, 'id', [id])[0]];
-        });
+//         $httpBackend.whenGET('/storage').respond(mockStorage);
+//
+//         $httpBackend.whenGET(/\/storage\/(.+)/).respond(function(method, url) {
+//             var url_parts = url.split('/');
+//             var id = parseInt(url_parts[url_parts.length - 1], 10);
+//
+//             if (isNaN(id))
+//                 throw new Error("HTTP request");
+//
+//             return [200, jpartfilter(mockStorage, 'id', [id])[0]];
+//         });
 
         // $httpBackend.whenGET(/\/article\/id\/(.+)/).respond(function(method, url) {
         //     var url_parts = url.split('/');

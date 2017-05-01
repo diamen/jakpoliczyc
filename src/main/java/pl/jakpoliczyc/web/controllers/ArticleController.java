@@ -1,6 +1,7 @@
 package pl.jakpoliczyc.web.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class ArticleController {
     @RequestMapping(value = "/articles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getArticles() {
         List<Article> articles = articleService.findAll();
-        if (articles == null || articles.isEmpty()) {
+        if (CollectionUtils.isEmpty(articles)) {
             throw new ResourceNotFoundException("None article found");
         }
         return new ResponseEntity<>(articleService.findAll(), HttpStatus.OK);

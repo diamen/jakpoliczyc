@@ -1,18 +1,10 @@
 angular.module('jakPoliczycControllers')
-    .controller('storageCtrl', function($scope, $http, jpcommon) {
+    .controller('storageCtrl', function($scope, $http, storageService) {
 
         $scope.storage = $scope.storage || [];
 
-        $http({
-            cache: true,
-            method: 'GET',
-            url: '/storage'
-        }).then(function success(response) {
+        storageService.getStorages().then(function success(response) {
             $scope.storage = response.data;
-        }, function error() {
-            throw new Error("HTTP error");
         });
-
-        $scope.getKind = jpcommon.getKind;
 
     });

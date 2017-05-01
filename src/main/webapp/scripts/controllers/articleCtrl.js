@@ -16,7 +16,11 @@ angular.module('jakPoliczycControllers')
                     $scope.article = response.data;
                     $scope.article.author = 'anonim';
                     $scope.article.ncontent = $scope.article.story.content;
-                    $scope.article.tags = $scope.article.tags.map(function(e) { return e.name; }).join(' ');
+                    if (angular.isDefined($scope.article.tags)) {
+                        $scope.article.tags = $scope.article.tags.map(function (e) {
+                            return e.name;
+                        }).join(' ');
+                    }
                 })
         };
         $scope.getSingle($scope.id);
@@ -34,6 +38,8 @@ angular.module('jakPoliczycControllers')
             var tags = $scope.article.tags;
             if (tags && angular.isString(tags) && tags.length > 0) {
                 tags = articleService.prepareTags(tags);
+            } else {
+                tags = [];
             }
             var request = {
                 story: {

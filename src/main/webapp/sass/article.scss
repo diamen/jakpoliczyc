@@ -1,6 +1,12 @@
 $article-border-color: #ccc;
+$article-border-edit-color: #a9a9a9;
 $article-comment-color: #f5f5f5;
 $article-youtube-color: #c72929;
+
+.jpeditable {
+  border: 1px dotted $article-border-edit-color;
+  display: block;
+}
 
 .jparticle {
   margin-bottom: 6px;

@@ -5,6 +5,11 @@ $note-color: #565656;
 $opacity: .57;
 $selected-color: #007cff;
 
+[contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  display: block;
+}
+
 %col {
   position: relative;
 }

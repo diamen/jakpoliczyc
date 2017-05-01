@@ -1,23 +1,23 @@
 package pl.jakpoliczyc.dao.repos;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Storage;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
-@Service("storageServiceImpl")
-@Transactional
-public class StorageServiceImpl implements StorageService {
+@Repository
+public class StorageRepositoryImpl implements StorageRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Transactional(readOnly = true)
-    public Storage find(long id) {
-        return entityManager.find(Storage.class, id);
+    public Optional<Storage> find(long id) {
+        return Optional.ofNullable(entityManager.find(Storage.class, id));
     }
 
     @Transactional(readOnly = true)
@@ -29,7 +29,7 @@ public class StorageServiceImpl implements StorageService {
         entityManager.persist(storage);
     }
 
-    public void remove(long id) {
+    public void delete(long id) {
         Storage storage = entityManager.find(Storage.class, id);
         entityManager.remove(storage);
     }

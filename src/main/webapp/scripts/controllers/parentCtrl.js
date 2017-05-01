@@ -86,6 +86,8 @@ angular.module('jakPoliczycControllers')
         };
 
         /* Alerts */
+        $scope.alerts = [];
+
         $scope.addAlert = function (alert) {
             $scope.alerts.push(alert);
         };

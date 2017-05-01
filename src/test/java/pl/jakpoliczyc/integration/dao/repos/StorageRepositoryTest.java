@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Stag;
 import pl.jakpoliczyc.dao.entities.Storage;
 import pl.jakpoliczyc.dao.entities.Story;
-import pl.jakpoliczyc.dao.repos.StorageService;
+import pl.jakpoliczyc.dao.repos.StorageRepository;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,13 +37,13 @@ import static org.assertj.core.api.Assertions.assertThat;
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @DatabaseSetup(value = "/fake.xml")
-@DbUnitConfiguration(dataSetLoader = StorageServiceTest.Loader.class)
-public class StorageServiceTest {
+@DbUnitConfiguration(dataSetLoader = StorageRepositoryTest.Loader.class)
+public class StorageRepositoryTest {
 
     public static class Loader extends AbstractDataSetLoader {
         @Override
         protected IDataSet createDataSet(Resource resource) throws Exception {
-            return StorageServiceTest.getDataset();
+            return StorageRepositoryTest.getDataset();
         }
     }
 
@@ -54,7 +54,7 @@ public class StorageServiceTest {
     }
 
     @Autowired
-    private StorageService storageService;
+    private StorageRepository storageRepository;
 
     private Storage getTestData() {
         Storage storage = new Storage();
@@ -63,15 +63,7 @@ public class StorageServiceTest {
         story.setIntro("Lorem...");
         story.setTitle("LI");
         storage.setStory(story);
-        Collection<Stag> stags = Arrays.asList(getStag("TEST"), getStag("OK"));
-        storage.setStags(stags);
         return storage;
-    }
-
-    private Stag getStag(String name) {
-        Stag stag = new Stag();
-        stag.setName(name);
-        return stag;
     }
 
     @Rollback
@@ -79,12 +71,12 @@ public class StorageServiceTest {
     @Test
     public void shouldListSizeIncreaseAfterInsert() {
         // given
-        int before = storageService.findAll().size();
+        int before = storageRepository.findAll().size();
         Storage storage = getTestData();
 
         // when
-        storageService.insert(storage);
-        int after = storageService.findAll().size();
+        storageRepository.insert(storage);
+        int after = storageRepository.findAll().size();
 
         // then
         assertThat(after).isEqualTo(before + 1);
@@ -96,14 +88,14 @@ public class StorageServiceTest {
     public void shouldListSizeDecreaseAfterRemove() {
         // given
         Storage storage = getTestData();
-        storageService.insert(storage);
-        List<Storage> storages = storageService.findAll();
+        storageRepository.insert(storage);
+        List<Storage> storages = storageRepository.findAll();
         int sizeBefore = storages.size();
         long id = storages.get(0).getId();
 
         // when
-        storageService.remove(id);
-        int sizeAfter = storageService.findAll().size();
+        storageRepository.delete(id);
+        int sizeAfter = storageRepository.findAll().size();
 
         // then
         assertThat(sizeBefore).isGreaterThan(sizeAfter);

@@ -1,5 +1,9 @@
 package pl.jakpoliczyc.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import pl.jakpoliczyc.web.common.View;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -7,11 +11,15 @@ import java.util.Collection;
 @Entity(name = "STAGS")
 public class Stag {
 
+    @JsonView(View.Compress.class)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @JsonView(View.Compress.class)
+    @Column(unique = true)
     private String name;
-    @ManyToMany
+    @JsonIgnore
+    @ManyToMany(mappedBy = "stags", fetch = FetchType.LAZY)
     private Collection<Storage> storages;
 
     public long getId() {

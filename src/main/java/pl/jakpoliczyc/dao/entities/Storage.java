@@ -1,18 +1,29 @@
 package pl.jakpoliczyc.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import pl.jakpoliczyc.web.common.View;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 @PersistenceUnit(name = "JakPoliczyc")
 @Entity(name = "STORAGES")
 public class Storage {
 
+    @JsonView(View.Compress.class)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @JsonView(View.Compress.class)
     @Embedded
     private Story story;
-    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "storages", targetEntity = Stag.class)
+    @JsonView(View.Compress.class)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "ADDED_DATE")
+    private Date addedDate;
+    @JsonView(View.Compress.class)
+    @ManyToMany
     @JoinTable(name = "STO_STA",
             joinColumns = @JoinColumn(name = "STO_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "STA_ID", referencedColumnName = "ID"))
@@ -32,6 +43,14 @@ public class Storage {
 
     public void setStory(Story story) {
         this.story = story;
+    }
+
+    public Date getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(Date addedDate) {
+        this.addedDate = addedDate;
     }
 
     public Collection<Stag> getStags() {

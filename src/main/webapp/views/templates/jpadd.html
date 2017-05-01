@@ -41,7 +41,7 @@
     </div>
 
     <div class="add-submit">
-        <button ng-click="openModalSaveToStorage()" class="btn btn-primary">{{language.stoSave}}</button>
+        <button ng-click="openModalSaveToStorage(add.title, add.intro, add.content, add.tags)" class="btn btn-primary">{{language.stoSave}}</button>
         <button ng-click="submit()" ng-disabled="addForm.$invalid" class="btn btn-primary">{{language.publish}}</button>
     </div>
 

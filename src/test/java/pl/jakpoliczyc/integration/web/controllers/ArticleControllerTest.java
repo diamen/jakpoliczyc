@@ -1,9 +1,5 @@
 package pl.jakpoliczyc.integration.web.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.jakpoliczyc.dao.entities.Article;
+import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Story;
 import pl.jakpoliczyc.dao.services.ArticleServiceImpl;
 import pl.jakpoliczyc.integration.web.WebTestConfig;
@@ -28,12 +25,14 @@ import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 import javax.servlet.ServletContext;
 import java.util.Arrays;
 
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ArticleControllerTest extends WebTestConfig {
@@ -190,6 +189,29 @@ public class ArticleControllerTest extends WebTestConfig {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void shouldReturnCompressedResult() throws Exception {
+        // given
+        Article article = new Article();
+        article.setMenu(new Menu());
+        Story story = new Story();
+        story.setIntro("intro");
+        story.setContent("content");
+        story.setTitle("title");
+        article.setStory(story);
+        String requestJson = generateRequest(article);
+        doReturn(Arrays.asList(article)).when(articleService).findAll();
+
+        // when - then
+        mockMvc.perform(get("/articles")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].story.title", is(story.getTitle())))
+                .andExpect(jsonPath("$[0].story.intro", is(story.getIntro())))
+                .andExpect(jsonPath("$[0].story.content").doesNotExist());
     }
 
 }

@@ -109,6 +109,7 @@ module.exports = function (grunt) {
         'scripts/services/jpPdfService.js',
         'scripts/services/menuService.js',
         'scripts/services/modalService.js',
+        'scripts/services/storageService.js',
         'scripts/services/subscribeService.js'
     ];
 
