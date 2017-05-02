@@ -94,6 +94,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Transactional(readOnly = true)
     private Menu prepareMenu(List<MenuDto> wrappers) {
+        if (wrappers.size() == 1 && wrappers.get(0).getId() == 0) {
+            Menu menu = new Menu();
+            menu.setName(wrappers.get(0).getName());
+            return menu;
+        }
         MenuDto lastNotZero = wrappers.stream().filter(e -> e.id > 0).max((e1, e2) -> wrappers.indexOf(e1) - wrappers.indexOf(e2)).get();
         List<MenuDto> menuToInsert = wrappers.stream().filter(e -> e.getId() == 0).collect(Collectors.toList());
         Menu lastExist = menuService.find(lastNotZero.getId());

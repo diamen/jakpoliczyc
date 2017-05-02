@@ -204,6 +204,31 @@ public class ArticleServiceTest {
     @Rollback
     @Transactional
     @Test
+    public void shouldInsertNewArticleWithWholeNewMenu() {
+        // given
+        MenuDto menuDto = new MenuDto();
+        menuDto.setId(0);
+        menuDto.setName("I do not exist already");
+        Story story = new Story();
+        story.setTitle("any title");
+        story.setContent("any content");
+        story.setIntro("any intro");
+        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
+        storyMenuTagDto.setMenus(Arrays.asList(menuDto));
+        storyMenuTagDto.setStory(story);
+
+        int sizeBefore = articleService.findAll().size();
+
+        // when
+        articleService.save(storyMenuTagDto);
+
+        // then
+        assertThat(sizeBefore + 1).isEqualTo(articleService.findAll().size());
+    }
+
+    @Rollback
+    @Transactional
+    @Test
     public void shouldInsertOnlyNotPresentTags() {
         // given
         List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();

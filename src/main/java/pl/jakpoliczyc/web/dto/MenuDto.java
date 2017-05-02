@@ -1,8 +1,14 @@
 package pl.jakpoliczyc.web.dto;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+
 public class MenuDto {
 
+    @NotNull
     public long id;
+    @NotEmpty
     public String name;
 
     public MenuDto() {

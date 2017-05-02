@@ -5,7 +5,6 @@ angular.module('jakPoliczycDirectives')
             scope: true,
             link: function(scope, element, attrs) {
                 scope.add = {};
-                scope.menu = angular.fromJson(attrs.items);
 
                 attrs.$observe('storage', function (val) {
                     init(val);

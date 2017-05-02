@@ -28,7 +28,9 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Storage;
 import pl.jakpoliczyc.dao.entities.Story;
+import pl.jakpoliczyc.dao.services.ArticleService;
 import pl.jakpoliczyc.dao.services.StorageService;
+import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StorageDto;
 
 import java.util.Arrays;
@@ -76,6 +78,9 @@ public class StorageServiceTest {
 
     @Autowired
     private StorageService storageService;
+
+    @Autowired
+    private ArticleService articleService;
 
     public Object[] parametersForShouldInsertCorrectlyStorageObject() {
         StorageDto storage1 = new StorageDto();
@@ -150,6 +155,30 @@ public class StorageServiceTest {
         softly.assertThat(storageAfter.getStory().getContent()).isEqualTo(contentAfter);
         softly.assertThat(storageAfter.getStory().getTitle()).isNull();
         softly.assertThat(storageAfter.getStory().getIntro()).isNull();
+        softly.assertAll();
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldPublishArticleFromStorage() throws Exception {
+        // given
+        long id = 1;
+        int sizeOfStoragesBefore = storageService.findAll().size();
+        int sizeOfArticlesBefore = articleService.findAll().size();
+        MenuDto menuDto = new MenuDto();
+        menuDto.setId(0);
+        menuDto.setName("Funkcje");
+
+        // when
+        storageService.publish(id, Arrays.asList(menuDto));
+
+        // then
+        int sizeOfStoragesAfter = storageService.findAll().size();
+        int sizeOfArticlesAfter = articleService.findAll().size();
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(sizeOfStoragesBefore - 1).isEqualTo(sizeOfStoragesAfter);
+        softly.assertThat(sizeOfArticlesBefore + 1).isEqualTo(sizeOfArticlesAfter);
         softly.assertAll();
     }
 

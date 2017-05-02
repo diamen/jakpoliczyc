@@ -69,6 +69,7 @@ module.exports = function (grunt) {
 
         /* Directives */
         'scripts/directives/directive.js',
+        'scripts/directives/isolateForm.js',
         'scripts/directives/jpadd.js',
         'scripts/directives/jpcategory.js',
         'scripts/directives/jpcategoryInput.js',

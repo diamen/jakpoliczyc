@@ -37,6 +37,14 @@ angular.module('jakPoliczycServices')
                     url: '/storage',
                     headers: {'Content-Type': 'application/json'}
                 });
+            },
+            publishStorage: function (id, data) {
+                return $http({
+                    method: 'POST',
+                    url: '/storage/publish/' + id,
+                    headers: {'Content-Type': 'application/json'},
+                    data: data
+                });
             }
         }
 

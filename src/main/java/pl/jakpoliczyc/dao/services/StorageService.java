@@ -1,6 +1,7 @@
 package pl.jakpoliczyc.dao.services;
 
 import pl.jakpoliczyc.dao.entities.Storage;
+import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StorageDto;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface StorageService {
     void delete(long storageId);
     Storage find(long id);
     List<Storage> findAll();
+    void publish(long storageId, List<MenuDto> menus);
 }

@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.jakpoliczyc.dao.entities.Storage;
 import pl.jakpoliczyc.dao.services.StorageService;
 import pl.jakpoliczyc.web.common.View;
+import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StorageDto;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -54,6 +56,12 @@ public class StorageController {
     public ResponseEntity<?> deleteStorage(@PathVariable long id) {
         storageService.delete(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/storage/publish/{id:[0-9]*}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> publishStorage(@PathVariable long id, @Valid @RequestBody List<MenuDto> menus) {
+        storageService.publish(id, menus);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
 }

@@ -4,11 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Stag;
 import pl.jakpoliczyc.dao.entities.Storage;
+import pl.jakpoliczyc.dao.repos.ArticleRepository;
 import pl.jakpoliczyc.dao.repos.StagRepository;
 import pl.jakpoliczyc.dao.repos.StorageRepository;
+import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StorageDto;
+import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +22,9 @@ import java.util.stream.Collectors;
 @Transactional
 @Service
 public class StorageServiceImpl implements StorageService {
+
+    @Autowired
+    private ArticleService articleService;
 
     @Autowired
     private StorageRepository storageRepository;
@@ -59,6 +66,18 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public List<Storage> findAll() {
         return storageRepository.findAll();
+    }
+
+    @Transactional
+    @Override
+    public void publish(long storageId, List<MenuDto> menus) {
+        Storage storage = find(storageId);
+        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
+        storyMenuTagDto.setStory(storage.getStory());
+        storyMenuTagDto.setMenus(menus);
+        storyMenuTagDto.setTags(storage.getStags().stream().map(e -> e.getName()).collect(Collectors.toList()));
+        storageRepository.delete(storageId);
+        articleService.save(storyMenuTagDto);
     }
 
     private List<Stag> prepareStags(List<String> names) {

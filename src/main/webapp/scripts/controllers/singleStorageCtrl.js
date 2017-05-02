@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('singleStorageCtrl', function($scope, $http, $stateParams, $window, articleService, modalService, storageService) {
+    .controller('singleStorageCtrl', function($scope, $http, $stateParams, $window, jpstorage, articleService, modalService, storageService) {
 
         var editables = [];
         var id = $stateParams.id;
@@ -57,6 +57,17 @@ angular.module('jakPoliczycControllers')
                     $scope.goHome();
                 });
             }, $scope.language.msgArtRem, id);
+        };
+
+        $scope.publish = function () {
+            jpstorage.clear('menus');
+            $scope.$broadcast('publish-down');
+            modalService.execute(function (data) {
+                storageService.publishStorage(data.id, data.menu).then(function success() {
+                    $scope.addAlert({'type': 'success', 'msg': $scope.language.alertStoPub});
+                    $scope.goHome();
+                });
+            }, $scope.language.msgPublish, {'id': id, 'menu': jpstorage.retrieve('menus')});
         };
 
         function toggleEditable(state) {

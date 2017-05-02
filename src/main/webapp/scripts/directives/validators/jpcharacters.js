@@ -3,7 +3,7 @@ angular.module('jakPoliczycDirectives')
         return {
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
-                var charRegex = /^[a-zA-ZąęćśńźóżĄĘĆŚŃŹÓŻ\s]*$/;
+                var charRegex = /^[a-zA-ZąęćłśńźóżĄĘĆŁŚŃŹÓŻ\s]*$/;
 
                 ctrl.$parsers.unshift(function (modelValue) {
 

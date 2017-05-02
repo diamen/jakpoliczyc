@@ -18,6 +18,7 @@ import pl.jakpoliczyc.dao.entities.Story;
 import pl.jakpoliczyc.dao.services.StorageService;
 import pl.jakpoliczyc.integration.web.WebTestConfig;
 import pl.jakpoliczyc.web.controllers.StorageController;
+import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StorageDto;
 
 import javax.servlet.ServletContext;
@@ -146,6 +147,7 @@ public class StorageControllerTest extends WebTestConfig {
 
     @Test
     public void shouldReturnStorageBeCorrect() throws Exception {
+        // given
         long id = 1;
         Storage storage = new Storage();
         Story story = new Story();
@@ -155,6 +157,7 @@ public class StorageControllerTest extends WebTestConfig {
         storage.setStory(story);
         doReturn(storage).when(storageService).find(id);
 
+        // when - then
         mockMvc.perform(get("/storage/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -179,6 +182,18 @@ public class StorageControllerTest extends WebTestConfig {
                 .andExpect(jsonPath("$[0].story.title", is(story.getTitle())))
                 .andExpect(jsonPath("$[0].story.intro", is(story.getIntro())))
                 .andExpect(jsonPath("$[0].story.content").doesNotExist());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenRequestIsNotValid() throws Exception {
+        MenuDto menuDto = new MenuDto();
+        menuDto.setId(0);
+        menuDto.setName("");
+
+        mockMvc.perform(post("/storage/publish/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(generateRequest(menuDto)))
+                .andExpect(status().isBadRequest());
     }
 
 }

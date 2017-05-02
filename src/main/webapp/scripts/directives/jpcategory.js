@@ -4,7 +4,7 @@ angular.module('jakPoliczycDirectives')
             restrict: 'E',
             scope: true,
             link: function(scope, element, attrs) {
-                scope.nitems = angular.fromJson(attrs.items);
+                scope.nitems = angular.fromJson(attrs.items) || [];
                 scope.editable = false;
                 scope.parentId = attrs.parentId || 0;
 
@@ -109,11 +109,13 @@ angular.module('jakPoliczycDirectives')
             },
             template:
 
-            '<div ng-form name="category" class="form-group">' +
+            '<div ng-if="nitems" ng-form name="category" class="form-group">' +
                 '<label>{{ parentId > 0 ? $root.language.subchapter : $root.language.chapter }}</label>' +
                 '<div class="input-group">' +
                     '<input name="input" ng-show="editable" ng-model="inputModel" class="form-control" ng-required="editable" jpalphanumeric/>' +
-                    '<select name="selNames" id="selNames" class="form-control jpzindexfix" ng-hide="editable" ng-options="item.name for item in nitems track by item.id" ng-model="selectedModel"></select>' +
+                    '<select name="selNames" id="selNames" class="form-control jpzindexfix" ng-hide="editable" ' +
+                    'ng-options="item.name for item in nitems track by item.id" ng-model="$parent.selectedModel" ng-init="$parent.selectedModel = nitems[0]">' +
+                    '</select>' +
                     '<span class="input-group-btn"><button ng-click="edit()" class="btn btn-default">{{ editable ? $root.language.cancel : $root.language.edit }}</button></span>' +
                     '<span ng-show="parentId > 0" class="input-group-btn"><button ng-click="remove()" class="btn btn-default remove">{{$root.language.remove}}</button></span>' +
                     '<span ng-hide="editable" class="input-group-btn"><button ng-click="addSelect()" class="btn btn-default">{{$root.language.add}}</button></span>' +

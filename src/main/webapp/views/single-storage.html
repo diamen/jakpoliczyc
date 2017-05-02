@@ -1,24 +1,31 @@
-<article class="jparticle" ng-if="single">
-    <header>
-        <div>
-            <span class="date">{{single.date | date: 'HH:mm dd/MM/yyyy'}}</span>
-        </div>
-        <h2 id="title" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTit}}" data-jp-content-editable ng-model="single.story.title"></h2>
-        <div>
-            <button ng-show="isEditable" class="btn btn-default" ng-click="submit()">{{$root.language.submit}}</button>
-            <button ng-hide="isEditable" class="btn btn-default" ng-click="edit()">{{$root.language.edit}}</button>
-            <button ng-hide="isEditable" class="btn btn-default" ng-click="delete()">{{$root.language.remove}}</button>
-            <button ng-show="isEditable" class="btn btn-default" ng-click="cancel()">{{$root.language.cancel}}</button>
-        </div>
-    </header>
+<form name="singleForm">
+    <article class="jparticle" ng-if="single">
+        <header>
+            <h2 id="title" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTit}}" data-jp-content-editable ng-model="single.story.title" required></h2>
+            <div>
+                <button ng-show="isEditable" class="btn btn-default" ng-click="submit()">{{$root.language.stoSave}}</button>
+                <button ng-hide="isEditable" class="btn btn-default" ng-click="edit()">{{$root.language.editSto}}</button>
+                <button ng-hide="isEditable" class="btn btn-default" ng-click="delete()">{{$root.language.remove}}</button>
+                <button ng-show="isEditable" class="btn btn-default" ng-click="cancel()">{{$root.language.cancel}}</button>
+            </div>
+        </header>
 
-    <div class="tags">
-        <span>{{$root.language.tagsS}}</span><span ng-hide="(angular.isUndefined(single.stags) || single.stags.length === 0) && !isEditable" id="tags" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTag}}" data-jp-content-editable ng-model="single.stags"></span>
-    </div>
-    <p id="intro" ng-class="isEditable ? 'jpeditable' : ''" class="intro" contenteditable="false" placeholder="{{$root.language.artPlcInt}}" data-jp-content-editable ng-model="single.story.intro"></p>
-    <p id="content" ng-class="isEditable ? 'jpeditable' : ''" class="content" mathjax-bind process="{{!isEditable}}" content="{{single.story.content}}" contenteditable="false" placeholder="{{$root.language.artPlcCon}}" data-jp-content-editable ng-model="single.story.content"></p>
-    <div class="footer">
-        <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>
-        <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.pdfDownload}}" ng-click="getPdf(id)"></i>
-    </div>
-</article>
+        <jpcategory ng-if="menu" ng-hide="isEditable" items="{{menu}}"></jpcategory>
+
+        <div class="tags">
+            <span>{{$root.language.tagsS}}</span><span ng-hide="(angular.isUndefined(single.stags) || single.stags.length === 0) && !isEditable" id="tags" name="tags" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTag}}" data-jp-content-editable ng-model="single.stags" jpcharacters></span>
+            <div ng-show="singleForm.tags.$error.jpcharacters">
+                <span class="jperror">{{language.errChars}}</span>
+            </div>
+        </div>
+        <p id="intro" ng-class="isEditable ? 'jpeditable' : ''" class="intro" contenteditable="false" placeholder="{{$root.language.artPlcInt}}" data-jp-content-editable ng-model="single.story.intro" required></p>
+        <p id="content" ng-class="isEditable ? 'jpeditable' : ''" class="content" mathjax-bind process="{{!isEditable}}" content="{{single.story.content}}" contenteditable="false" placeholder="{{$root.language.artPlcCon}}" data-jp-content-editable ng-model="single.story.content" required></p>
+        <div class="footer">
+            <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>
+        </div>
+
+        <div class="add-submit">
+            <button ng-click="publish()" ng-disabled="isEditable || singleForm.$invalid" class="btn btn-primary">{{language.publish}}</button>
+        </div>
+    </article>
+</form>

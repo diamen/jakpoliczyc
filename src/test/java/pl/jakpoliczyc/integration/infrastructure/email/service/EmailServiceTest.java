@@ -5,6 +5,7 @@ import com.icegreen.greenmail.util.ServerSetup;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,7 @@ import javax.mail.MessagingException;
 import java.util.Arrays;
 import java.util.List;
 
+@Ignore
 @TestPropertySource(properties = {
         "smtp.host=localhost",
         "smtp.port=25",
