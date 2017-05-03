@@ -52,6 +52,11 @@ angular.module('jakPoliczycServices')
                     tag = tag.trim();
                     return tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase();
                 });
+            },
+            prepareYoutubeUrl: function (url) {
+                var toWatch = url.substr(url.indexOf('embed/')).substring(6);
+                var youtube = url.substr(0, url.indexOf('embed'));
+                return  (youtube + "watch?v=" + toWatch);
             }
         }
 

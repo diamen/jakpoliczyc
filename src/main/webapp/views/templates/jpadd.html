@@ -32,13 +32,7 @@
 
     <jppostarea form="addForm"></jppostarea>
 
-    <div class="input-group add-youtube">
-        <span class="input-group-addon">
-            <input ng-model="youtubeEnabled" ng-true-value="true" ng-false-value="false" type="checkbox" aria-label="youtube checkbox">
-        </span>
-        <span class="input-group-addon" id="sizing-addon1">www</span>
-        <input ng-disabled="!youtubeEnabled" type="url" placeholder="youtube link" class="form-control" aria-label="youtube input.">
-    </div>
+    <jp-youtube-form ng-model="add.youtube"></jp-youtube-form>
 
     <div class="add-submit">
         <button ng-click="openModalSaveToStorage(add.title, add.intro, add.content, add.tags)" class="btn btn-primary">{{language.stoSave}}</button>

@@ -1,12 +1,16 @@
 package pl.jakpoliczyc.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
+import pl.jakpoliczyc.dao.converters.UrlToStringConverter;
 import pl.jakpoliczyc.web.common.View;
 
 import javax.persistence.*;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @PersistenceUnit(name = "JakPoliczyc")
 @Entity(name = "STORAGES")
 public class Storage {
@@ -28,6 +32,8 @@ public class Storage {
             joinColumns = @JoinColumn(name = "STO_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "STA_ID", referencedColumnName = "ID"))
     private Collection<Stag> stags;
+    @Convert(converter = UrlToStringConverter.class)
+    private URL url;
 
     public long getId() {
         return id;
@@ -59,5 +65,13 @@ public class Storage {
 
     public void setStags(Collection<Stag> stags) {
         this.stags = stags;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public void setUrl(URL url) {
+        this.url = url;
     }
 }

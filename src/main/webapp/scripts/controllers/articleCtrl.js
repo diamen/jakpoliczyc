@@ -1,9 +1,10 @@
 angular.module('jakPoliczycControllers')
-    .controller('articleCtrl', function($scope, $http, $stateParams, $window, articleService, jpPdfService, jpstorage, modalService) {
+    .controller('articleCtrl', function ($scope, $http, $sce, $stateParams, $window, articleService, jpstorage, modalService) {
 
         var editables = [];
         $scope.id = parseInt($stateParams.id, 10);
         $scope.isEditable = false;
+        $scope.prepareYoutubeUrl = articleService.prepareYoutubeUrl;
 
         $scope.$on('$stateChangeSuccess', function () {
             $scope.$emit('unselect-up');
@@ -21,16 +22,12 @@ angular.module('jakPoliczycControllers')
                             return e.name;
                         }).join(' ');
                     }
+                    if (angular.isDefined($scope.article.url)) {
+                        $scope.url = $sce.trustAsResourceUrl($scope.article.url);
+                    }
                 })
         };
         $scope.getSingle($scope.id);
-
-        $scope.getPdf = function () {
-            var intro = angular.element(document.querySelector("#intro"))[0];
-            var content = angular.element(document.querySelector("#content"))[0];
-            console.log(content);
-            jpPdfService.saveAsPdf(content);
-        };
 
         $scope.submit = function () {
             jpstorage.clear('menus');
@@ -48,9 +45,10 @@ angular.module('jakPoliczycControllers')
                     content: $scope.article.ncontent
                 },
                 menus: jpstorage.retrieve('menus'),
-                tags: tags
+                tags: tags,
+                url: $scope.article.url
             };
-            modalService.execute(function(data) {
+            modalService.execute(function (data) {
                 articleService.updateArticle(data.id, data.request).then(function success() {
                     $scope.goHome();
                 });
@@ -69,11 +67,13 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.cancel = function () {
-            modalService.execute(function() { $window.location.reload(); }, $scope.language.msgUpdCancel);
+            modalService.execute(function () {
+                $window.location.reload();
+            }, $scope.language.msgUpdCancel);
         };
 
         $scope.delete = function () {
-            modalService.execute(function(id) {
+            modalService.execute(function (id) {
                 articleService.deleteArticle(id).then(function success() {
                     $scope.goHome();
                 });

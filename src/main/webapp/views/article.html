@@ -25,10 +25,15 @@
             </div>
             <p id="intro" ng-class="isEditable ? 'jpeditable' : ''" class="intro" contenteditable="false" placeholder="{{$root.language.artPlcInt}}" data-jp-content-editable ng-model="article.story.intro" required></p>
             <p id="content" ng-class="isEditable ? 'jpeditable' : ''" class="content" mathjax-bind process="{{!isEditable}}" content="{{article.ncontent}}" contenteditable="false" placeholder="{{$root.language.artPlcCon}}" data-jp-content-editable ng-model="article.ncontent" required></p>
+
+            <div ng-if="url" ng-hide="isEditable" class="video">
+                <iframe width="420" height="315" ng-src="{{url}}" allowfullscreen></iframe>
+            </div>
+            <jp-youtube-form ng-show="isEditable" ng-model="article.url"></jp-youtube-form>
+
             <div class="footer">
                 <span>{{$root.language.comments}} [{{article.comments.length}}]</span>
-                <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>
-                <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.pdfDownload}}" ng-click="getPdf(id)"></i>
+                <i ng-click="redirect(prepareYoutubeUrl(article.url))" ng-show="url" class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>
             </div>
             <ng-form novalidate isolate-form ng-submit="nadd(usercom.author, usercom.content)" name="form" class="add">
                 <div class="form-group">

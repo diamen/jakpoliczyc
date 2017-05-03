@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.jakpoliczyc.dao.converters.UrlToStringConverter;
 import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Stag;
 import pl.jakpoliczyc.dao.entities.Storage;
@@ -32,11 +33,14 @@ public class StorageServiceImpl implements StorageService {
     @Autowired
     private StagRepository stagRepository;
 
+    private UrlToStringConverter converter = new UrlToStringConverter();
+
     @Override
     public void save(StorageDto wrapper) {
         Storage storage = new Storage();
         storage.setStags(wrapper.getStags() != null ? prepareStags(wrapper.getStags()) : null);
         storage.setStory(wrapper.getStory());
+        storage.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
         storageRepository.insert(storage);
     }
 
@@ -47,6 +51,7 @@ public class StorageServiceImpl implements StorageService {
         storage.setStory(wrapper.getStory());
         storage.setStags(wrapper.getStags() != null ? prepareStags(wrapper.getStags()) : null);
         storage.setAddedDate(new Date());
+        storage.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
         storageRepository.insert(storage);
     }
 

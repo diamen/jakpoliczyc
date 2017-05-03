@@ -54,6 +54,7 @@ PL = {
     errReq:         "Pole jest wymagane",
     errSings:       "Zakaz używania znaków specjalnych!",
     errUsername:    "Wymagane podanie nazwy użytkownika",
+    errYoutube:     'Niepoprawny format - wymagany format: "https://www.youtube.com/embed/{RESZTA}"',
     exercise:       "Zadanie",
     expand:         "Rozwiń",
     fbRedirect:     "Przejdź do fanpage'a",

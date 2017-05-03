@@ -1,14 +1,20 @@
 angular.module('jakPoliczycControllers')
-    .controller('singleStorageCtrl', function($scope, $http, $stateParams, $window, jpstorage, articleService, modalService, storageService) {
+    .controller('singleStorageCtrl', function ($scope, $http, $sce, $stateParams, $window, jpstorage, articleService, modalService, storageService) {
 
         var editables = [];
         var id = $stateParams.id;
         $scope.isEditable = false;
+        $scope.prepareYoutubeUrl = articleService.prepareYoutubeUrl;
 
         storageService.getStorage(id).then(function success(response) {
             $scope.single = response.data;
             if (angular.isDefined($scope.single.stags)) {
-                $scope.single.stags = $scope.single.stags.map(function(e) { return e.name; }).join(' ');
+                $scope.single.stags = $scope.single.stags.map(function (e) {
+                    return e.name;
+                }).join(' ');
+            }
+            if (angular.isDefined($scope.single.url)) {
+                $scope.url = $sce.trustAsResourceUrl($scope.single.url);
             }
         });
 
@@ -25,9 +31,10 @@ angular.module('jakPoliczycControllers')
                     intro: $scope.single.story.intro,
                     content: $scope.single.story.content
                 },
-                stags: stags
+                stags: stags,
+                url: $scope.single.url
             };
-            modalService.execute(function(data) {
+            modalService.execute(function (data) {
                 storageService.updateStorage(data.id, data.request).then(function success() {
                     $scope.addAlert({'type': 'success', 'msg': $scope.language.alertStoUpd});
                     $scope.goHome();
@@ -47,11 +54,13 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.cancel = function () {
-            modalService.execute(function() { $window.location.reload(); }, $scope.language.msgUpdCancel);
+            modalService.execute(function () {
+                $window.location.reload();
+            }, $scope.language.msgUpdCancel);
         };
 
         $scope.delete = function () {
-            modalService.execute(function(id) {
+            modalService.execute(function (id) {
                 storageService.deleteStorage(id).then(function success() {
                     $scope.addAlert({'type': 'success', 'msg': $scope.language.alertStoRem});
                     $scope.goHome();

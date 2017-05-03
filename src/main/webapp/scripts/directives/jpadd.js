@@ -30,7 +30,8 @@ angular.module('jakPoliczycDirectives')
                                 content: scope.add.content
                             },
                             menus: jpstorage.retrieve('menus'),
-                            tags: tags
+                            tags: tags,
+                            url: scope.add.youtube
                         };
                         scope.openModalSubmit(request);
                     }

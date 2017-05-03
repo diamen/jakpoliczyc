@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import pl.jakpoliczyc.dao.converters.UrlToStringConverter;
 import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Comment;
 import pl.jakpoliczyc.dao.entities.Menu;
@@ -33,6 +34,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private TagService tagService;
 
+    private UrlToStringConverter converter = new UrlToStringConverter();
+
     @Override
     @Transactional
     public void save(StoryMenuTagDto wrapper) {
@@ -42,6 +45,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setMenu(menu);
         article.setTags(wrapper.getTags() != null ? prepareTags(wrapper.getTags()) : null);
         article.setAddedDate(new Date());
+        article.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
         articleRepository.insertArticle(article);
     }
 
@@ -53,6 +57,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setStory(wrapper.getStory());
         article.setMenu(menu);
         article.setTags(wrapper.getTags() != null ? prepareTags(wrapper.getTags()) : null);
+        article.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
         articleRepository.insertArticle(article);
     }
 

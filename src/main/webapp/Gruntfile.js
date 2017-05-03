@@ -21,8 +21,6 @@ module.exports = function (grunt) {
         'libraries/angular-mocks/angular-mocks.js',
         'libraries/angular-sanitize/angular-sanitize.js',
         'libraries/angular-ui-tree/dist/angular-ui-tree.js',
-        'libraries/jsPDF/dist/jspdf.debug.js',
-        'libraries/html2canvas/dist/html2canvas.js',
         'libraries/underscore/underscore.js',
         'libraries/trix/trix.js',
         'libraries/angular-trix/dist/angular-trix.js',
@@ -85,6 +83,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpnode.js',
         'scripts/directives/jppostarea.js',
         'scripts/directives/jpToggle.js',
+        'scripts/directives/jpYoutubeForm.js',
         'scripts/directives/mathjaxBind.js',
         'scripts/directives/slideable.js',
         'scripts/directives/slideToggle.js',
@@ -94,6 +93,7 @@ module.exports = function (grunt) {
         'scripts/directives/validators/jpalphanumeric.js',
         'scripts/directives/validators/jpcharacters.js',
         'scripts/directives/validators/jpurls.js',
+        'scripts/directives/validators/jpyoutube.js',
 
         /* Factories */
         'scripts/factories/factory.js',
@@ -107,7 +107,6 @@ module.exports = function (grunt) {
         'scripts/services/broadcasterService.js',
         'scripts/services/jpartfilter.js',
         'scripts/services/jpauth.js',
-        'scripts/services/jpPdfService.js',
         'scripts/services/menuService.js',
         'scripts/services/modalService.js',
         'scripts/services/storageService.js',

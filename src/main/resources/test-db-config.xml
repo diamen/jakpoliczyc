@@ -31,7 +31,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter"/>
         </property>
-        <property name="packagesToScan" value="pl.jakpoliczyc.dao.entities"/>
+        <property name="packagesToScan" value="pl.jakpoliczyc.dao"/>
         <property name="jpaProperties">
             <props>
                 <prop key="eclipselink.logging.level">FINEST</prop>

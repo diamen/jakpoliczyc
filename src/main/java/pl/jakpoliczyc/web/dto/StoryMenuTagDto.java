@@ -1,6 +1,7 @@
 package pl.jakpoliczyc.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.URL;
 import pl.jakpoliczyc.dao.entities.Story;
 
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,8 @@ public class StoryMenuTagDto implements Serializable {
     private List<String> tags;
     @NotNull
     private List<MenuDto> menus;
+    @URL
+    private String url;
 
     public StoryMenuTagDto() {
         super();
@@ -50,12 +53,22 @@ public class StoryMenuTagDto implements Serializable {
         this.menus = menus;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
-        return "StoryMenuTag{" +
-                "story=" + story +
-                ", tags=" + tags +
-                ", menus=" + menus +
-                '}';
+        final StringBuilder sb = new StringBuilder("StoryMenuTagDto{");
+        sb.append("story=").append(story);
+        sb.append(", tags=").append(tags);
+        sb.append(", menus=").append(menus);
+        sb.append(", url='").append(url).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
