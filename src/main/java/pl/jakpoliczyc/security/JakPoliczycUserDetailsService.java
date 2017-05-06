@@ -25,7 +25,7 @@ public class JakPoliczycUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUsername(username);
         if (user != null) {
-            return new org.springframework.security.core.userdetails.User(
+            return new JwtUser(
                     user.getUsername(),
                     user.getPassword(),
                     user.getAuthorities()

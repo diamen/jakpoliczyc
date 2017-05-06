@@ -3,13 +3,12 @@ package pl.jakpoliczyc.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.aspectj.apache.bcel.util.ClassLoaderRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,8 +33,20 @@ public class JwtTokenUtils {
     @Value("${jwt.expiration}")
     private Long expiration;
 
+    @Value("${jwt.header}")
+    private String tokenHeader;
+
     public JwtTokenUtils() {
         this.signatureAlgorithm = SignatureAlgorithm.HS256;
+    }
+
+    public String getTokenFromRequest(HttpServletRequest request) {
+        String authToken = request.getHeader(tokenHeader);
+        if (authToken != null && authToken.contains("Bearer")) {
+            authToken = authToken.split("\\s")[1];
+            authToken = authToken.replace("\"", "");
+        }
+        return authToken;
     }
 
     public String getUsernameFromToken(String token) {
@@ -142,7 +153,7 @@ public class JwtTokenUtils {
 
     public String generateToken(UserDetails userDetails, Device device) {
         return Jwts.builder().setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(getExpirationDate())
+                .setExpiration(generateExpirationDate())
                 .setSubject(userDetails.getUsername())
                 .signWith(signatureAlgorithm, secret)
                 .claim(CLAIM_KEY_AUTHORITIES, userDetails.getAuthorities().stream().map(e -> e.getAuthority()).collect(Collectors.joining(",")))
@@ -180,7 +191,6 @@ public class JwtTokenUtils {
         JwtUser user = (JwtUser) userDetails;
         final String username = getUsernameFromToken(token);
         final Date created = getCreatedDateFromToken(token);
-        //final Date expiration = getExpirationDateFromToken(token);
         return (
                 username.equals(user.getUsername())
                         && !isTokenExpired(token)

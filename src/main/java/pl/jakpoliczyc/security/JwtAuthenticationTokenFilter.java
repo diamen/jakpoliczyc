@@ -22,15 +22,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtils jwtTokenUtils;
 
-    @Value("${jwt.header}")
-    private String tokenHeader;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authToken = request.getHeader(tokenHeader);
-        if (authToken != null && authToken.contains("Bearer")) {
-            authToken = authToken.split("\\s")[1];
-        }
+        String authToken = jwtTokenUtils.getTokenFromRequest(request);
         final String username = jwtTokenUtils.getUsernameFromToken(authToken);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

@@ -68,21 +68,6 @@ public class JwtTokenUtilsTest {
     }
 
     @Test
-    public void shouldDecryptExpirationDateFromToken() {
-        // given
-        final Date expectedExpiration = new Date(System.currentTimeMillis() + expiration);
-        JwtTokenUtils spyJwtTokenUtils = spy(jwtTokenUtils);
-        doReturn(expectedExpiration).when(spyJwtTokenUtils).getExpirationDate();
-        final String token = spyJwtTokenUtils.generateToken(getUserDetails("any"), getDevice());
-
-        // when
-        final Date givenExpiration = spyJwtTokenUtils.getExpirationDateFromToken(token);
-
-        // then
-        assertThat(givenExpiration).isEqualToIgnoringMillis(expectedExpiration);
-    }
-
-    @Test
     public void shouldDecryptAuthoritiesFromToken() {
         // given
         final String expectedRole = "ROLE_ADMIN";

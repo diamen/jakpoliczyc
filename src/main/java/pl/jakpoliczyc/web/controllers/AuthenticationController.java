@@ -1,10 +1,11 @@
 package pl.jakpoliczyc.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.jakpoliczyc.security.JwtTokenUtils;
+import pl.jakpoliczyc.security.JwtUser;
 import pl.jakpoliczyc.web.dto.JwtAuthenticationRequestDto;
 import pl.jakpoliczyc.web.dto.JwtAuthenticationResponseDto;
 
@@ -50,6 +52,21 @@ public class AuthenticationController {
         }
 
         return ResponseEntity.ok(new JwtAuthenticationResponseDto(jwtTokenUtils.generateToken(userDetails, DeviceUtils.getCurrentDevice(request))));
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
+    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
+        final String token = jwtTokenUtils.getTokenFromRequest(request);
+        final String username = jwtTokenUtils.getUsernameFromToken(token);
+        final JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+
+        if (jwtTokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
+            final String refreshedToken = jwtTokenUtils.refreshToken(token);
+            return new ResponseEntity<>(new JwtAuthenticationResponseDto(refreshedToken), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
 }

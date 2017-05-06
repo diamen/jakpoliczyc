@@ -82,6 +82,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpmenu.js',
         'scripts/directives/jpnode.js',
         'scripts/directives/jppostarea.js',
+        'scripts/directives/jpTimer.js',
         'scripts/directives/jpToggle.js',
         'scripts/directives/jpYoutubeForm.js',
         'scripts/directives/mathjaxBind.js',
@@ -94,6 +95,9 @@ module.exports = function (grunt) {
         'scripts/directives/validators/jpcharacters.js',
         'scripts/directives/validators/jpurls.js',
         'scripts/directives/validators/jpyoutube.js',
+
+        /* Filters */
+        'scripts/filters/jpStopwatch.js',
 
         /* Factories */
         'scripts/factories/factory.js',
@@ -113,9 +117,9 @@ module.exports = function (grunt) {
         'scripts/services/subscribeService.js'
     ];
 
-    grunt.initConfig({
+    grunt.config.init({
 
-       pkg: grunt.file.readJSON('package.json'),
+       // pkg: grunt.file.readJSON('package.json'),
 
        clean: ['src/main/webapp/sass/build.scss', 'src/main/webapp/styles/main.css', 'src/main/webapp/styles/main.css.map'],
 

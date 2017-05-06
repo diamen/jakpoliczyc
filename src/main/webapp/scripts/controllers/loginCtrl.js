@@ -5,7 +5,6 @@ angular.module('jakPoliczycControllers')
         $scope.login = function (username, password) {
             jpauth.login(username, password).then(function success(response) {
                 $cookieStore.put("TOKEN", response.data.token);
-
                 var toState = jpstorage.retrieve("PREVIOUS");
                 toState ? $state.go(toState) : $state.go("articles");
                 $scope.$emit("login-up");

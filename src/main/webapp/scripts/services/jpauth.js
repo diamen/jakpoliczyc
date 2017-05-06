@@ -17,6 +17,13 @@ angular.module('jakPoliczycServices')
             callback();
         };
 
+        var refreshToken = function () {
+            return $http({
+                method: 'GET',
+                url: '/refresh'
+            });
+        };
+
         var initRoles = function () {
             var token = $cookieStore.get("TOKEN");
             var auth = jwtHelper.decodeToken(token).authorities;
@@ -47,6 +54,12 @@ angular.module('jakPoliczycServices')
             }
         };
 
+        var getExpirationDate = function () {
+            if ($cookieStore.get("TOKEN")) {
+                return jwtHelper.getTokenExpirationDate($cookieStore.get("TOKEN"));
+            }
+        };
+
         var isLogin = function () {
             if ($cookieStore.get("TOKEN")) {
                 if (jwtHelper.decodeToken($cookieStore.get("TOKEN")).sub) {
@@ -57,12 +70,14 @@ angular.module('jakPoliczycServices')
         };
 
         return {
+            getExpirationDate: getExpirationDate,
             getUsername: getUsername,
             getRoles: getRoles,
             hasRoles: hasRoles,
             isLogin: isLogin,
             login: login,
-            logout: logout
+            logout: logout,
+            refreshToken: refreshToken
         };
 
     }]);

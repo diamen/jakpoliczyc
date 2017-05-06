@@ -72,15 +72,22 @@ header[role="banner"] {
   }
 }
 
+.timer {
+  display: block !important;
+  font-size: .85em;
+  margin-top: .1em;
+}
+
 .user-details {
-  background-color: $header-userdetails-color;
-  border: 1px solid $header-userdetails-border-color;
-  border-radius: 2px;
-  display: table;
   float: right;
   margin-right: 8px;
   margin-top: 2px;
-  padding: 5px;
+
+  > div:not(.tooltip) {
+    background-color: $header-userdetails-color;
+    border: 1px solid $header-userdetails-border-color;
+    padding: 5px !important;
+  }
 
   div {
     display: table-cell;
