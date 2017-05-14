@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.jakpoliczyc.dao.entities.Menu;
-import pl.jakpoliczyc.dao.repos.MenuService;
+import pl.jakpoliczyc.dao.repos.MenuRepository;
 
 import java.util.List;
 
@@ -18,16 +18,16 @@ import java.util.List;
 public class MenuController {
 
     @Autowired
-    private MenuService menuService;
+    private MenuRepository menuRepository;
 
     @ResponseBody
     @RequestMapping(value = "/menu", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getMenus() {
-        List<Menu> menus = menuService.findAll();
+        List<Menu> menus = menuRepository.findAll();
         if (menus == null || menus.isEmpty()) {
             throw new ResourceNotFoundException("None menus found");
         }
-        return new ResponseEntity<>(menuService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(menuRepository.findAll(), HttpStatus.OK);
     }
 
 }
