@@ -1,0 +1,25 @@
+$toolbelt-border-color: #ccc;
+$toolbelt-height: 2.86em;
+$toolbelt-nav-height: 2.5em;
+$toolbelt-padding-top: .25em;
+
+.toolbelt {
+  background-color: $background-color;
+  border-bottom: 1px solid $toolbelt-border-color;
+  line-height: $toolbelt-nav-height;
+  padding: .25em 0;
+  position: relative;
+  z-index: 2;
+
+  .fa-3x {
+    line-height: ($toolbelt-height - 2 * $toolbelt-padding-top) / 3em; // 3em to font-size elementu fa-3x
+  }
+
+  table {
+    margin: 0 2em;
+  }
+
+  td {
+    margin: 0 .25em;
+  }
+}

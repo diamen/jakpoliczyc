@@ -145,4 +145,14 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> findAll() {
         return articleRepository.findAll();
     }
+
+    @Override
+    public List<Article> findByMenuId(long menuId) {
+        return articleRepository.findByMenuId(menuId);
+    }
+
+    @Override
+    public List<Article> findByTagId(long tagId) {
+        return articleRepository.findByTagId(tagId);
+    }
 }

@@ -14,4 +14,6 @@ public interface ArticleService {
     void delete(long articleId, long commentId);
     Article find(long id);
     List<Article> findAll();
+    List<Article> findByMenuId(long menuId);
+    List<Article> findByTagId(long tagId);
 }

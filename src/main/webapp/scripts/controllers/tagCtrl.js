@@ -1,46 +1,18 @@
 angular.module('jakPoliczycControllers')
-    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window) {
+    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window, tagService) {
 
         var _selected;
         var _searcher = new Searcher();
 
-        $scope.animation = {};
-        $scope.animation.expanded = false;
-        $scope.animation.collapsedText = $sce.trustAsHtml('<div>' + $scope.language.collapse + '</div>');
-        $scope.animation.expandedText = $sce.trustAsHtml('<div>' + $scope.language.expand + '</div>');
-
         $scope.tags = [];
         $scope.selectedTags = [];
 
-        $scope.$on('menu-down', function () {
-            $scope.untickAll();
+        tagService.getTags().then(function success(response) {
+            if (angular.isDefined(response.data)) {
+                $scope.tags = response.data;
+                fireEvent($scope.tags, $scope.selectedTags);
+            }
         });
-
-        function expandDirective(arg) {
-            $scope.invoke = angular.isUndefined(arg) ? !$scope.invoke : arg;
-        }
-
-        $http({
-//            cache: true,
-            method: 'GET',
-            url: '/tags'
-        }).then(function success(response) {
-            $scope.tags = response.data;
-            fireEvent($scope.tags, $scope.selectedTags);
-        }, function error() {
-            throw new Error("HTTP error");
-        });
-
-        $scope.render = function() {
-            $timeout(function () {
-                expandDirective(true);
-            }, 0);
-        };
-
-        $timeout(angular.element($window).bind('resize', function() {
-           $scope.animation.expanded = false;
-           expandDirective();
-        }), 50);
 
         $scope.ngModelOptionsSelected = function(value) {
             if (arguments.length) {
@@ -58,28 +30,18 @@ angular.module('jakPoliczycControllers')
             getterSetter: true
         };
 
-        $scope.focus = function () {
-            if(!isExpanded())
-                expandDirective();
-        };
-
         $scope.unfocus = function () {
             if(_searcher.doesSelectedTagExist(_selected)) {
                 $scope.selectedTags[_searcher.getIndex()] = true;
                 $scope.ngModelOptionsSelected('');
             }
 
-            if(isExpanded()) {
-                $timeout(function() {
-                    index = $scope.selectedTags.indexOf(true);
-
-                    if (index === -1)
-                        expandDirective();
-                }, 500);
-            }
+            $timeout(function () {
+                if (!$scope.focusUL) { $scope.focus = false; }
+            }, 500);
         };
 
-        $scope.tick = function(index) {
+        $scope.tick = function(index, id) {
             $scope.selectedTags[index] = !$scope.selectedTags[index];
             fireEvent($scope.tags, $scope.selectedTags);
         };
@@ -89,19 +51,15 @@ angular.module('jakPoliczycControllers')
             fireEvent($scope.tags, $scope.selectedTags);
         })();
 
-        $scope.closeMenu = function () {
-            $scope.$emit('close-up');
-        };
-
         function fireEvent(tags, selectedTags) {
             $scope.$emit('tags-up', tags.filter(function (value, index) {
                 return selectedTags[index];
             }));
         }
 
-        function isExpanded() {
-            return $scope.animation.expanded;
-        }
+        $scope.$on('menu-down', function () {
+            $scope.selectedTags = Array($scope.tags.length).fill(false);;
+        });
 
         function Searcher() {
             var index = -1;

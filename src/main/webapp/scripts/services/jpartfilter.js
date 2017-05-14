@@ -15,7 +15,7 @@ angular.module('jakPoliczycServices')
 
             articles.forEach(function (article) {
                 _.intersection(Array.isArray(article[filterParamName]) ?
-                    article[filterParamName] : [article[filterParamName]], filterValue).length > 0 ? filteredArticles.push(article) : '';
+                    article[filterParamName].map(function(e) { return e.id }) : [article[filterParamName]].map(function(e) { return e.id }), filterValue).length > 0 ? filteredArticles.push(article) : '';
             });
 
             return filteredArticles;

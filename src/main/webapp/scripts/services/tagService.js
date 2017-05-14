@@ -1,14 +1,14 @@
 angular.module('jakPoliczycServices')
-    .service("menuService", ['$http', function($http) {
+    .service("tagService", ['$http', function($http) {
 
         return {
-            getMenus: function() {
+            getTags: function () {
                 return $http({
                     cache: true,
+                    headers: {'Content-Type': 'application/json'},
                     method: 'GET',
-                    url: '/menu'
+                    url: '/tags'
                 });
             }
         }
-
     }]);

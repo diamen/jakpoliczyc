@@ -81,4 +81,16 @@ public class ArticleController {
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/articles/menu/{id:[0-9]*}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getArticlesByMenuId(@PathVariable long id) {
+        return new ResponseEntity<Object>(articleService.findByMenuId(id), HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/articles/tag/{id:[0-9]*}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getArticlesByTagId(@PathVariable long id) {
+        return new ResponseEntity<Object>(articleService.findByTagId(id), HttpStatus.OK);
+    }
+
 }

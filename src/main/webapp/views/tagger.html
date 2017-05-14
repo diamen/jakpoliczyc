@@ -1,10 +1,12 @@
 <div ng-controller="tagCtrl" class="tagparent">
     <div class="tagger">
-        <span class="row-s">
-            <i class="fa fa-home fa-3x" aria-hidden="true" uib-tooltip="Home" ng-click="goHome()"></i>
-            <i class="fa fa-bars fa-3x" aria-hidden="true" uib-tooltip="Menu" ng-click="openMenu()"></i>
-            <i class="fa fa-tags fa-3x" aria-hidden="true" uib-tooltip="Tags" ng-click="openTags()"></i>
-            <i class="fa fa-eraser fa-3x" aria-hidden="true" uib-tooltip="Czyść" ng-click="clear()"></i>
+        <span>
+            <label for="tag">Wyszukiwanie po tagach</label>
+            <input class="form-control" typeahead-on-select="unfocus()" ng-focus="focus = true" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag as tag.name for tag in tags | filter:$viewValue | limitTo: 5" type="text" id="tag">
         </span>
     </div>
+    <ul ng-if="tags" ng-show="selectedTags.indexOf(true) != -1 || focus" tabindex="-1" ng-focus="focusUL = true" ng-blur="focusUL = false; unfocus()" class="tagger">
+        <li class="x hide-s" ng-click="untickAll()" uib-tooltip="Odznacz tagi" tooltip-placement="bottom">X</li>
+        <li ng-class="selectedTags[$index] ? 'selected' : 'unselected'" class="selected" ng-click="tick($index, tag.id)" ng-init="render()" ng-repeat="tag in tags">{{tag.name}}</li>
+    </ul>
 </div>

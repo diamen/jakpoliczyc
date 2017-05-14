@@ -114,7 +114,8 @@ module.exports = function (grunt) {
         'scripts/services/menuService.js',
         'scripts/services/modalService.js',
         'scripts/services/storageService.js',
-        'scripts/services/subscribeService.js'
+        'scripts/services/subscribeService.js',
+        'scripts/services/tagService.js'
     ];
 
     grunt.config.init({

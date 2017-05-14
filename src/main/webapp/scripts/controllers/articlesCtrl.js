@@ -1,13 +1,13 @@
 angular.module('jakPoliczycControllers')
-    .controller('articlesCtrl', function($scope, $rootScope, $http, jpartfilter) {
+    .controller('articlesCtrl', function($scope, $rootScope, $http, jpartfilter, articleService) {
 
         $scope.articles = [];
         $scope.filteredArticles = [];
-        $scope.orderProp = 'title';
         $scope.isFilter = false;
 
         $scope.header = { values: {} };
-        $scope.header.names = { TITLE: "title", KIND: "kind", DATE: "date" };
+        $scope.header.names = { TITLE: "story.title", DATE: "addedDate" };
+        $scope.orderProp = $scope.header.names.DATE;
 
         var _articlesLength;
 
@@ -15,47 +15,45 @@ angular.module('jakPoliczycControllers')
             $scope.header.values[value] = { selected: false, reversed: false };
         });
 
-        $http({
-//            cache: true,
-            method: 'GET',
-            url: '/articles'
-        }).then(function success(response) {
+        articleService.getArticles().then(function success(response) {
             $scope.articles = response.data;
-            console.log($scope.articles);
             _articlesLength = $scope.articles.length;
             angular.copy($scope.articles, $scope.filteredArticles);
-        }, function error() {
-            throw new Error("HTTP error");
         });
 
         $scope.$on('tags-down', function (event, args) {
             if (angular.isUndefined(args))
                 return;
 
-            $scope.filteredArticles = jpartfilter($scope.articles, 'tags', args) || [];
+            filterTags(args);
+        });
+
+        $scope.$on('menu-down', function (event, args) {
+            if (angular.isUndefined(args)) {
+                if ($scope.articles.length !== $scope.filteredArticles.length)
+                    angular.copy($scope.articles, $scope.filteredArticles);
+                $scope.isFilter = false;
+                return;
+            }
+
+            filterTags();
+            args = args || {};
+
+            $scope.filteredArticles = jpartfilter($scope.articles, 'menu', [args].map(function(menu) { return menu.id; })) || [];
+            $scope.isFilter = true;
+        });
+
+
+        function filterTags(arg) {
+            arg = arg || [];
+            $scope.filteredArticles = jpartfilter($scope.articles, 'tags', arg.map(function(tag) { return tag.id; })) || [];
 
             if (angular.isUndefined(_articlesLength))
                 return;
 
-            $scope.chosenTags = args.join(", ");
-            $scope.isFilter = ($scope.filteredArticles.length !== _articlesLength);
-        });
-
-        $scope.$on('menu-down', function (event, args) {
-            args = args || {};
-
-            $http({
-                method: 'GET',
-                url: '/articles/menuid/' + args.id
-            }).then(function success(response) {
-                $scope.articles = response.data;
-                angular.copy($scope.articles, $scope.filteredArticles);
-                $scope.chosenCategory = args.name;
-                $scope.isFilter = ($scope.filteredArticles.length !== _articlesLength);
-            }, function error() {
-                throw new Error("HTTP error");
-            });
-        });
+            $scope.chosenTags = arg.map(function(tag) { return tag.name; }).join(", ");
+            $scope.isFilter = ($scope.filteredArticles.length !== _articlesLength) || $scope.chosenTags.length > 0;
+        }
 
         ($scope.orderBy = function (value) {
             angular.forEach($scope.header.values, function (elem, key) {
@@ -85,5 +83,9 @@ angular.module('jakPoliczycControllers')
                 elem.reversed = false;
             });
         })($scope.header.names.DATE);
+
+        function reverse(value) {
+            return '-' + value;
+        }
 
     });

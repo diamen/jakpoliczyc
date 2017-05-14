@@ -52,4 +52,16 @@ public class ArticleRepositoryImpl implements ArticleRepository {
         article.getComments().add(comment);
         entityManager.persist(article);
     }
+
+    @Override
+    public List<Article> findByMenuId(long menuId) {
+        return entityManager.createQuery("SELECT e.articles FROM Menu e WHERE e.id = :id", Article.class)
+                .setParameter("id", menuId).getResultList();
+    }
+
+    @Override
+    public List<Article> findByTagId(long tagId) {
+        return entityManager.createQuery("SELECT e.articles FROM TAGS e WHERE e.id = :id", Article.class)
+                .setParameter("id", tagId).getResultList();
+    }
 }

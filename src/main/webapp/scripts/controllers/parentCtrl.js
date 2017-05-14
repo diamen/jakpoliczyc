@@ -21,7 +21,6 @@ angular.module('jakPoliczycControllers')
 
         $scope.$on('close-up', function () {
             $scope.isMenuOpened = false;
-            $scope.isTagsOpened = false;
         });
 
         $scope.$on('unselect-up', function () {

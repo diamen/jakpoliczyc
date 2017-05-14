@@ -103,6 +103,9 @@ public class ArticleServiceTest {
                 .newRow("articles").with("id", 1).with("added_date", new Date()).with("content", "content").with("intro", "intro").with("title", "title")
                 .with("menu_id", 2).add()
 
+                .newRow("articles").with("id", 2).with("added_date", new Date()).with("content", "content").with("intro", "intro").with("title", "title")
+                .with("menu_id", 2).add()
+
                 .newRow("tags").with("id", 1).with("name", "Exists").add()
                 .newRow("tags").with("id", 2).with("name", "Also").add()
 
@@ -346,6 +349,34 @@ public class ArticleServiceTest {
         // then
         int sizeAfter = articleService.findAll().size();
         assertThat(sizeBefore).isGreaterThan(sizeAfter);
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldFindArticlesByTagId() {
+        // given
+        int expectedSize = 1;
+
+        // when
+        int returnedSize = articleService.findByTagId(1).size();
+
+        // then
+        assertThat(expectedSize).isEqualTo(returnedSize);
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldFindArticlesByMenuId() {
+        // given
+        int expectedSize = 2;
+
+        // when
+        int returnedSize = articleService.findByMenuId(2).size();
+
+        // then
+        assertThat(expectedSize).isEqualTo(returnedSize);
     }
 
 }

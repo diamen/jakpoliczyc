@@ -1,4 +1,5 @@
-$tag-border-color: #ccc;
+$tag-background-color: #fbfbfb;
+$tag-border-color: #a29e9e;
 $tag-border-edge-color: #e4e4e4;
 $tag-gradient-color-first: #fff;
 $tag-gradient-color-second: #e5e5e5;
@@ -13,11 +14,11 @@ $tag-text-color: #5792bd;
 $tag-unselected-color: #a6e1ec;
 
 .tagparent {
-  //position: relative;
+  margin: -10px -5px;
 }
 
 .tagger {
-  background-color: $background-color;
+  background-color: $tag-background-color;
   border-bottom: 1px solid $tag-border-color;
   width: 100%;
 
@@ -75,9 +76,6 @@ $tag-unselected-color: #a6e1ec;
     color: $tag-text-color;
   }
 
-  i {
-    cursor: pointer;
-  }
 
   .fa-3x {
     line-height: ($tag-height - 2 * $tag-padding-top) / 3em; // 3em to font-size elementu fa-3x
@@ -91,9 +89,6 @@ $tag-unselected-color: #a6e1ec;
     margin-bottom: 0;
   }
 
-  .btn {
-    display: none;
-  }
 }
 
 div.tagger {
@@ -108,31 +103,12 @@ div.tagger {
     display: inline-block;
     vertical-align: middle;
   }
-
-  span:first-child,
-  span:nth-child(2) {
-    float: right;
-  }
 }
 
 ul.tagger {
   list-style: none;
 }
 
-jp-login {
-  @include background;
-  box-shadow: 0 2px 3px $tag-login-shadow;
-  padding: .25em;
-  position: absolute;
-  text-align: center;
-  transition: top 500ms;
-  width: 22em;
-  z-index: 1;
-
-  div:last-child {
-    text-align: center;
-  }
-}
 
 @media only screen and (min-width: 768px) {
   .tagger {
@@ -154,8 +130,6 @@ jp-login {
   }
 
   ul.tagger {
-    border-left: 1px solid $tag-border-color;
-    border-right: 1px solid $tag-border-color;
     display: table;
     margin-bottom: 0;
     position: relative;
@@ -168,7 +142,6 @@ jp-login {
   }
 
   .tagger > span {
-    background-color: $tag-span-color;
     border-left: 1px solid $tag-border-edge-color;
     border-right: 1px solid $tag-border-edge-color;
     padding: 0 .25em;
@@ -195,10 +168,6 @@ jp-login {
 @media only screen and (max-width: 476px) {
   .tagger label,
   .tagger input {
-    width: 100%;
-  }
-
-  jp-login {
     width: 100%;
   }
 }

@@ -12,4 +12,6 @@ public interface ArticleRepository {
     void removeArticle(long id);
     void removeComment(long articleId, long commentId);
     void insertComment(long articleId, Comment comment);
+    List<Article> findByMenuId(long menuId);
+    List<Article> findByTagId(long tagId);
 }

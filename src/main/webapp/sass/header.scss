@@ -6,6 +6,7 @@ $header-userdetails-color: #f7f7f7;
 header[role="banner"] {
   background-color: $header-color;
   box-shadow: 0 0 .3125em $header-shadow-color inset;
+  overflow: hidden;
   z-index: 2;
 }
 
