@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpcategory', ['$compile', 'jpstorage', function ($compile, jpstorage) {
+    .directive('jpCategory', ['$compile', 'jpStorage', function ($compile, jpStorage) {
         return {
             restrict: 'E',
             scope: true,
@@ -29,9 +29,9 @@ angular.module('jakPoliczycDirectives')
 
                 scope.saveMenuInfo = function (id, name) {
                     var menu = new Menu(id, name);
-                    var menus = jpstorage.retrieve("menus") || [];
+                    var menus = jpStorage.retrieve("menus") || [];
                     menus.push(menu);
-                    jpstorage.put("menus", menus);
+                    jpStorage.put("menus", menus);
                     console.log("id = " + id + " | name = " + name);
                     scope.$emit('publish-up');
                 };
@@ -47,9 +47,9 @@ angular.module('jakPoliczycDirectives')
 
                     var id = parentId || 0;
                     var elem = inputElem || element;
-                    var html = "<jpcategory-input parent-id='";
+                    var html = "<jp-category-input parent-id='";
                     html += id;
-                    html += "'></jpcategory-input>";
+                    html += "'></jp-category-input>";
 
                     elem.children().append($compile(html)(scope))
                 };
@@ -67,11 +67,11 @@ angular.module('jakPoliczycDirectives')
                         return;
                     }
 
-                    var html = "<jpcategory items='";
+                    var html = "<jp-category items='";
                     html += angular.toJson(item.submenus);
                     html += "' parent-id='";
                     html += item.id;
-                    html += "'></jpcategory>";
+                    html += "'></jp-category>";
 
                     element.children().append($compile(html)(scope))
                 };
@@ -112,7 +112,7 @@ angular.module('jakPoliczycDirectives')
             '<div ng-if="nitems" ng-form name="category" class="form-group">' +
                 '<label>{{ parentId > 0 ? $root.language.subchapter : $root.language.chapter }}</label>' +
                 '<div class="input-group">' +
-                    '<input name="input" ng-show="editable" ng-model="inputModel" class="form-control" ng-required="editable" jpalphanumeric/>' +
+                    '<input name="input" ng-show="editable" ng-model="$parent.inputModel" class="form-control" ng-required="editable" jpalphanumeric/>' +
                     '<select name="selNames" id="selNames" class="form-control jpzindexfix" ng-hide="editable" ' +
                     'ng-options="item.name for item in nitems track by item.id" ng-model="$parent.selectedModel" ng-init="$parent.selectedModel = nitems[0]">' +
                     '</select>' +

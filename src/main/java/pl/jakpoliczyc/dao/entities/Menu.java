@@ -8,6 +8,7 @@ import pl.jakpoliczyc.web.common.View;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @PersistenceUnit(name = "JakPoliczyc")
 @Entity
@@ -21,11 +22,11 @@ public class Menu {
     private String name;
     @JsonBackReference
     @JoinColumn(nullable = true)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Menu parent;
     @JsonManagedReference
     @OneToMany(mappedBy = "parent", cascade = CascadeType.PERSIST)
-    private Collection<Menu> submenus;
+    private List<Menu> submenus;
     @JsonIgnore
     @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
     private Collection<Article> articles;
@@ -48,11 +49,11 @@ public class Menu {
         this.parent = parent;
     }
 
-    public Collection<Menu> getSubmenus() {
+    public List<Menu> getSubmenus() {
         return submenus;
     }
 
-    public void setSubmenus(Collection<Menu> submenus) {
+    public void setSubmenus(List<Menu> submenus) {
         this.submenus = submenus;
     }
 

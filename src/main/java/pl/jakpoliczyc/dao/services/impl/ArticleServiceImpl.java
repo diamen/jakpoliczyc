@@ -1,5 +1,6 @@
 package pl.jakpoliczyc.dao.services.impl;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +52,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional
     public void update(long articleId, StoryMenuTagDto wrapper) {
+        cleanMenu();
+
         Article article = articleRepository.find(articleId);
         Menu menu = prepareMenu(wrapper.getMenus());
         article.setStory(wrapper.getStory());
@@ -60,10 +63,42 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.insertArticle(article);
     }
 
+    @Transactional
+    public void cleanMenu() {
+        menuRepository.findAllUnparsed().stream().filter(e -> CollectionUtils.isEmpty(e.getSubmenus())).forEach(e -> {
+            clearMenu(e);
+        });
+    }
+
+    @Transactional
+    private synchronized void clearMenu(Menu menu) {
+        if (CollectionUtils.isEmpty(menu.getSubmenus()) && CollectionUtils.isEmpty(menu.getArticles())) {
+            if (menu.getParent() != null) {
+                for (int i = 0; i < menu.getParent().getSubmenus().size(); i++) {
+                    if (menu.getParent().getSubmenus().get(i).equals(menu)) {
+                        menu.getParent().getSubmenus().remove(i);
+                    }
+                }
+            }
+
+            menuRepository.remove(menu);
+            if (menu.getParent() != null) {
+                if (CollectionUtils.isEmpty(menu.getParent().getSubmenus())) {
+                    menu.getParent().setSubmenus(null);
+                    menuRepository.remove(menu.getParent());
+                }
+            }
+        }
+        if (menu.getParent() != null) {
+            clearMenu(menu.getParent());
+        }
+    }
+
     @Override
     @Transactional
     public void delete(long articleId) {
         articleRepository.removeArticle(articleId);
+        cleanMenu();
     }
 
     @Override
@@ -98,24 +133,26 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Transactional(readOnly = true)
     private Menu prepareMenu(List<MenuDto> wrappers) {
-        if (wrappers.size() == 1 && wrappers.get(0).getId() == 0) {
-            Menu menu = new Menu();
-            menu.setName(wrappers.get(0).getName());
-            return menu;
+        if (wrappers.get(0).getId() == 0) {
+            return prepareMenuToInsert(wrappers, null);
         }
         MenuDto lastNotZero = wrappers.stream().filter(e -> e.id > 0).max((e1, e2) -> wrappers.indexOf(e1) - wrappers.indexOf(e2)).get();
-        List<MenuDto> menuToInsert = wrappers.stream().filter(e -> e.getId() == 0).collect(Collectors.toList());
         Menu lastExist = menuRepository.find(lastNotZero.getId());
 
-        Queue<Menu> menuQueue = new LinkedBlockingQueue<>();
-
-        if (menuToInsert.size() == 0) {
+        List<MenuDto> menuToInsertDto = wrappers.stream().filter(e -> e.getId() == 0).collect(Collectors.toList());
+        if (menuToInsertDto.size() == 0) {
             return lastExist;
         }
 
-        Menu firstNotExist = null;
-        for (int i = menuToInsert.size() - 1; i >= 0; i--) {
-            MenuDto currentMenu = menuToInsert.get(i);
+        return prepareMenuToInsert(menuToInsertDto, lastExist);
+    }
+
+    private Menu prepareMenuToInsert(List<MenuDto> dtos, Menu lastExist) {
+        Queue<Menu> menuQueue = new LinkedBlockingQueue<>();
+        List<Menu> menuToInsert = new ArrayList<>();
+        Menu firstNotExist;
+        for (int i = dtos.size() - 1; i >= 0; i--) {
+            MenuDto currentMenu = dtos.get(i);
             firstNotExist = new Menu();
             firstNotExist.setName(currentMenu.getName());
             if (menuQueue.size() > 0) {
@@ -125,12 +162,16 @@ public class ArticleServiceImpl implements ArticleService {
             }
             menuQueue.add(firstNotExist);
 
-            if (i == 0) {
+            if (i == 0 && lastExist != null) {
                 firstNotExist.setParent(lastExist);
+                List<Menu> submenus = lastExist.getSubmenus();
+                submenus.add(firstNotExist);
+                lastExist.setSubmenus(submenus);
             }
+            menuToInsert.add(firstNotExist);
         }
 
-        return firstNotExist;
+        return menuToInsert.get(0);
     }
 
     @Override

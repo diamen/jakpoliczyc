@@ -1,15 +1,14 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpHasRoles', ['$compile', 'jpauth', function ($compile, jpauth) {
+    .directive('jpHasRoles', ['$compile', 'jpAuth', function ($compile, jpAuth) {
         return {
             restrict: 'A',
+            terminal: true,
+            priority: 1000,
             scope: true,
             compile: function (elem, attr) {
                 var roles = [];
                 var input = attr.jpHasRoles.replace(/ /g, '');
                 input.indexOf(',') != -1 ? roles = input.split(',') : roles.push(input);
-
-                console.log(attr);
-                console.log(roles);
 
                 return function (scope, element) {
                     scope.show = false;
@@ -18,7 +17,7 @@ angular.module('jakPoliczycDirectives')
                     $compile(element)(scope);
 
                     var hasRoles = function (r) {
-                        scope.show = jpauth.hasRoles(r);
+                        scope.show = jpAuth.hasRoles(r);
                     };
                     hasRoles(roles);
 

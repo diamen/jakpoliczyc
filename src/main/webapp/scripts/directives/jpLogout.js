@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpLogout', ['$compile', 'jpauth', function ($compile, jpauth) {
+    .directive('jpLogout', ['$compile', 'jpAuth', function ($compile, jpAuth) {
         return {
             restrict: 'A',
             priority: 1001,
@@ -11,7 +11,7 @@ angular.module('jakPoliczycDirectives')
                 var fn = $compile(elem);
                 return function (scope) {
                     scope.logout = function () {
-                        jpauth.logout(function () {
+                        jpAuth.logout(function () {
                             scope.$emit("logout-up");
                             scope.goHome();
                         });

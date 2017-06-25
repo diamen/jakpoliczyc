@@ -97,6 +97,10 @@ $article-youtube-color: #c72929;
       margin: 5px;
       padding: 2px;
     }
+
+    &:after, &::after {
+      @extend %clear-float;
+    }
   }
 
   .add {

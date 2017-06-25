@@ -1,6 +1,8 @@
 package pl.jakpoliczyc.infrastructure.email.service.impl;
 
 import org.h2.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.jakpoliczyc.infrastructure.email.service.EmailService;
@@ -24,6 +26,8 @@ public class EmailServiceImpl implements EmailService {
     @Value("${smtp.password}")
     private String smtpPassword;
 
+    private Logger log = LoggerFactory.getLogger(EmailService.class);
+
     private static final String protocol = "smtp";
 
     @Override
@@ -46,7 +50,7 @@ public class EmailServiceImpl implements EmailService {
                 emailAddressesTo.stream().map(e -> { try {
                     return new InternetAddress(e);
                 } catch (AddressException e1) {
-                    // TODO logger
+                    log.error(e1.getMessage());
                 }
                     return null;
                 }).toArray(Address[]::new));

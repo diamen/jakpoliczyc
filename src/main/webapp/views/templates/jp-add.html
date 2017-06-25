@@ -1,6 +1,6 @@
 <form name="addForm">
 
-    <jpcategory ng-if="menu" items="{{menu}}"></jpcategory>
+    <jp-category ng-if="menu" items="{{menu}}"></jp-category>
 
     <div class="form-group">
         <label for="add-tags">{{language.tags}}</label>
@@ -30,7 +30,7 @@
         <small class="form-text text-muted">{{language.artIntroInf}}</small>
     </div>
 
-    <jppostarea form="addForm"></jppostarea>
+    <jp-postarea form="addForm"></jp-postarea>
 
     <jp-youtube-form ng-model="add.youtube"></jp-youtube-form>
 

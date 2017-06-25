@@ -1,9 +1,9 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jppostarea', ['$rootScope', function ($rootScope) {
+    .directive('jpPostarea', ['$rootScope', function ($rootScope) {
         return {
             restrict: 'E',
             scope: false,
-            templateUrl: 'views/templates/jppostarea.html',
+            templateUrl: 'views/templates/jp-postarea.html',
             link: function(scope) {
                 scope.add = {};
                 scope.add.content = "";

@@ -528,7 +528,7 @@ angular.module('jakPoliczycApp')
             }
         ])
 
-    .run(function ($httpBackend, jpartfilter, mockMenu, mockTags, mockArticle, mockArticles, mockStorage) {
+    .run(function ($httpBackend, jpArtfilter, mockMenu, mockTags, mockArticle, mockArticles, mockStorage) {
 //        $httpBackend.whenGET('/menu').respond(mockMenu);
 //        $httpBackend.whenGET('/tags').respond(mockTags);
 //        $httpBackend.whenGET('/articles').respond(mockArticles);

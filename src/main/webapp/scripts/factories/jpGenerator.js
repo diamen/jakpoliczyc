@@ -1,5 +1,5 @@
 angular.module('jakPoliczycFactories')
-    .factory('jpgenerator', [function() {
+    .factory('jpGenerator', [function() {
 
         var randomStr = function () {
             var text = "";

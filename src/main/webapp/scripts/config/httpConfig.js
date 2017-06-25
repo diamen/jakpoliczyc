@@ -1,4 +1,4 @@
 angular.module('jakPoliczycApp')
     .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push('jptokeninterceptor');
+        $httpProvider.interceptors.push('jpTokenInterceptor');
     }]);

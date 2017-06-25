@@ -7,5 +7,7 @@ import java.util.List;
 public interface MenuRepository {
     Menu find(long id);
     List<Menu> findAll();
+    List<Menu> findAllUnparsed();
+    void remove(Menu menu);
     void save(Menu menu);
 }

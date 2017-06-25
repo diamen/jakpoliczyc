@@ -29,6 +29,16 @@ public class MenuRepositoryStub implements MenuRepository {
     }
 
     @Override
+    public List<Menu> findAllUnparsed() {
+        return null;
+    }
+
+    @Override
+    public void remove(Menu menu) {
+
+    }
+
+    @Override
     public void save(Menu menu) {
         entityManager.persist(menu);
     }

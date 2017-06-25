@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('articlesCtrl', function($scope, $rootScope, $http, jpartfilter, articleService) {
+    .controller('articlesCtrl', function($scope, $rootScope, $http, jpArtfilter, articleService) {
 
         $scope.articles = [];
         $scope.filteredArticles = [];
@@ -39,14 +39,14 @@ angular.module('jakPoliczycControllers')
             filterTags();
             args = args || {};
 
-            $scope.filteredArticles = jpartfilter($scope.articles, 'menu', [args].map(function(menu) { return menu.id; })) || [];
+            $scope.filteredArticles = jpArtfilter($scope.articles, 'menu', [args].map(function(menu) { return menu.id; })) || [];
             $scope.isFilter = true;
         });
 
 
         function filterTags(arg) {
             arg = arg || [];
-            $scope.filteredArticles = jpartfilter($scope.articles, 'tags', arg.map(function(tag) { return tag.id; })) || [];
+            $scope.filteredArticles = jpArtfilter($scope.articles, 'tags', arg.map(function(tag) { return tag.id; })) || [];
 
             if (angular.isUndefined(_articlesLength))
                 return;

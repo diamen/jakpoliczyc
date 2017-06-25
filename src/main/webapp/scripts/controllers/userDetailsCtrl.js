@@ -1,14 +1,14 @@
 angular.module('jakPoliczycControllers')
-    .controller('userDetailsCtrl', function ($scope, $cookieStore, jpauth) {
+    .controller('userDetailsCtrl', function ($scope, $cookieStore, jpAuth) {
 
         var initUsername = function() {
-            $scope.username = jpauth.getUsername();
+            $scope.username = jpAuth.getUsername();
         };
         initUsername();
 
         var initExpirationTime = function () {
-            if (angular.isDefined(jpauth.getExpirationDate())) {
-                $scope.expirationTime = jpauth.getExpirationDate().getTime();
+            if (angular.isDefined(jpAuth.getExpirationDate())) {
+                $scope.expirationTime = jpAuth.getExpirationDate().getTime();
             }
         };
         initExpirationTime();
@@ -28,7 +28,7 @@ angular.module('jakPoliczycControllers')
         };
 
         $scope.refreshToken = function () {
-            jpauth.refreshToken().then(function success(response) {
+            jpAuth.refreshToken().then(function success(response) {
                  $cookieStore.put("TOKEN", response.data.token);
                  initExpirationTime();
             });

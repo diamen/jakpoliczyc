@@ -1,5 +1,5 @@
 angular.module('jakPoliczycFactories')
-    .factory('jptokeninterceptor', ['$cookies', function($cookies) {
+    .factory('jpTokenInterceptor', ['$cookies', function($cookies) {
 
         return {
             request: function (config) {

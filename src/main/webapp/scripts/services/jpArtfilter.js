@@ -1,5 +1,5 @@
 angular.module('jakPoliczycServices')
-    .service("jpartfilter", ['$rootScope', function($rootScope) {
+    .service("jpArtfilter", ['$rootScope', function($rootScope) {
 
         return function (articles, filterParamName, filterValue) {
             if (angular.isUndefined(filterValue) || angular.isUndefined(filterParamName) || angular.isUndefined(articles))

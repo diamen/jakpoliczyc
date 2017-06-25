@@ -37,13 +37,13 @@
     <div ng-include="'views/toolbelt.html'"></div>
     <div class="jpcontainer slideable">
         <div class="col-2">
-            <jpmenu ng-class="isMenuOpened ? 'show-s' : 'hide-s'" items="{{menu}}"></jpmenu>
+            <jp-menu ng-class="isMenuOpened ? 'show-s' : 'hide-s'" items="{{menu}}"></jp-menu>
             <section class="subscriber" ng-include="'views/subscriber.html'"></section>
         </div>
         <main class="col-10 jpmain">
             <ui-view></ui-view>
         </main>
-        <jpcontact></jpcontact>
+        <jp-contact></jp-contact>
         <div class="social">
             <span>
                 <a href="https://www.youtube.com"><i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybRedirect}}"></i></a>

@@ -90,6 +90,9 @@ angular.module('jakPoliczycControllers')
 
         /* Alerts */
         $scope.alerts = [];
+        $scope.alerts.SUCCESS = 'success';
+        $scope.alerts.DANGER = 'danger';
+        $scope.alerts.WARNING = 'warning';
 
         $scope.addAlert = function (alert) {
             $scope.alerts.push(alert);

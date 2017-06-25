@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpnode', function () {
+    .directive('jpNode', function () {
         return {
             restrict: 'A',
             link: function (scope) {

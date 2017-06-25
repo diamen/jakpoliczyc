@@ -2,8 +2,7 @@
     <article class="jparticle">
             <header>
                 <div>
-                    <span class="author">{{article.author}}</span>
-                    <span class="date">{{article.date | date: 'HH:mm dd/MM/yyyy'}}</span>
+                    <span class="date">{{article.addedDate | date: 'HH:mm dd/MM/yyyy'}}</span>
                 </div>
                 <h2 id="title" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTit}}"
                     data-jp-content-editable ng-model="article.story.title" required></h2>
@@ -15,7 +14,7 @@
                 </div>
             </header>
 
-            <jpcategory ng-if="menu" ng-show="isEditable" items="{{menu}}"></jpcategory>
+            <jp-category ng-if="menu" ng-show="isEditable" items="{{menu}}"></jp-category>
 
             <div class="tags">
                 <span>{{$root.language.tagsS}}</span><span ng-hide="(angular.isUndefined(article.tags) || article.tags.length === 0) && !isEditable" name="tags" id="tags" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTag}}" data-jp-content-editable ng-model="article.tags" jpcharacters></span>

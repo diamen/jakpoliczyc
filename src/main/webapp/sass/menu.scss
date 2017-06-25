@@ -7,7 +7,7 @@ $menu-selected-color-xl: #000;
 $menu-text-color-s: transparentize(#fff, .25);
 $menu-text-color-xl: #7c9eb2;
 
-jpmenu {
+jp-menu {
   display: block;
   padding: 2px;
 
@@ -39,7 +39,7 @@ jpmenu {
 }
 
 @media only screen and (min-width: 768px) {
-  jpmenu {
+  jp-menu {
     background-color: $menu-background-color;
   }
 
@@ -57,49 +57,49 @@ jpmenu {
     @extend %jpmenui;
   }
 
-  jpmenu li,
-  jpmenu ol {
+  jp-menu li,
+  jp-menu ol {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-size: .98em;
     list-style-type: none;
   }
 
-  jpmenu ol {
+  jp-menu ol {
     padding-left: 0;
   }
 
-  jpmenu .node {
+  jp-menu .node {
     border: 1px solid $menu-border-color;
     color: $menu-text-color-xl;
     margin: 5px 0;
     padding: 5px;
   }
 
-  jpmenu .hidden {
+  jp-menu .hidden {
     display: none;
     visibility: hidden;
   }
 
-  jpmenu i {
+  jp-menu i {
     @extend %jpmenui;
     font-size: 1.1em;
   }
 
-  jpmenu .click {
+  jp-menu .click {
     cursor: pointer;
   }
 
-  jpmenu .selected {
+  jp-menu .selected {
     background-color: $menu-selected-color-xl;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  jpmenu {
+  jp-menu {
     @extend %foreground;
   }
 
-  jpmenu {
+  jp-menu {
     color: $menu-text-color-s;
     font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif;
     text-transform: uppercase;
@@ -110,7 +110,7 @@ jpmenu {
     padding: 5px;
   }
 
-  jpmenu .angular-ui-tree-handle {
+  jp-menu .angular-ui-tree-handle {
     border-bottom: 1px solid $menu-border-bottom-color;
     font-size: 1.1em;
     padding: .15em .1em;
@@ -120,7 +120,7 @@ jpmenu {
     font-weight: 500;
   }
 
-  jpmenu .selected {
+  jp-menu .selected {
     background-color: $menu-selected-color-s;
   }
 }

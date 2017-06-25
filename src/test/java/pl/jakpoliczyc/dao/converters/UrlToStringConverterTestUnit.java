@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RunWith(JUnit4.class)
-public class UrlToStringCovnerterTestUnit {
+public class UrlToStringConverterTestUnit {
 
     private UrlToStringConverter converter = new UrlToStringConverter();
     private final String urlAsString = "http://www.google.pl";

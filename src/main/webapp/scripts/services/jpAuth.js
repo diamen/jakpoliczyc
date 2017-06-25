@@ -1,5 +1,5 @@
 angular.module('jakPoliczycServices')
-    .service("jpauth", ['$http', '$cookieStore', 'jwtHelper', function($http, $cookieStore, jwtHelper) {
+    .service("jpAuth", ['$http', '$cookieStore', 'jwtHelper', function($http, $cookieStore, jwtHelper) {
 
         var _roles = [];
 

@@ -1,5 +1,5 @@
 angular.module('jakPoliczycFactories')
-    .factory('jpstorage', [function() {
+    .factory('jpStorage', [function() {
 
         var container = {};
 

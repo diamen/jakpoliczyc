@@ -10,7 +10,7 @@
             </div>
         </header>
 
-        <jpcategory ng-if="menu" ng-hide="isEditable" items="{{menu}}"></jpcategory>
+        <jp-category ng-if="menu" ng-hide="isEditable" items="{{menu}}"></jp-category>
 
         <div class="tags">
             <span>{{$root.language.tagsS}}</span><span ng-hide="(angular.isUndefined(single.stags) || single.stags.length === 0) && !isEditable" id="tags" name="tags" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTag}}" data-jp-content-editable ng-model="single.stags" jpcharacters></span>

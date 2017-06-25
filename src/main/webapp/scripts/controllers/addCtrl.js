@@ -8,16 +8,21 @@ angular.module('jakPoliczycControllers')
         $scope.saveToStorage = function (args) {
             storageService.postStorage(args).then(function success(response) {
                 if (response.status === 201) {
-                    $scope.addAlert({'type': 'success', 'msg': $scope.language.alertStoAdd});
+                    $scope.addAlert({'type': $scope.alerts.SUCCESS, 'msg': $scope.language.alertStoAdd});
                     $scope.goStorage();
                 }
             }, function error() {
-                $scope.addAlert({'type': 'error', 'msg': $scope.language.alertStoErr});
+                $scope.addAlert({'type': $scope.alerts.DANGER, 'msg': $scope.language.alertStoErr});
             });
         };
 
         $scope.submit = function (args) {
-            articleService.postArticle(args);
+            articleService.postArticle(args).then(function success() {
+                $scope.addAlert({'type': $scope.alerts.SUCCESS, 'msg': $scope.language.alertArtAdd});
+                $scope.goHome();
+            }, function error() {
+                $scope.addAlert({'type': $scope.alerts.DANGER, 'msg': $scope.language.alertArtErr});
+            });
         };
 
         $scope.openModalSaveToStorage = function (title, intro, content, stags) {

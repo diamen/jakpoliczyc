@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpmenu', function () {
+    .directive('jpMenu', function () {
         return {
             require: '?ngModel',
             restrict: 'E',
@@ -66,7 +66,7 @@ angular.module('jakPoliczycDirectives')
 
             "<div id='tree-root' class='jpmenu' ui-tree data-drag-enabled='false'>" +
                 "<ol ui-tree-nodes='' ng-model='nitems'>" +
-                    "<li ng-repeat='item in nitems track by $index' ui-tree-node ng-include=\"'views/templates/jpnode.html'\">" +
+                    "<li ng-repeat='item in nitems track by $index' ui-tree-node ng-include=\"'views/templates/jp-node.html'\">" +
                     "</li>" +
                 "</ol>" +
             "</div>"

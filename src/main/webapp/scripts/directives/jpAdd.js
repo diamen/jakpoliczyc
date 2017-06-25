@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpadd', ['jpstorage', 'articleService', function(jpstorage, articleService) {
+    .directive('jpAdd', ['jpStorage', 'articleService', function(jpStorage, articleService) {
         return {
             restrict: 'E',
             scope: true,
@@ -11,13 +11,13 @@ angular.module('jakPoliczycDirectives')
                 });
 
                 scope.submit = function () {
-                    jpstorage.clear('menus');
+                    jpStorage.clear('menus');
                     scope.$broadcast('publish-down');
                 };
 
                 scope.$on('publish-up', function () {
-                    var noOfMenusElem = element.find('jpcategory').length + element.find('jpcategoryInput').length;
-                    var noOfMenus = jpstorage.retrieve('menus').length;
+                    var noOfMenusElem = element.find('jp-category').length + element.find('jp-category-input').length;
+                    var noOfMenus = jpStorage.retrieve('menus').length;
 
                     if (noOfMenus === noOfMenusElem) {
                         if (scope.add.tags && angular.isString(scope.add.tags) && (scope.add.tags.length > 0)) {
@@ -29,7 +29,7 @@ angular.module('jakPoliczycDirectives')
                                 intro: scope.add.intro,
                                 content: scope.add.content
                             },
-                            menus: jpstorage.retrieve('menus'),
+                            menus: jpStorage.retrieve('menus'),
                             tags: tags,
                             url: scope.add.youtube
                         };
@@ -45,6 +45,6 @@ angular.module('jakPoliczycDirectives')
                     }
                 }
             },
-            templateUrl: 'views/templates/jpadd.html'
+            templateUrl: 'views/templates/jp-add.html'
         }
     }]);

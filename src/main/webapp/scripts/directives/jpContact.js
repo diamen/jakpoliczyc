@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpcontact', ['$sanitize', 'broadcasterService', function($sanitize, broadcasterService) {
+    .directive('jpContact', ['$sanitize', 'broadcasterService', function($sanitize, broadcasterService) {
 
         var ctrl = function () {
             var vm = this;
@@ -16,6 +16,6 @@ angular.module('jakPoliczycDirectives')
             restrict: 'E',
             replace: true,
             scope: {},
-            templateUrl: 'views/templates/jpcontact.html'
+            templateUrl: 'views/templates/jp-contact.html'
         }
     }]);

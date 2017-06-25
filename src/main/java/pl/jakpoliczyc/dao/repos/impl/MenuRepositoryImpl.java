@@ -29,8 +29,18 @@ public class MenuRepositoryImpl implements MenuRepository {
     }
 
     @Transactional(readOnly = true)
+    public List<Menu> findAllUnparsed() {
+        return entityManager.createQuery("SELECT e FROM Menu e", Menu.class).getResultList();
+    }
+
+    @Transactional(readOnly = true)
     public Menu find(long id) {
         return entityManager.find(Menu.class, id);
+    }
+
+    @Override
+    public void remove(Menu menu) {
+        entityManager.remove(menu);
     }
 
     @Transactional

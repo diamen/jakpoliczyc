@@ -1,10 +1,10 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpcategoryInput', ['jpgenerator', function (jpgenerator) {
+    .directive('jpCategoryInput', ['jpGenerator', function (jpGenerator) {
         return {
             restrict: 'E',
             scope: true,
             link: function(scope, element, attrs) {
-                var uuid = jpgenerator.guid();
+                var uuid = jpGenerator.guid();
                 element.attr('uuid', uuid);
 
                 scope.$on('publish-down', function () {
@@ -19,7 +19,7 @@ angular.module('jakPoliczycDirectives')
 
                 var parentId = attrs.parentId;
                 scope.inputModel = '';
-                scope.name = jpgenerator.randomString();
+                scope.name = jpGenerator.randomString();
 
                 scope.add = function () {
                     scope.addInput(scope.inputModel, element, parentId);
