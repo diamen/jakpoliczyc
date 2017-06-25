@@ -8,8 +8,8 @@
                     data-jp-content-editable ng-model="article.story.title" required></h2>
                 <div>
                     <button ng-show="isEditable" ng-disabled="artForm.$invalid" class="btn btn-default" ng-click="submit()">{{$root.language.submit}}</button>
-                    <button ng-hide="isEditable" class="btn btn-default" ng-click="edit()">{{$root.language.edit}}</button>
-                    <button ng-hide="isEditable" class="btn btn-default" ng-click="delete()">{{$root.language.remove}}</button>
+                    <button ng-hide="isEditable" class="btn btn-default" jp-has-roles="ROLE_ADMIN" ng-click="edit()">{{$root.language.edit}}</button>
+                    <button ng-hide="isEditable" class="btn btn-default" jp-has-roles="ROLE_ADMIN" ng-click="delete()">{{$root.language.remove}}</button>
                     <button ng-show="isEditable" class="btn btn-default" ng-click="cancel()">{{$root.language.cancel}}</button>
                 </div>
             </header>

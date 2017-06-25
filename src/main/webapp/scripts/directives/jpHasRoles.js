@@ -12,8 +12,19 @@ angular.module('jakPoliczycDirectives')
 
                 return function (scope, element) {
                     scope.show = false;
+                    var attrs = ['show'];
+                    var ngShowValue = element.attr('ng-show');
+                    if (ngShowValue) {
+                        attrs.push(ngShowValue);
+                    }
+                    var ngHideValue = element.attr('ng-hide');
+                    if (ngHideValue) {
+                        attrs.push("!" + ngHideValue);
+                        element.removeAttr('ng-hide');
+                    }
+
                     element.removeAttr('jp-has-roles');
-                    element.attr('ng-show', 'show');
+                    element.attr('ng-show', attrs.join(" && "));
                     $compile(element)(scope);
 
                     var hasRoles = function (r) {

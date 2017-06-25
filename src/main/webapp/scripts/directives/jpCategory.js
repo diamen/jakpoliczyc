@@ -58,7 +58,7 @@ angular.module('jakPoliczycDirectives')
                     var item = angular.fromJson(scope.selectedModel) || {};
 
                     var hasChild = (angular.isDefined(item.submenus) && item.submenus.length > 0);
-                    var hasChild = scope.editable ? false : hasChild;
+                    hasChild = scope.editable ? false : hasChild;
 
                     scope.disable();
 

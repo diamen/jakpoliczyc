@@ -6,10 +6,24 @@ angular.module('jakPoliczycDirectives')
             terminal: true,
             scope: true,
             compile: function () {
-                return function (scope, element) {
+                return function (scope, element, attr) {
+                    var jpIsLogin = !(attr.jpIsLogin === "false");
+                    var angularDirective = jpIsLogin ? 'ng-show' : 'ng-hide';
+
                     scope.login = false;
+                    var attrs = ['login'];
+                    var ngShowValue = element.attr('ng-show');
+                    if (ngShowValue) {
+                        attrs.push(ngShowValue);
+                    }
+                    var ngHideValue = element.attr('ng-hide');
+                    if (ngHideValue) {
+                        attrs.push("!" + ngHideValue);
+                    }
+
                     element.removeAttr('jp-is-login');
-                    element.attr('ng-show', 'login');
+                    element.removeAttr(angularDirective);
+                    element.attr(angularDirective, attrs.join(" && "));
                     $compile(element)(scope);
 
                     if (jpAuth.isLogin()) {

@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpIsNotLogin', ['$compile', 'jpAuth', function ($compile, jpAuth) {
+    .directive('jpIsNotLogin', ['$compile', function ($compile) {
         return {
             restrict: 'A',
             priority: 1001,
@@ -7,22 +7,9 @@ angular.module('jakPoliczycDirectives')
             scope: true,
             compile: function () {
                 return function (scope, element) {
-                    scope.login = false;
                     element.removeAttr('jp-is-not-login');
-                    element.attr('ng-hide', 'login');
+                    element.attr('jp-is-login', 'false');
                     $compile(element)(scope);
-
-                    if (jpAuth.isLogin()) {
-                        scope.login = true;
-                    }
-
-                    scope.$on("login-down", function () {
-                        scope.login = true;
-                    });
-
-                    scope.$on("logout-down", function () {
-                        scope.login = false;
-                    });
                 }
             }
         }
