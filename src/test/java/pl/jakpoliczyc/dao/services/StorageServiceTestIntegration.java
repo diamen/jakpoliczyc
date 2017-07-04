@@ -17,6 +17,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -79,6 +81,48 @@ public class StorageServiceTestIntegration {
     @Autowired
     private ArticleService articleService;
 
+    private final Pageable pageable = new Pageable() {
+        @Override
+        public int getPageNumber() {
+            return 1;
+        }
+
+        @Override
+        public int getPageSize() {
+            return 9999;
+        }
+
+        @Override
+        public int getOffset() {
+            return 0;
+        }
+
+        @Override
+        public Sort getSort() {
+            return null;
+        }
+
+        @Override
+        public Pageable next() {
+            return null;
+        }
+
+        @Override
+        public Pageable previousOrFirst() {
+            return null;
+        }
+
+        @Override
+        public Pageable first() {
+            return null;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return false;
+        }
+    };
+
     public Object[] parametersForShouldInsertCorrectlyStorageObject() {
         StorageDto storage1 = new StorageDto();
         Story story1 = new Story();
@@ -107,13 +151,13 @@ public class StorageServiceTestIntegration {
     @Test
     public void shouldInsertCorrectlyStorageObject(StorageDto wrapper) throws Exception {
         // given
-        int sizeBefore = storageService.findAll().size();
+        int sizeBefore = storageService.findAll(pageable).getContent().size();
 
         // when
         storageService.save(wrapper);
 
         // then
-        assertThat(sizeBefore + 1).isEqualTo(storageService.findAll().size());
+        assertThat(sizeBefore + 1).isEqualTo(storageService.findAll(pageable).getContent().size());
     }
 
     @Rollback
@@ -121,13 +165,13 @@ public class StorageServiceTestIntegration {
     @Test
     public void shouldRemoveCorrectlyStorageObject() throws Exception {
         // given
-        int sizeBefore = storageService.findAll().size();
+        int sizeBefore = storageService.findAll(pageable).getContent().size();
 
         // when
         storageService.delete(1);
 
         // then
-        assertThat(sizeBefore - 1).isEqualTo(storageService.findAll().size());
+        assertThat(sizeBefore - 1).isEqualTo(storageService.findAll(pageable).getContent().size());
     }
 
     @Rollback
@@ -161,8 +205,8 @@ public class StorageServiceTestIntegration {
     public void shouldPublishArticleFromStorage() throws Exception {
         // given
         long id = 1;
-        int sizeOfStoragesBefore = storageService.findAll().size();
-        int sizeOfArticlesBefore = articleService.findAll().size();
+        int sizeOfStoragesBefore = storageService.findAll(pageable).getContent().size();
+        int sizeOfArticlesBefore = articleService.findAll(pageable).getContent().size();
         MenuDto menuDto = new MenuDto();
         menuDto.setId(0);
         menuDto.setName("Funkcje");
@@ -171,8 +215,8 @@ public class StorageServiceTestIntegration {
         storageService.publish(id, Arrays.asList(menuDto));
 
         // then
-        int sizeOfStoragesAfter = storageService.findAll().size();
-        int sizeOfArticlesAfter = articleService.findAll().size();
+        int sizeOfStoragesAfter = storageService.findAll(pageable).getContent().size();
+        int sizeOfArticlesAfter = articleService.findAll(pageable).getContent().size();
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(sizeOfStoragesBefore - 1).isEqualTo(sizeOfStoragesAfter);
         softly.assertThat(sizeOfArticlesBefore + 1).isEqualTo(sizeOfArticlesAfter);

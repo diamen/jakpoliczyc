@@ -80,6 +80,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpLogout.js',
         'scripts/directives/jpMenu.js',
         'scripts/directives/jpNode.js',
+        'scripts/directives/jpPagination.js',
         'scripts/directives/jpPostarea.js',
         'scripts/directives/jpTimer.js',
         'scripts/directives/jpToggle.js',
@@ -144,7 +145,7 @@ module.exports = function (grunt) {
        concatScss: {
             dist: {
                src: [
-                   'src/main/webapp/sass/*.scss'
+                   'src/main/webapp/sass/*.scss', 'src/main/webapp/sass/*/*.scss'
                ],
                dest: 'src/main/webapp/sass/build.scss'
             }

@@ -1,0 +1,42 @@
+$jp-pagination-selected-color: #0b46af;
+
+.jp-pagination {
+  text-align: center;
+
+  &-content {
+    display: inline-block;
+    position: relative;
+  }
+
+  @media only screen and (min-width: 350px) {
+    &-content {
+      width: 350px;
+    }
+  }
+
+  &-selected {
+    border-color: $jp-pagination-selected-color;
+    color: $jp-pagination-selected-color;
+    font-weight: bold;
+    transform: scale(1.1);
+  }
+
+  &-arrow-left, &-arrow-right {
+    position: absolute;
+  }
+
+  &-arrow-left {
+    left: 1px;
+  }
+
+  &-arrow-right {
+    right: 1px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    &-arrow-left, &-arrow-right {
+      display: none;
+    }
+  }
+
+}

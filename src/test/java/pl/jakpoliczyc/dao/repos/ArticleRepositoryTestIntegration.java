@@ -5,6 +5,9 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,7 +20,6 @@ import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Comment;
 import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Story;
-import pl.jakpoliczyc.dao.repos.ArticleRepository;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -36,6 +38,48 @@ public class ArticleRepositoryTestIntegration {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    private final Pageable pageable = new Pageable() {
+        @Override
+        public int getPageNumber() {
+            return 1;
+        }
+
+        @Override
+        public int getPageSize() {
+            return 99999;
+        }
+
+        @Override
+        public int getOffset() {
+            return 0;
+        }
+
+        @Override
+        public Sort getSort() {
+            return null;
+        }
+
+        @Override
+        public Pageable next() {
+            return null;
+        }
+
+        @Override
+        public Pageable previousOrFirst() {
+            return null;
+        }
+
+        @Override
+        public Pageable first() {
+            return null;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return false;
+        }
+    };
 
     private Article getTestData() {
         Article article = new Article();
@@ -89,11 +133,11 @@ public class ArticleRepositoryTestIntegration {
     @Test
     public void shouldListSizeIncreaseAfterInsert() {
         // given
-        int sizeBefore = articleRepository.findAll().size();
+        int sizeBefore = articleRepository.findAll(pageable).getContent().size();
 
         // when
         articleRepository.insertArticle(getTestData());
-        int sizeAfter = articleRepository.findAll().size();
+        int sizeAfter = articleRepository.findAll(pageable).getContent().size();
 
         // then
         assertThat(sizeBefore).isLessThan(sizeAfter);
@@ -105,13 +149,13 @@ public class ArticleRepositoryTestIntegration {
     public void shouldListSizeDecreaseAfterRemove() {
         // given
         articleRepository.insertArticle(getTestData());
-        List<Article> articles = articleRepository.findAll();
-        int sizeBefore = articles.size();
-        long articleId = articles.get(0).getId();
+        Page<Article> articles = articleRepository.findAll(pageable);
+        int sizeBefore = articles.getContent().size();
+        long articleId = articles.getContent().get(0).getId();
 
         // when
         articleRepository.removeArticle(articleId);
-        int sizeAfter = articleRepository.findAll().size();
+        int sizeAfter = articleRepository.findAll(pageable).getContent().size();
 
         // then
         assertThat(sizeBefore).isGreaterThan(sizeAfter);
@@ -122,11 +166,11 @@ public class ArticleRepositoryTestIntegration {
     @Test
     public void shouldInsertOfArticleWithItsDependencies() {
         // given
-        int sizeBefore = articleRepository.findAll().size();
+        int sizeBefore = articleRepository.findAll(pageable).getContent().size();
 
         // when
         articleRepository.insertArticle(getInsertData());
-        int sizeAfter = articleRepository.findAll().size();
+        int sizeAfter = articleRepository.findAll(pageable).getContent().size();
 
         // then
         assertThat(sizeBefore).isLessThan(sizeAfter);
@@ -138,7 +182,7 @@ public class ArticleRepositoryTestIntegration {
     public void shouldInsertNewCommentWhenCommentsAlreadyExist() {
         // given
         articleRepository.insertArticle(getTestData());
-        Article article = articleRepository.findAll().get(0);
+        Article article = articleRepository.findAll(pageable).getContent().get(0);
         int sizeBefore = article.getComments() != null ? article.getComments().size() : 0;
         Comment comment = new Comment();
         comment.setAuthor("arnold");
@@ -146,9 +190,9 @@ public class ArticleRepositoryTestIntegration {
         comment.setAddedDate(new Date());
 
         // when
-        List<Article> articles = articleRepository.findAll();
+        List<Article> articles = articleRepository.findAll(pageable).getContent();
         articleRepository.insertComment(articles.get(articles.size() - 1).getId(), comment);
-        int sizeAfter = articleRepository.findAll().get(0).getComments().size();
+        int sizeAfter = articleRepository.findAll(pageable).getContent().get(0).getComments().size();
 
         // then
         assertThat(sizeBefore + 1).isEqualTo(sizeAfter);
@@ -182,7 +226,7 @@ public class ArticleRepositoryTestIntegration {
         articleRepository.insertComment(id, comment);
 
         // then
-        assertThat(1).isEqualTo(articleRepository.findAll().get(0).getComments().size());
+        assertThat(1).isEqualTo(articleRepository.findAll(pageable).getContent().get(0).getComments().size());
     }
 
 }

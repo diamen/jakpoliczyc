@@ -1,5 +1,8 @@
 package pl.jakpoliczyc.dao.repos.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Article;
@@ -19,8 +22,13 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Article> findAll() {
-        return entityManager.createQuery("SELECT e FROM ARTICLES e", Article.class).getResultList();
+    public Page<Article> findAll(final Pageable pageable) {
+        final List<Article> articles = entityManager.createQuery("SELECT e FROM ARTICLES e", Article.class)
+                .setFirstResult(pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+        final long total = entityManager.createQuery("SELECT COUNT(e) FROM ARTICLES e", Long.class).getSingleResult();
+        return new PageImpl<>(articles, pageable, total);
     }
 
     @Override

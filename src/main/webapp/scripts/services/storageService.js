@@ -32,11 +32,30 @@ angular.module('jakPoliczycServices')
                 });
             },
             getStorages: function() {
-                return $http({
+                var config = {
+                    cache: 'true',
                     method: 'GET',
                     url: '/storage',
                     headers: {'Content-Type': 'application/json'}
-                });
+                };
+
+                var fire = function () {
+                    return $http(config);
+                };
+
+                var getConfig = function () {
+                    return config;
+                };
+
+                var setConfig = function (conf) {
+                    config = conf;
+                };
+
+                return {
+                    fire: fire,
+                    getConfig: getConfig,
+                    setConfig: setConfig
+                };
             },
             publishStorage: function (id, data) {
                 return $http({

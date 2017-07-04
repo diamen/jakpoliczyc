@@ -18,6 +18,8 @@ import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,12 +29,11 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
-import pl.jakpoliczyc.dao.entities.Article;
-import pl.jakpoliczyc.dao.entities.Comment;
 import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Story;
 import pl.jakpoliczyc.dao.repos.MenuRepository;
 import pl.jakpoliczyc.dao.repos.TagService;
+import pl.jakpoliczyc.web.dto.ArticleCompressedDto;
 import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
@@ -123,6 +124,48 @@ public class ArticleServiceTestIntegration {
     @Autowired
     private TagService tagService;
 
+    private final Pageable pageable = new Pageable() {
+        @Override
+        public int getPageNumber() {
+            return 1;
+        }
+
+        @Override
+        public int getPageSize() {
+            return 9999;
+        }
+
+        @Override
+        public int getOffset() {
+            return 0;
+        }
+
+        @Override
+        public Sort getSort() {
+            return null;
+        }
+
+        @Override
+        public Pageable next() {
+            return null;
+        }
+
+        @Override
+        public Pageable previousOrFirst() {
+            return null;
+        }
+
+        @Override
+        public Pageable first() {
+            return null;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return false;
+        }
+    };
+
     private List<MenuDto> getShouldInsertToMenuWorkWithTestData1() {
         return Arrays.asList(new MenuDto(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"),
                 new MenuDto(4, "Wielokąty wpisane w okrąg i opisane na okręgu"),
@@ -158,7 +201,7 @@ public class ArticleServiceTestIntegration {
         int noOfElementsWithIdEqualedToZero = param.stream().filter(e -> e.getId() == 0).collect(Collectors.toList()).size();
 
         // when
-        Method method = ((Advised) articleService).getTargetSource().getTarget().getClass().getDeclaredMethod("prepareMenu", new Class[] {List.class});
+        Method method = ((Advised) articleService).getTargetSource().getTarget().getClass().getDeclaredMethod("prepareMenu", new Class[]{List.class});
         method.setAccessible(true);
         Menu menu = (Menu) method.invoke(((Advised) articleService).getTargetSource().getTarget(), param);
         method.setAccessible(false);
@@ -173,11 +216,11 @@ public class ArticleServiceTestIntegration {
 
     public Object[] parametersForShouldListBeIncreasedOnlyByElementsWithIdEqualedToZero() {
         return $(
-          $(getShouldInsertToMenuWorkWithTestData1()),
-          $(getShouldInsertToMenuWorkWithTestData2()),
-          $(getShouldInsertToMenuWorkWithTestData3()),
-          $(getShouldInsertToMenuWorkWithTestData4())
-          );
+                $(getShouldInsertToMenuWorkWithTestData1()),
+                $(getShouldInsertToMenuWorkWithTestData2()),
+                $(getShouldInsertToMenuWorkWithTestData3()),
+                $(getShouldInsertToMenuWorkWithTestData4())
+        );
     }
 
     @Rollback
@@ -218,13 +261,13 @@ public class ArticleServiceTestIntegration {
         storyMenuTagDto.setMenus(Arrays.asList(menuDto));
         storyMenuTagDto.setStory(story);
 
-        int sizeBefore = articleService.findAll().size();
+        int sizeBefore = articleService.findAll(pageable).getContent().size();
 
         // when
         articleService.save(storyMenuTagDto);
 
         // then
-        assertThat(sizeBefore + 1).isEqualTo(articleService.findAll().size());
+        assertThat(sizeBefore + 1).isEqualTo(articleService.findAll(pageable).getContent().size());
     }
 
     @Rollback
@@ -261,11 +304,11 @@ public class ArticleServiceTestIntegration {
         story.setContent("any content");
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, null, existingMenus);
 
-        int sizeBefore = articleService.findAll().size();
+        int sizeBefore = articleService.findAll(pageable).getContent().size();
 
         // when
         articleService.save(storyMenuTagDto);
-        int sizeAfter = articleService.findAll().size();
+        int sizeAfter = articleService.findAll(pageable).getContent().size();
 
         // then
         assertThat(sizeAfter).isGreaterThan(sizeBefore);
@@ -288,29 +331,9 @@ public class ArticleServiceTestIntegration {
         articleService.save(storyMenuTagDto);
 
         // then
-        Article currentlyAddedArticle = articleService.findAll().get(articleService.findAll().size() - 1);
+        ArticleCompressedDto currentlyAddedArticle = articleService.findAll(pageable).getContent()
+                .get(articleService.findAll(pageable).getContent().size() - 1);
         assertThat(currentlyAddedArticle.getTags().size()).isEqualTo(tags.size());
-    }
-
-    @Rollback
-    @Transactional
-    @Test
-    public void shouldListOfCommentsDecreaseAfterRemove() {
-        // given
-        CommentDto commentDto = new CommentDto();
-        commentDto.setContent("blabla");
-        commentDto.setAuthor("author");
-
-        List<Article> articles = articleService.findAll();
-        articleService.save(articles.get(0).getId(), commentDto);
-        List<Comment> comments = articleService.findAll().get(0).getComments().stream().collect(Collectors.toList());
-        int sizeBefore = articleService.findAll().get(0).getComments().size();
-
-        // when
-        articleService.delete(articles.get(0).getId(), comments.get(0).getId());
-
-        // then
-        assertThat(sizeBefore).isGreaterThan(articleService.findAll().get(0).getComments().size());
     }
 
     @Rollback
@@ -318,13 +341,13 @@ public class ArticleServiceTestIntegration {
     @Test
     public void shouldListOfArticlesDecreaseAfterRemove() {
         // given
-        int sizeBefore = articleService.findAll().size();
+        int sizeBefore = articleService.findAll(pageable).getContent().size();
 
         // when
         articleService.delete(1);
 
         // then
-        int sizeAfter = articleService.findAll().size();
+        int sizeAfter = articleService.findAll(pageable).getContent().size();
         assertThat(sizeBefore).isGreaterThan(sizeAfter);
     }
 
@@ -333,19 +356,19 @@ public class ArticleServiceTestIntegration {
     @Test
     public void shouldListOfArticlesWithCommentsDecreaseAfterRemove() {
         // given
-        List<Article> articles = articleService.findAll();
+        List<ArticleCompressedDto> articles = articleService.findAll(pageable).getContent();
         CommentDto commentDto = new CommentDto();
         commentDto.setContent("blabla");
         commentDto.setAuthor("author");
         articleService.save(1, commentDto);
-        int sizeBefore = articleService.findAll().size();
+        int sizeBefore = articleService.findAll(pageable).getContent().size();
 
         // when
         articleService.find(1);
         articleService.delete(1);
 
         // then
-        int sizeAfter = articleService.findAll().size();
+        int sizeAfter = articleService.findAll(pageable).getContent().size();
         assertThat(sizeBefore).isGreaterThan(sizeAfter);
     }
 

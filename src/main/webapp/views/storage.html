@@ -8,11 +8,12 @@
             <th>{{language.tags}}</th>
             <th>{{language.date}}</th>
         </tr>
-        <tr ng-click="goSingleStorage($index + 1)" ng-repeat="article in storage | orderBy: date">
-            <td><strong>{{$index + 1}}</strong></td>
-            <td><strong>{{article.story.title}}</strong></td>
+        <tr ng-click="goSingleStorage(article.id)" ng-repeat="article in storage | orderBy: date">
+            <td><strong>{{article.no}}</strong></td>
+            <td><strong>{{article.title}}</strong></td>
             <td><span ng-repeat="tag in article.stags">[{{tag.name}}] </span></td>
             <td>{{article.addedDate | date: 'HH:mm dd/MM/yyyy'}}</td>
         </tr>
     </table>
+    <jp-pagination class="jplist-pagination" get-data="getData()" success="httpSuccess(data)" failure="httpFailure(response)"></jp-pagination>
 </div>

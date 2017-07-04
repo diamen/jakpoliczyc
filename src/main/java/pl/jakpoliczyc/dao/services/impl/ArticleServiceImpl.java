@@ -2,6 +2,9 @@ package pl.jakpoliczyc.dao.services.impl;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.converters.UrlToStringConverter;
@@ -13,6 +16,7 @@ import pl.jakpoliczyc.dao.repos.ArticleRepository;
 import pl.jakpoliczyc.dao.repos.MenuRepository;
 import pl.jakpoliczyc.dao.repos.TagService;
 import pl.jakpoliczyc.dao.services.ArticleService;
+import pl.jakpoliczyc.web.dto.ArticleCompressedDto;
 import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
@@ -182,17 +186,25 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional
-    public List<Article> findAll() {
-        return articleRepository.findAll();
+    public Page<ArticleCompressedDto> findAll(final Pageable pageable) {
+        final Page<Article> articles = articleRepository.findAll(pageable);
+        return new PageImpl<>(convertToCompressedList(articles.getContent()), pageable, articles.getTotalElements());
     }
 
     @Override
-    public List<Article> findByMenuId(long menuId) {
-        return articleRepository.findByMenuId(menuId);
+    public List<ArticleCompressedDto> findByMenuId(long menuId) {
+        return convertToCompressedList(articleRepository.findByMenuId(menuId));
     }
 
     @Override
-    public List<Article> findByTagId(long tagId) {
-        return articleRepository.findByTagId(tagId);
+    public List<ArticleCompressedDto> findByTagId(long tagId) {
+        return convertToCompressedList(articleRepository.findByTagId(tagId));
+    }
+
+    private List<ArticleCompressedDto> convertToCompressedList(List<Article> articles) {
+        return articles.stream().map(article -> {
+            return new ArticleCompressedDto(article.getId(), article.getStory().getTitle(), article.getStory().getIntro(),
+                    article.getAddedDate(), article.getTags(), new MenuDto(article.getMenu().getId(), article.getMenu().getName()));
+        }).collect(Collectors.toList());
     }
 }

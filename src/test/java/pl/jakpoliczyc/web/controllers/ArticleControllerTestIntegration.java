@@ -7,26 +7,29 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.jakpoliczyc.dao.entities.Article;
-import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Story;
 import pl.jakpoliczyc.dao.services.impl.ArticleServiceImpl;
 import pl.jakpoliczyc.web.IntegrationWebTestConfig;
+import pl.jakpoliczyc.web.dto.ArticleCompressedDto;
 import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import javax.servlet.ServletContext;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyObject;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,13 +48,18 @@ public class ArticleControllerTestIntegration extends IntegrationWebTestConfig {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Autowired
+    private PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver;
+
     private MockMvc mockMvc;
 
     @Before
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(articleController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(articleController)
+                .setCustomArgumentResolvers(pageableHandlerMethodArgumentResolver)
+                .build();
     }
 
     @Test
@@ -66,30 +74,30 @@ public class ArticleControllerTestIntegration extends IntegrationWebTestConfig {
     @Test
     public void shouldReturnOkStatusWhenListIsNotEmpty() throws Exception {
         // given
-        doReturn(Arrays.asList(new Article())).when(articleService).findAll();
+        doReturn(new PageImpl<>(Arrays.asList(new Article()))).when(articleService).findAll(any());
 
         // when - then
-        mockMvc.perform(get("/articles"))
+        mockMvc.perform(get("/articles?page=1&size=100"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void shouldReturnErrorNotFoundStatusWhenListIsEmpty() throws Exception {
         // given
-        doReturn(Arrays.asList()).when(articleService).findAll();
+        doReturn(new PageImpl<>(Collections.emptyList())).when(articleService).findAll(any());
 
         // when - then
-        mockMvc.perform(get("/articles"))
+        mockMvc.perform(get("/articles?page=1&size=100"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void shouldReturnErrorNotFoundStatusWhenListIsNull() throws Exception {
         // given
-        doReturn(null).when(articleService).findAll();
+        doReturn(null).when(articleService).findAll(any());
 
         // when - then
-        mockMvc.perform(get("/articles"))
+        mockMvc.perform(get("/articles?page=1&size=100"))
                 .andExpect(status().isNotFound());
     }
 
@@ -193,24 +201,17 @@ public class ArticleControllerTestIntegration extends IntegrationWebTestConfig {
     @Test
     public void shouldReturnCompressedResult() throws Exception {
         // given
-        Article article = new Article();
-        article.setMenu(new Menu());
-        Story story = new Story();
-        story.setIntro("intro");
-        story.setContent("content");
-        story.setTitle("title");
-        article.setStory(story);
-        String requestJson = generateRequest(article);
-        doReturn(Arrays.asList(article)).when(articleService).findAll();
+        final ArticleCompressedDto articleCompressedDto = new ArticleCompressedDto(1L, "title", "intro",
+                new Date(), Collections.emptyList(), null);
+        doReturn(new PageImpl<>(Arrays.asList(articleCompressedDto))).when(articleService).findAll(any());
 
         // when - then
-        mockMvc.perform(get("/articles")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestJson))
+        mockMvc.perform(get("/articles?page=1&size=100")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].story.title", is(story.getTitle())))
-                .andExpect(jsonPath("$[0].story.intro", is(story.getIntro())))
-                .andExpect(jsonPath("$[0].story.content").doesNotExist());
+                .andExpect(jsonPath("$.content[0].title", is(articleCompressedDto.getTitle())))
+                .andExpect(jsonPath("$.content[0].intro", is(articleCompressedDto.getIntro())))
+                .andExpect(jsonPath("$.content[0].content").doesNotExist());
     }
 
 }

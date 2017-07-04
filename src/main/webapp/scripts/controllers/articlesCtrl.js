@@ -15,12 +15,6 @@ angular.module('jakPoliczycControllers')
             $scope.header.values[value] = { selected: false, reversed: false };
         });
 
-        articleService.getArticles().then(function success(response) {
-            $scope.articles = response.data;
-            _articlesLength = $scope.articles.length;
-            angular.copy($scope.articles, $scope.filteredArticles);
-        });
-
         $scope.$on('tags-down', function (event, args) {
             if (angular.isUndefined(args))
                 return;
@@ -87,5 +81,19 @@ angular.module('jakPoliczycControllers')
         function reverse(value) {
             return '-' + value;
         }
+
+        $scope.getData = function () {
+            return articleService.getArticles();
+        };
+
+        $scope.httpSuccess = function (data) {
+            $scope.articles = data;
+            _articlesLength = $scope.articles.length;
+            angular.copy($scope.articles, $scope.filteredArticles);
+        };
+
+        $scope.httpFailure = function (response) {
+            console.log(response);
+        };
 
     });

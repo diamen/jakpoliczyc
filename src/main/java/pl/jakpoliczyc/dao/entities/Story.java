@@ -1,15 +1,10 @@
 package pl.jakpoliczyc.dao.entities;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import pl.jakpoliczyc.web.common.View;
-
 import javax.persistence.*;
 
 @Embeddable @Access(AccessType.FIELD)
 public class Story {
-    @JsonView(View.Compress.class)
     private String title;
-    @JsonView(View.Compress.class)
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "text")
     @Lob

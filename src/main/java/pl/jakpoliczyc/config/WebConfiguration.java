@@ -3,6 +3,9 @@ package pl.jakpoliczyc.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.data.web.SortHandlerMethodArgumentResolver;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -11,6 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
+@EnableSpringDataWebSupport
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan(basePackages = "pl.jakpoliczyc.web")
 public class WebConfiguration extends WebMvcConfigurerAdapter {
@@ -36,6 +40,16 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
         return new DeviceResolverHandlerInterceptor();
+    }
+
+    @Bean
+    public SortHandlerMethodArgumentResolver sortHandlerMethodArgumentResolver() {
+        return new SortHandlerMethodArgumentResolver();
+    }
+
+    @Bean
+    public PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver() {
+        return new PageableHandlerMethodArgumentResolver();
     }
 
     @Override

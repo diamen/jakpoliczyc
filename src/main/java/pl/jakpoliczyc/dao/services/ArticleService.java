@@ -1,6 +1,9 @@
 package pl.jakpoliczyc.dao.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import pl.jakpoliczyc.dao.entities.Article;
+import pl.jakpoliczyc.web.dto.ArticleCompressedDto;
 import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
@@ -13,7 +16,7 @@ public interface ArticleService {
     void save(long articleId, CommentDto wrapper);
     void delete(long articleId, long commentId);
     Article find(long id);
-    List<Article> findAll();
-    List<Article> findByMenuId(long menuId);
-    List<Article> findByTagId(long tagId);
+    Page<ArticleCompressedDto> findAll(final Pageable pageable);
+    List<ArticleCompressedDto> findByMenuId(long menuId);
+    List<ArticleCompressedDto> findByTagId(long tagId);
 }

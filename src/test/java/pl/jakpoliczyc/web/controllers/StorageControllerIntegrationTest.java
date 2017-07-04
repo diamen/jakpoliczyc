@@ -7,7 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,10 +20,13 @@ import pl.jakpoliczyc.dao.entities.Story;
 import pl.jakpoliczyc.dao.services.StorageService;
 import pl.jakpoliczyc.web.IntegrationWebTestConfig;
 import pl.jakpoliczyc.web.dto.MenuDto;
+import pl.jakpoliczyc.web.dto.StorageCompressedDto;
 import pl.jakpoliczyc.web.dto.StorageDto;
 
 import javax.servlet.ServletContext;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
@@ -29,13 +34,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class StorageControllerTestIntegration extends IntegrationWebTestConfig {
+public class StorageControllerIntegrationTest extends IntegrationWebTestConfig {
 
     @Mock
     private StorageService storageService;
 
     @InjectMocks
     private StorageController storageController;
+
+    @Autowired
+    private PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -46,7 +54,9 @@ public class StorageControllerTestIntegration extends IntegrationWebTestConfig {
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(storageController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(storageController)
+                .setCustomArgumentResolvers(pageableHandlerMethodArgumentResolver)
+                .build();
     }
 
     @Test
@@ -61,30 +71,30 @@ public class StorageControllerTestIntegration extends IntegrationWebTestConfig {
     @Test
     public void shouldReturnOkStatusWhenListIsNotEmpty() throws Exception {
         // given
-        doReturn(Arrays.asList(new Storage())).when(storageService).findAll();
+        doReturn(new PageImpl<>(Arrays.asList(new Storage()))).when(storageService).findAll(any());
 
         // when - then
-        mockMvc.perform(get("/storage"))
+        mockMvc.perform(get("/storage?page=1&size=100"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void shouldReturnErrorNotFoundStatusWhenListIsEmpty() throws Exception {
         // given
-        doReturn(Arrays.asList()).when(storageService).findAll();
+        doReturn(new PageImpl<>(Collections.emptyList())).when(storageService).findAll(any());
 
         // when - then
-        mockMvc.perform(get("/storage"))
+        mockMvc.perform(get("/storage?page=1&size=100"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void shouldReturnErrorNotFoundStatusWhenListIsNull() throws Exception {
         // given
-        doReturn(null).when(storageService).findAll();
+        doReturn(null).when(storageService).findAll(any());
 
         // when - then
-        mockMvc.perform(get("/storage"))
+        mockMvc.perform(get("/storage?page=1&size=100"))
                 .andExpect(status().isNotFound());
     }
 
@@ -165,20 +175,15 @@ public class StorageControllerTestIntegration extends IntegrationWebTestConfig {
 
     @Test
     public void shouldReturnCompressedResult() throws Exception {
-        Storage storage = new Storage();
-        Story story = new Story();
-        story.setTitle("title");
-        story.setIntro("intro");
-        story.setContent("content");
-        storage.setStory(story);
-        doReturn(Arrays.asList(storage)).when(storageService).findAll();
+        final StorageCompressedDto storage = new StorageCompressedDto(1L, "title", new Date(), Collections.emptyList());
+        doReturn(new PageImpl<>(Arrays.asList(storage))).when(storageService).findAll(any());
 
-        mockMvc.perform(get("/storage/")
+        mockMvc.perform(get("/storage?page=1&size=100")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].story.title", is(story.getTitle())))
-                .andExpect(jsonPath("$[0].story.intro", is(story.getIntro())))
-                .andExpect(jsonPath("$[0].story.content").doesNotExist());
+                .andExpect(jsonPath("$.content[0].title", is(storage.getTitle())))
+                .andExpect(jsonPath("$.content[0].id", is(Math.toIntExact(storage.getId()))))
+                .andExpect(jsonPath("$.content[0].addedDate", is(storage.getAddedDate().getTime())));
     }
 
     @Test

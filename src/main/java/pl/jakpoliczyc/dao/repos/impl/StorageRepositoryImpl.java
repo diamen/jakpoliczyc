@@ -1,5 +1,8 @@
 package pl.jakpoliczyc.dao.repos.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Storage;
@@ -22,8 +25,13 @@ public class StorageRepositoryImpl implements StorageRepository {
     }
 
     @Transactional(readOnly = true)
-    public List<Storage> findAll() {
-        return entityManager.createQuery("SELECT e FROM STORAGES e", Storage.class).getResultList();
+    public Page<Storage> findAll(final Pageable pageable) {
+        final List<Storage> storages = entityManager.createQuery("SELECT e FROM STORAGES  e", Storage.class)
+                .setFirstResult(pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+        final long total = entityManager.createQuery("SELECT COUNT(e) FROM STORAGES e", Long.class).getSingleResult();
+        return new PageImpl<>(storages, pageable, total);
     }
 
     public void insert(Storage storage) {

@@ -1,8 +1,6 @@
 package pl.jakpoliczyc.dao.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
-import pl.jakpoliczyc.web.common.View;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -11,11 +9,9 @@ import java.util.Collection;
 @Entity(name = "TAGS")
 public class Tag {
 
-    @JsonView(View.Compress.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @JsonView(View.Compress.class)
     @Column(unique = true)
     private String name;
     @JsonIgnore

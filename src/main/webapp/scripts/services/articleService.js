@@ -11,12 +11,30 @@ angular.module('jakPoliczycServices')
                 });
             },
             getArticles: function() {
-                return $http({
+                var config = {
                     cache: 'true',
                     method: 'GET',
                     url: '/articles',
                     headers: {'Content-Type': 'application/json'}
-                });
+                };
+
+                var fire = function () {
+                    return $http(config);
+                };
+
+                var getConfig = function () {
+                  return config;
+                };
+
+                var setConfig = function (conf) {
+                    config = conf;
+                };
+
+                return {
+                    fire: fire,
+                    getConfig: getConfig,
+                    setConfig: setConfig
+                };
             },
             getArticlesByMenuId: function (id) {
                 return $http({

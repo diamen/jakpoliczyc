@@ -3,8 +3,16 @@ angular.module('jakPoliczycControllers')
 
         $scope.storage = $scope.storage || [];
 
-        storageService.getStorages().then(function success(response) {
-            $scope.storage = response.data;
-        });
+        $scope.getData = function () {
+            return storageService.getStorages();
+        };
+
+        $scope.httpSuccess = function (data) {
+            $scope.storage = data;
+        };
+
+        $scope.httpFailure = function (response) {
+            console.log(response);
+        };
 
     });

@@ -1,0 +1,11 @@
+<div ng-show="totalPages > 1" class="jp-pagination">
+    <div ng-if="cells" class="jp-pagination-content">
+        <button class="jp-pagination-arrow-left btn btn-default" ng-disabled="isPreviousDisabled()"
+                ng-click="previous()">&lt;</button>
+        <button ng-repeat="cell in cells track by $index" ng-click="goToPage(cell)" ng-disabled="isCellDisabled(cell)"
+                ng-class="isCurrentPage(cell) ? 'jp-pagination-selected' : ''" class="btn btn-default">{{cell}}
+        </button>
+        <button class="jp-pagination-arrow-right btn btn-default" ng-disabled="isNextDisabled()" ng-click="next()">
+            &gt;</button>
+    </div>
+</div>

@@ -49,4 +49,10 @@ $list-hover-color: #bb138e;
     }
   }
 
+  &-pagination {
+    bottom: 5px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
 }

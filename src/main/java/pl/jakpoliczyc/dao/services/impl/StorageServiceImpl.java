@@ -1,19 +1,21 @@
 package pl.jakpoliczyc.dao.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.converters.UrlToStringConverter;
-import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Stag;
 import pl.jakpoliczyc.dao.entities.Storage;
-import pl.jakpoliczyc.dao.repos.ArticleRepository;
 import pl.jakpoliczyc.dao.repos.StagRepository;
 import pl.jakpoliczyc.dao.repos.StorageRepository;
 import pl.jakpoliczyc.dao.services.ArticleService;
 import pl.jakpoliczyc.dao.services.StorageService;
 import pl.jakpoliczyc.web.dto.MenuDto;
+import pl.jakpoliczyc.web.dto.StorageCompressedDto;
 import pl.jakpoliczyc.web.dto.StorageDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
@@ -71,8 +73,9 @@ public class StorageServiceImpl implements StorageService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Storage> findAll() {
-        return storageRepository.findAll();
+    public Page<StorageCompressedDto> findAll(final Pageable pageable) {
+        final Page<Storage> storages = storageRepository.findAll(pageable);
+        return new PageImpl<>(convertToCompressedList(storages.getContent()), pageable, storages.getTotalPages());
     }
 
     @Transactional
@@ -98,6 +101,13 @@ public class StorageServiceImpl implements StorageService {
                 stagRepository.save(stag);
                 return stag;
             }
+        }).collect(Collectors.toList());
+    }
+
+    private List<StorageCompressedDto> convertToCompressedList(List<Storage> storages) {
+        return storages.stream().map(storage -> {
+            return new StorageCompressedDto(storage.getId(), storage.getStory() != null ? storage.getStory().getTitle() : null,
+                    storage.getAddedDate(), storage.getStags());
         }).collect(Collectors.toList());
     }
 }

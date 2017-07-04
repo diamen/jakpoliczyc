@@ -1,8 +1,9 @@
 package pl.jakpoliczyc.web.controllers;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,12 +12,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.services.ArticleService;
-import pl.jakpoliczyc.web.common.View;
+import pl.jakpoliczyc.web.dto.ArticleCompressedDto;
 import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 public class ArticleController {
@@ -24,15 +24,14 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @JsonView(View.Compress.class)
     @ResponseBody
     @RequestMapping(value = "/articles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getArticles() {
-        List<Article> articles = articleService.findAll();
-        if (CollectionUtils.isEmpty(articles)) {
+    public ResponseEntity<?> getArticles(final Pageable pageable) {
+        Page<ArticleCompressedDto> articles = articleService.findAll(pageable);
+        if (articles == null || CollectionUtils.isEmpty(articles.getContent())) {
             throw new ResourceNotFoundException("None article found");
         }
-        return new ResponseEntity<>(articleService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
     @ResponseBody
