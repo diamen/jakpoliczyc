@@ -40,7 +40,7 @@ $list-hover-color: #bb138e;
     background-color: $list-background-color;
   }
 
-  tr:not(:first-child) {
+  tr:not([role="list-header"]) {
     cursor: pointer;
     transition: all .5s ease;
 

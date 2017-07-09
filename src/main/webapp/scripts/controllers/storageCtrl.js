@@ -15,4 +15,31 @@ angular.module('jakPoliczycControllers')
             console.log(response);
         };
 
+        $scope.getColumns = function () {
+            return [
+                {
+                    'name' : $scope.language.no,
+                    'isSortable': false,
+                    'css': 'col-md-1'
+                },
+                {
+                    'name' : $scope.language.title,
+                    'isSortable': true,
+                    'attribute': 'title',
+                    'css': 'col-md-4'
+                },
+                {
+                    'name' : $scope.language.tags,
+                    'isSortable': false,
+                    'css': 'col-md-5'
+                },
+                {
+                    'name' : $scope.language.date,
+                    'isSortable': true,
+                    'attribute': 'addedDate',
+                    'css': 'col-md-2'
+                }
+            ];
+        };
+
     });

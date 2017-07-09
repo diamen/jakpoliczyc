@@ -77,6 +77,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpHasRoles.js',
         'scripts/directives/jpIsLogin.js',
         'scripts/directives/jpIsNotLogin.js',
+        'scripts/directives/jpListHeader.js',
         'scripts/directives/jpLogout.js',
         'scripts/directives/jpMenu.js',
         'scripts/directives/jpNode.js',
@@ -101,6 +102,7 @@ module.exports = function (grunt) {
         /* Factories */
         'scripts/factories/factory.js',
         'scripts/factories/jpGenerator.js',
+        'scripts/factories/jpPagingSorting.js',
         'scripts/factories/jpStorage.js',
         'scripts/factories/jpTokenInterceptor.js',
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Comment;
 import pl.jakpoliczyc.dao.repos.ArticleRepository;
+import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,7 +24,8 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     @Override
     @Transactional(readOnly = true)
     public Page<Article> findAll(final Pageable pageable) {
-        final List<Article> articles = entityManager.createQuery("SELECT e FROM ARTICLES e", Article.class)
+        final String query = String.format("SELECT e FROM ARTICLES e %s", RepositoryUtils.sortToStringQuery(pageable.getSort(), Article.class));
+        final List<Article> articles = entityManager.createQuery(query, Article.class)
                 .setFirstResult(pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Storage;
 import pl.jakpoliczyc.dao.repos.StorageRepository;
+import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,7 +27,8 @@ public class StorageRepositoryImpl implements StorageRepository {
 
     @Transactional(readOnly = true)
     public Page<Storage> findAll(final Pageable pageable) {
-        final List<Storage> storages = entityManager.createQuery("SELECT e FROM STORAGES  e", Storage.class)
+        final String query = String.format("SELECT e FROM STORAGES e %s", RepositoryUtils.sortToStringQuery(pageable.getSort(), Storage.class));
+        final List<Storage> storages = entityManager.createQuery(query, Storage.class)
                 .setFirstResult(pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();

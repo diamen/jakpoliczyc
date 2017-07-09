@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpPagination', ['$document', function($document) {
+    .directive('jpPagination', ['$document', 'jpPagingSorting', function($document, jpPagingSorting) {
         return {
             restrict: 'E',
             replace: true,
@@ -92,30 +92,24 @@ angular.module('jakPoliczycDirectives')
                     return index === pageNo + 1;
                 };
 
-                function getPaginationUrl(url, pageNo, size) {
-                    return url + "?page=" + pageNo + "&size=" + size;
-                }
+                jpPagingSorting.setCallbacks(function httpSuccess(response) {
+                    var data = response.data;
+                    pageNo = data.number;
+                    scope.totalPages = data.totalPages;
+                    generateArray(pageNo, data.totalPages);
+                    first = data.first;
+                    last = data.last;
+                    var i = 1;
+                    angular.forEach(data.content, function (e) {
+                        e.no = (data.number * data.size) + i++;
+                    });
+                    scope.success({'data' : data.content});
+                }, function httpFailure(response) {
+                    scope.failure({'response': response});
+                });
 
                 function fireHttpRequest(no, size) {
-                    var data = scope.getData();
-                    var config = data.getConfig();
-                    config.url = getPaginationUrl(config.url, no, size);
-                    data.setConfig(config);
-                    data.fire().then(function success(response) {
-                        var data = response.data;
-                        pageNo = data.number;
-                        scope.totalPages = data.totalPages;
-                        generateArray(pageNo, data.totalPages);
-                        first = data.first;
-                        last = data.last;
-                        var i = 1;
-                        angular.forEach(data.content, function (e) {
-                            e.no = (data.number * data.size) + i++;
-                        });
-                        scope.success({'data' : data.content});
-                    }, function failure(response) {
-                        scope.failure({'response': response});
-                    });
+                    jpPagingSorting.fire({'pageNo': no, 'size': size}, scope.getData());
                 }
                 fireHttpRequest(0, pageSize);
 

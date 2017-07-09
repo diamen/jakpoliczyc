@@ -1,18 +1,13 @@
 <div class="jplist">
     <h2>{{language.storage}}</h2>
 
+    <jp-list-header columns="{{getColumns()}}"></jp-list-header>
     <table>
-        <tr>
-            <th>{{language.no}}</th>
-            <th>{{language.title}}</th>
-            <th>{{language.tags}}</th>
-            <th>{{language.date}}</th>
-        </tr>
-        <tr ng-click="goSingleStorage(article.id)" ng-repeat="article in storage | orderBy: date">
-            <td><strong>{{article.no}}</strong></td>
-            <td><strong>{{article.title}}</strong></td>
-            <td><span ng-repeat="tag in article.stags">[{{tag.name}}] </span></td>
-            <td>{{article.addedDate | date: 'HH:mm dd/MM/yyyy'}}</td>
+        <tr ng-click="goSingleStorage(article.id)" ng-repeat="article in storage">
+            <td class="col-md-1"><strong>{{article.no}}</strong></td>
+            <td class="col-md-4"><strong>{{article.title}}</strong></td>
+            <td class="col-md-5"><span ng-repeat="tag in article.stags">[{{tag.name}}] </span></td>
+            <td class="col-md-2">{{article.addedDate | date: 'HH:mm dd/MM/yyyy'}}</td>
         </tr>
     </table>
     <jp-pagination class="jplist-pagination" get-data="getData()" success="httpSuccess(data)" failure="httpFailure(response)"></jp-pagination>

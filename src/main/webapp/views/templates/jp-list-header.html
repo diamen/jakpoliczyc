@@ -1,0 +1,13 @@
+<table>
+    <tr role="list-header">
+        <th ng-repeat="column in cols track by $index" ng-class="column.css"
+            ng-click="column.isSortable && sort($index, column.attribute)" ng-style="getStyle($index)">
+            <i ng-if="column.isSortable" class="fa"
+               ng-class="{'fa-caret-square-o-up' : column.reverse,
+               'fa-caret-square-o-down' : !column.reverse,
+               'jpselected' : column.selected}"
+               aria-hidden="true"/>
+            {{column.name}}
+        </th>
+    </tr>
+</table>
