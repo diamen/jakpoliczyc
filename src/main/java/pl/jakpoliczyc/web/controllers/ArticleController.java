@@ -4,6 +4,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +18,8 @@ import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 public class ArticleController {
@@ -82,14 +85,14 @@ public class ArticleController {
 
     @ResponseBody
     @RequestMapping(value = "/articles/menu/{id:[0-9]*}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getArticlesByMenuId(@PathVariable long id) {
-        return new ResponseEntity<Object>(articleService.findByMenuId(id), HttpStatus.OK);
+    public ResponseEntity<?> getArticlesByMenuId(final Pageable pageable, @PathVariable long id) {
+        return new ResponseEntity<Object>(articleService.findByMenuId(pageable, id), HttpStatus.OK);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/articles/tag/{id:[0-9]*}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getArticlesByTagId(@PathVariable long id) {
-        return new ResponseEntity<Object>(articleService.findByTagId(id), HttpStatus.OK);
+    @RequestMapping(value = "/articles/tag", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getArticlesByTagId(final Pageable pageable, @RequestParam("ids") final Long[] ids) {
+        return new ResponseEntity<Object>(articleService.findByTagId(pageable, Arrays.asList(ids)), HttpStatus.OK);
     }
 
 }

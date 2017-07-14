@@ -1,5 +1,5 @@
 angular.module('jakPoliczycDirectives')
-    .directive('jpMenu', function () {
+    .directive('jpMenu', ['articleService', function (articleService) {
         return {
             require: '?ngModel',
             restrict: 'E',
@@ -14,6 +14,8 @@ angular.module('jakPoliczycDirectives')
                 scope.selected = false;
                 var parentElem = element.find('i');
 
+                var eventTargetName = 'menu';
+
                 scope.toggleAll = function () {
                   scope.collapsed ?
                       scope.$broadcast('angular-ui-tree:expand-all') : scope.$broadcast('angular-ui-tree:collapse-all');
@@ -26,7 +28,7 @@ angular.module('jakPoliczycDirectives')
                     var temp = that.selected;
                     unselectAll();
                     that.selected = !temp;
-                    that.selected ? scope.$emit('menu-up', item) : scope.$emit('menu-up', undefined);
+                    that.selected ? scope.$emit('menu-up', articleService.getArticlesByMenuId(item.id)) : scope.$emit('menu-up', undefined);
 
                     closeMenu();
                 };
@@ -38,6 +40,14 @@ angular.module('jakPoliczycDirectives')
                 scope.closeMenu = function () {
                     closeMenu();
                 };
+
+                scope.$on('filter-down', function (event, args) {
+                    if (args && args.$name === eventTargetName) {
+                        return;
+                    }
+
+                    unselectAll();
+                });
 
                 function unselectAll() {
                     scope.$broadcast('unselect-down');
@@ -72,4 +82,4 @@ angular.module('jakPoliczycDirectives')
             "</div>"
         };
 
-    });
+    }]);

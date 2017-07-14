@@ -12,7 +12,9 @@ import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional
 @Repository
@@ -65,14 +67,52 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     }
 
     @Override
-    public List<Article> findByMenuId(long menuId) {
-        return entityManager.createQuery("SELECT e.articles FROM Menu e WHERE e.id = :id", Article.class)
-                .setParameter("id", menuId).getResultList();
+    public Page<Article> findByMenuId(final Pageable pageable, final long menuId) {
+        final String query = String.format("SELECT e FROM ARTICLES e WHERE e.menu.id = :id %s", RepositoryUtils.sortToStringQuery(pageable.getSort(), Article.class));
+        final List<Article> articles = entityManager.createQuery(query, Article.class)
+                .setParameter("id", menuId)
+                .setFirstResult(pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+        final long total = entityManager.createQuery("SELECT COUNT(e.articles) FROM Menu e WHERE e.id = :id", Long.class)
+                .setParameter("id", menuId)
+                .getSingleResult();
+        return new PageImpl<>(articles, pageable, total);
     }
 
     @Override
-    public List<Article> findByTagId(long tagId) {
-        return entityManager.createQuery("SELECT e.articles FROM TAGS e WHERE e.id = :id", Article.class)
-                .setParameter("id", tagId).getResultList();
+    public Page<Article> findByTagId(final Pageable pageable, final List<Long> ids) {
+
+        String idsQuery = "";
+
+        for (int i = 1; i <= ids.size(); i++) {
+            idsQuery += "?" + i;
+
+            if (i != ids.size()) {
+                idsQuery += ", ";
+            }
+        }
+
+        final String mainQuery = String.format("SELECT * FROM %s.ARTICLES WHERE id in (SELECT ART_ID FROM %s.ART_TAG WHERE TAG_ID IN (%s)) %s",
+                RepositoryUtils.PERSISTENCE_UNIT_NAME, RepositoryUtils.PERSISTENCE_UNIT_NAME, idsQuery, RepositoryUtils.sortToStringNativeQuery(pageable.getSort()));
+
+        final String countQuery = String.format("SELECT COUNT(*) FROM %s.ARTICLES WHERE id in (SELECT ART_ID FROM %s.ART_TAG WHERE TAG_ID IN (%s))", RepositoryUtils.PERSISTENCE_UNIT_NAME, RepositoryUtils.PERSISTENCE_UNIT_NAME, idsQuery);
+
+        Query nativeMainQuery = entityManager.createNativeQuery(mainQuery, Article.class);
+        Query nativeCountQuery = entityManager.createNativeQuery(countQuery);
+
+        for (int i = 1; i <= ids.size(); i++) {
+            nativeMainQuery = nativeMainQuery.setParameter(i, ids.get(i - 1));
+            nativeCountQuery = nativeCountQuery.setParameter(i, ids.get(i - 1));
+        }
+
+        final List<Article> articles = nativeMainQuery
+                .setFirstResult(pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+
+        final long total = (Long) nativeCountQuery.getSingleResult();
+
+        return new PageImpl<>(articles, pageable, total);
     }
 }

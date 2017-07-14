@@ -18,30 +18,67 @@ angular.module('jakPoliczycServices')
                     headers: {'Content-Type': 'application/json'}
                 };
 
-                var fire = function () {
+                var fire = function (config) {
                     return $http(config);
                 };
 
                 var getConfig = function () {
-                  return config;
-                };
-
-                var setConfig = function (conf) {
-                    config = conf;
+                    var configCopy = {};
+                    angular.copy(config, configCopy);
+                    return configCopy;
                 };
 
                 return {
                     fire: fire,
-                    getConfig: getConfig,
-                    setConfig: setConfig
+                    getConfig: getConfig
+                };
+            },
+            getArticlesByTagId: function (ids) {
+                var config = {
+                    method: 'GET',
+                    url: '/articles/tag',
+                    headers: {'Content-Type': 'application/json'},
+                    params: {
+                        ids: ids
+                    }
+                };
+
+                var fire = function (config) {
+                    return $http(config);
+                };
+
+                var getConfig = function () {
+                    var configCopy = {};
+                    angular.copy(config, configCopy);
+                    return configCopy;
+                };
+
+                return {
+                    fire: fire,
+                    getConfig: getConfig
                 };
             },
             getArticlesByMenuId: function (id) {
-                return $http({
+                var config = {
                     method: 'GET',
                     url: '/articles/menu/' + id,
                     headers: {'Content-Type': 'application/json'}
-                });
+                };
+
+                var fire = function (config) {
+                    return $http(config);
+                };
+
+                var getConfig = function () {
+                    var configCopy = {};
+                    angular.copy(config, configCopy);
+                    return configCopy;
+                };
+
+                return {
+                    fire: fire,
+                    getConfig: getConfig
+                };
             },
             updateArticle: function(id, data) {
                 return $http({

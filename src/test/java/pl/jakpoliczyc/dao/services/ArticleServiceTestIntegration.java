@@ -375,26 +375,12 @@ public class ArticleServiceTestIntegration {
     @Rollback
     @Transactional
     @Test
-    public void shouldFindArticlesByTagId() {
-        // given
-        int expectedSize = 1;
-
-        // when
-        int returnedSize = articleService.findByTagId(1).size();
-
-        // then
-        assertThat(expectedSize).isEqualTo(returnedSize);
-    }
-
-    @Rollback
-    @Transactional
-    @Test
     public void shouldFindArticlesByMenuId() {
         // given
         int expectedSize = 2;
 
         // when
-        int returnedSize = articleService.findByMenuId(2).size();
+        int returnedSize = articleService.findByMenuId(pageable, 2l).getContent().size();
 
         // then
         assertThat(expectedSize).isEqualTo(returnedSize);

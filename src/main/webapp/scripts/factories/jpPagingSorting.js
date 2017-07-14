@@ -6,8 +6,7 @@ angular.module('jakPoliczycFactories')
             size,
             sort,
             success,
-            failure,
-            rawUrl;
+            failure;
 
         function getPaginationUrl(url, pageNo, size, sort) {
             var sortUrlPart = angular.isDefined(sort) ? '&sort=' + sort : '';
@@ -25,10 +24,8 @@ angular.module('jakPoliczycFactories')
                 size = angular.isDefined(input.size) ? input.size : size;
                 sort = angular.isDefined(input.sort) ? input.sort : sort;
                 var config = data.getConfig();
-                rawUrl = rawUrl || config.url;
-                config.url = getPaginationUrl(rawUrl, pageNo, size, sort);
-                data.setConfig(config);
-                data.fire().then(function(response) {
+                config.url = getPaginationUrl(config.url, pageNo, size, sort);
+                data.fire(config).then(function(response) {
                     success(response);
                 }, function(response) {
                     failure(response);

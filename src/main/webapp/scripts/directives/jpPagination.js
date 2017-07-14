@@ -7,7 +7,8 @@ angular.module('jakPoliczycDirectives')
                 pageSize: '@',
                 getData: '&',
                 success: '&',
-                failure: '&'
+                failure: '&',
+                control: '='
             },
             link: function (scope, element, attrs) {
 
@@ -24,6 +25,14 @@ angular.module('jakPoliczycDirectives')
                     if (e.keyCode === 37 && !scope.isPreviousDisabled()) {
                         scope.previous();
                     }
+                });
+
+                scope.$watch('control', function (value) {
+                    if (angular.isUndefined(value)) {
+                        return;
+                    }
+                    scope.getData = function() { return value };
+                    fireHttpRequest(0, pageSize);
                 });
 
                 scope.next = function () {

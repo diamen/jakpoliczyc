@@ -17,7 +17,23 @@ public class RepositoryUtils {
 
     private static final Logger log = LoggerFactory.getLogger(EmailService.class);
 
+    public static final String PERSISTENCE_UNIT_NAME = "JakPoliczyc";
+
     private RepositoryUtils() {
+    }
+
+    public static String sortToStringNativeQuery(final Sort sort) {
+        if (sort == null) {
+            return "";
+        }
+
+        final String attributes = StringUtils.collectionToCommaDelimitedString(
+                StreamSupport.stream(sort.spliterator(), false)
+                    .map(e -> e.getProperty() + " " + e.getDirection())
+                .collect(Collectors.toList())
+        );
+
+        return String.format("ORDER BY %s", attributes);
     }
 
     public static String sortToStringQuery(final Sort sort, final Class entity) {

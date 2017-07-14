@@ -12,11 +12,17 @@ angular.module('jakPoliczycControllers')
 
         /* Events */
         $scope.$on('tags-up', function (event, args) {
-            passDown('tags-down', args);
+            if (angular.isDefined(args)) {
+                args.$name = 'tags';
+            }
+            passDown('filter-down', args);
         });
 
         $scope.$on('menu-up', function (event, args) {
-            passDown('menu-down', args);
+            if (angular.isDefined(args)) {
+                args.$name = 'menu';
+            }
+            passDown('filter-down', args);
         });
 
         $scope.$on('close-up', function () {

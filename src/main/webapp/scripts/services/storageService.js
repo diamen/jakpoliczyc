@@ -39,22 +39,19 @@ angular.module('jakPoliczycServices')
                     headers: {'Content-Type': 'application/json'}
                 };
 
-                var fire = function () {
+                var fire = function (config) {
                     return $http(config);
                 };
 
                 var getConfig = function () {
-                    return config;
-                };
-
-                var setConfig = function (conf) {
-                    config = conf;
+                    var configCopy = {};
+                    angular.copy(config, configCopy);
+                    return configCopy;
                 };
 
                 return {
                     fire: fire,
-                    getConfig: getConfig,
-                    setConfig: setConfig
+                    getConfig: getConfig
                 };
             },
             publishStorage: function (id, data) {

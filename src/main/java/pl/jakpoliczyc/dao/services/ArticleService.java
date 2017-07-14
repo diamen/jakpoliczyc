@@ -17,6 +17,6 @@ public interface ArticleService {
     void delete(long articleId, long commentId);
     Article find(long id);
     Page<ArticleCompressedDto> findAll(final Pageable pageable);
-    List<ArticleCompressedDto> findByMenuId(long menuId);
-    List<ArticleCompressedDto> findByTagId(long tagId);
+    Page<ArticleCompressedDto> findByMenuId(final Pageable pageable, final long menuId);
+    Page<ArticleCompressedDto> findByTagId(final Pageable pageable, final List<Long> ids);
 }

@@ -1,8 +1,10 @@
 angular.module('jakPoliczycControllers')
-    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window, tagService) {
+    .controller('tagCtrl', function($scope, $http, $timeout, $sce, $window, tagService, articleService) {
 
         var _selected;
         var _searcher = new Searcher();
+
+        var eventTargetName = "tags";
 
         $scope.tags = [];
         $scope.selectedTags = [];
@@ -52,13 +54,20 @@ angular.module('jakPoliczycControllers')
         })();
 
         function fireEvent(tags, selectedTags) {
-            $scope.$emit('tags-up', tags.filter(function (value, index) {
+            var tagIds = tags.filter(function (value, index) {
                 return selectedTags[index];
-            }));
+            }).map(function (elem) {
+                return elem.id;
+            });
+
+            $scope.$emit('tags-up', tagIds.length ? articleService.getArticlesByTagId(tagIds) : undefined);
         }
 
-        $scope.$on('menu-down', function () {
-            $scope.selectedTags = Array($scope.tags.length).fill(false);;
+        $scope.$on('filter-down', function (event, args) {
+            if (args && args.$name === eventTargetName) {
+                return;
+            }
+            $scope.selectedTags = Array($scope.tags.length).fill(false);
         });
 
         function Searcher() {

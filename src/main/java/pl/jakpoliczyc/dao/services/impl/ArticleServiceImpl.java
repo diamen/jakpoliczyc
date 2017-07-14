@@ -192,13 +192,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleCompressedDto> findByMenuId(long menuId) {
-        return convertToCompressedList(articleRepository.findByMenuId(menuId));
+    public Page<ArticleCompressedDto> findByMenuId(final Pageable pageable, final long menuId) {
+        final Page<Article> articles = articleRepository.findByMenuId(pageable, menuId);
+        return new PageImpl<>(convertToCompressedList(articles.getContent()), pageable, articles.getTotalElements());
     }
 
     @Override
-    public List<ArticleCompressedDto> findByTagId(long tagId) {
-        return convertToCompressedList(articleRepository.findByTagId(tagId));
+    public Page<ArticleCompressedDto> findByTagId(final Pageable pageable, final List<Long> ids) {
+        final Page<Article> articles = articleRepository.findByTagId(pageable, ids);
+        return new PageImpl<>(convertToCompressedList(articles.getContent()), pageable, articles.getTotalElements());
     }
 
     private List<ArticleCompressedDto> convertToCompressedList(List<Article> articles) {
