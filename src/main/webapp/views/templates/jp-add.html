@@ -5,16 +5,20 @@
     <div class="form-group">
         <label for="add-tags">{{language.tags}}</label>
         <textarea ng-model="add.tags" name="addTags" class="form-control" id="add-tags" maxlength="1000"
-                  aria-describedby="add tags" rows="4" jpcharacters></textarea>
+                  aria-describedby="add tags" rows="4" jpcharacters jpsingle></textarea>
         <small class="form-text text-muted">{{language.tagWarn}}</small>
         <div ng-show="addForm.addTags.$error.jpcharacters">
             <span class="jperror">{{language.errChars}}</span>
+        </div>
+        <div ng-show="addForm.addTags.$error.jpsingle">
+            <span class="jperror">{{language.errSingle}}</span>
         </div>
     </div>
 
     <div class="form-group">
         <label for="add-title">{{language.artTit}}</label>
-        <input maxlength="100" type="text" name="addTitle" ng-model="add.title" class="form-control" id="add-title" aria-describedby="title" placeholder="{{language.insertTitle}}" required>
+        <input maxlength="100" type="text" name="addTitle" ng-model="add.title" class="form-control" id="add-title"
+               aria-describedby="title" placeholder="{{language.insertTitle}}" required>
         <div ng-show="addForm.addTitle.$error.required">
             <span class="jperror">{{language.errReq}}</span>
         </div>
@@ -23,7 +27,8 @@
 
     <div class="form-group">
         <label for="add-intro">{{language.artIntro}}</label>
-        <textarea class="form-control" name="addIntro" ng-model="add.intro" id="add-intro" aria-describedby="intro" rows="4" required></textarea>
+        <textarea class="form-control" name="addIntro" ng-model="add.intro" id="add-intro" aria-describedby="intro"
+                  rows="4" required></textarea>
         <div ng-show="addForm.addIntro.$error.required">
             <span class="jperror">{{language.errReq}}</span>
         </div>
@@ -35,7 +40,10 @@
     <jp-youtube-form ng-model="add.youtube"></jp-youtube-form>
 
     <div class="add-submit">
-        <button ng-click="openModalSaveToStorage(add.title, add.intro, add.content, add.tags)" class="btn btn-primary">{{language.stoSave}}</button>
+        <button ng-click="openModalSaveToStorage(add.title, add.intro, add.content, add.tags)"
+                ng-disabled="addForm.addTags.$error.jpsingle" class="btn btn-primary">
+            {{language.stoSave}}
+        </button>
         <button ng-click="submit()" ng-disabled="addForm.$invalid" class="btn btn-primary">{{language.publish}}</button>
     </div>
 

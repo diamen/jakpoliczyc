@@ -14,6 +14,15 @@ angular.module('jakPoliczycDirectives')
                     return e;
                 });
 
+                (function () {
+                    jpPagingSorting.subscribe(function () {
+                        angular.forEach(scope.cols, function (element) {
+                            element.selected = false;
+                            element.reverse = false;
+                        });
+                    });
+                }());
+
                 scope.sort = function (index, attribute) {
                     scope.cols[index].reverse = !scope.cols[index].reverse;
                     scope.cols[index].selected = true;

@@ -6,9 +6,11 @@ angular.module('jakPoliczycControllers')
         $scope.$on('filter-down', function (event, args) {
             if (angular.isUndefined(args)) {
                 $scope.control = articleService.getArticles();
+                $scope.isFilter = false;
                 return;
             }
             $scope.control = args;
+            $scope.isFilter = true;
         });
 
         $scope.getColumns = function () {
@@ -42,8 +44,9 @@ angular.module('jakPoliczycControllers')
             return articleService.getArticles();
         };
 
-        $scope.httpSuccess = function (data) {
+        $scope.httpSuccess = function (data, totalElements) {
             $scope.articles = data;
+            $scope.totalElements = totalElements;
         };
 
         $scope.httpFailure = function (response) {

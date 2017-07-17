@@ -112,7 +112,7 @@ angular.module('jakPoliczycDirectives')
                     angular.forEach(data.content, function (e) {
                         e.no = (data.number * data.size) + i++;
                     });
-                    scope.success({'data' : data.content});
+                    scope.success({'data' : data.content, 'totalElements': data.totalElements});
                 }, function httpFailure(response) {
                     scope.failure({'response': response});
                 });

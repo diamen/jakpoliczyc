@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('parentCtrl', function ($scope, $state, $timeout, $window, menuService) {
+    .controller('parentCtrl', function ($scope, $state, $timeout, $window, menuService, jpPagingSorting) {
 
         $scope.isAdmin = false;
         $scope.isMenuOpened = false;
@@ -8,6 +8,8 @@ angular.module('jakPoliczycControllers')
 
         menuService.getMenus().then(function success(response) {
             $scope.menu = response.data;
+        }, function error() {
+            $scope.menu = [];
         });
 
         /* Events */
@@ -118,6 +120,10 @@ angular.module('jakPoliczycControllers')
         }
 
         function passDown(eventName, args) {
+            if (eventName === 'filter-down') {
+                jpPagingSorting.clear();
+            }
+
             if (!isHome($state.current.url)) {
                 $scope.goHome();
             }

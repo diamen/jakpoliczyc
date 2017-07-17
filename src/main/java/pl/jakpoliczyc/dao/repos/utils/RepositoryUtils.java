@@ -10,6 +10,7 @@ import javax.persistence.Embedded;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -45,7 +46,7 @@ public class RepositoryUtils {
                 StreamSupport.stream(sort.spliterator(), false)
                         .map(e -> {
                             try {
-                                return "e." + getProperty(e.getProperty(), entity) + " " + e.getDirection();
+                                return "e." + getProperty(e.getProperty(), entity, false) + " " + e.getDirection();
                             } catch (UnknownPropertyForEntityClassException exception) {
                                 return "";
                             }
@@ -56,13 +57,17 @@ public class RepositoryUtils {
         return attributes.length() == 0 ? "" : String.format("ORDER BY %s", attributes);
     }
 
-    private static String getProperty(final String property, final Class entity) throws UnknownPropertyForEntityClassException {
+    protected static String getPropertyForNative(final String name, final Class entity) throws UnknownPropertyForEntityClassException {
+        return getProperty(name, entity, true);
+    }
+
+    protected static String getProperty(final String property, final Class entity, final boolean nativ) throws UnknownPropertyForEntityClassException {
         final Field[] fields = entity.getDeclaredFields();
         Optional<Field> optionalField = Arrays.stream(fields)
                 .filter(e -> e.getName().equals(property)).findAny();
 
         if (optionalField.isPresent()) {
-            return optionalField.get().getName();
+            return nativ ? convertString(optionalField.get().getName()) : optionalField.get().getName();
         }
 
         optionalField = Arrays.stream(fields)
@@ -81,11 +86,15 @@ public class RepositoryUtils {
                     .filter(e -> e.getName().equals(property)).findAny();
 
             if (embeddedField.isPresent()) {
-                return optionalField.get().getName() + "." + embeddedField.get().getName();
+                return nativ ? convertString(embeddedField.get().getName()) : optionalField.get().getName() + "." + embeddedField.get().getName();
             }
         }
 
         throw new UnknownPropertyForEntityClassException();
+    }
+
+    protected static String convertString(final String string) {
+        return String.join("_", string.split("(?=\\p{Upper})")).toUpperCase();
     }
 
 }

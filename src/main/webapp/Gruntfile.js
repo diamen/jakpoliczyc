@@ -93,6 +93,7 @@ module.exports = function (grunt) {
          -----Validators*/
         'scripts/directives/validators/jpalphanumeric.js',
         'scripts/directives/validators/jpcharacters.js',
+        'scripts/directives/validators/jpsingle.js',
         'scripts/directives/validators/jpurls.js',
         'scripts/directives/validators/jpyoutube.js',
 

@@ -1,6 +1,6 @@
 <div>
     <div uib-carousel active="0" interval="5000" no-wrap="false">
-        <div uib-slide ng-repeat="article in filteredArticles track by article.id" ng-if="$index < 3" index="$index">
+        <div uib-slide ng-repeat="article in articles track by article.id" ng-if="$index < 3" index="$index">
             <h4>{{article.title}}</h4>
             <div>{{article.intro}}</div>
         </div>

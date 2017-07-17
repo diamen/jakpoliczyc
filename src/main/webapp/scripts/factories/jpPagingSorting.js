@@ -6,11 +6,23 @@ angular.module('jakPoliczycFactories')
             size,
             sort,
             success,
-            failure;
+            failure,
+            subscribers = [];
 
         function getPaginationUrl(url, pageNo, size, sort) {
             var sortUrlPart = angular.isDefined(sort) ? '&sort=' + sort : '';
             return url + "?page=" + pageNo + '&size=' + size + sortUrlPart;
+        }
+
+        function subscribe(clearFn) {
+            subscribers.push(clearFn);
+        }
+
+        function clear() {
+            sort = undefined;
+            angular.forEach(subscribers, function (clearFn) {
+                clearFn();
+            });
         }
 
         return {
@@ -18,6 +30,8 @@ angular.module('jakPoliczycFactories')
                 success = s;
                 failure = f;
             },
+            clear: clear,
+            subscribe: subscribe,
             fire: function(input, d) {
                 data = d || data;
                 pageNo = angular.isDefined(input.pageNo) ?  input.pageNo : pageNo;

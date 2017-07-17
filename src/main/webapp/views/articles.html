@@ -1,10 +1,8 @@
 <div ng-include="'views/tagger.html'"></div>
 <div class="jplist">
     <h2 ng-hide="isFilter">{{language.artTitle}}</h2>
-    <h2 ng-show="isFilter">{{language.filterRes}}</h2>
-    <h3 ng-show="isFilter && chosenCategory">{{language.category}}: {{chosenCategory}}</h3>
-    <h3 ng-show="isFilter && chosenTags">{{language.tags}}: {{chosenTags}}</h3>
-    <div ng-if="filteredArticles && filteredArticles.length >= 3 && !isFilter"
+    <h2 ng-show="isFilter">{{language.filterRes}}: {{totalElements}} {{language.result}}</h2>
+    <div ng-if="articles && articles.length >= 3 && !isFilter"
          class="hide-s" ng-include="'views/articles-carousel.html'"></div>
     <jp-list-header columns="{{getColumns()}}"></jp-list-header>
     <table>
@@ -15,6 +13,6 @@
             <td class="col-md-2">{{article.addedDate | date: 'HH:mm dd/MM/yyyy'}}</td>
         </tr>
     </table>
-    <jp-pagination class="jplist-pagination" get-data="getData()" success="httpSuccess(data)"
+    <jp-pagination class="jplist-pagination" get-data="getData()" success="httpSuccess(data, totalElements)"
                    failure="httpFailure(response)" control="control"></jp-pagination>
 </div>

@@ -56,4 +56,17 @@ class RepositoryUtilsSpec extends Specification {
         "" == RepositoryUtils.sortToStringQuery(new Sort(new Order(Direction.ASC, "unknown")), Article.class)
     }
 
+    def "Should name of column be parsed correctly for native query"() {
+        when: "Property is parsed to a column name"
+        def columnName = RepositoryUtils.getPropertyForNative(input, Article.class)
+
+        then: "Returned value is a proper column name"
+        output == columnName
+
+        where: "sample data"
+        input       ||  output
+        "addedDate" ||  "ADDED_DATE"
+        "title"     ||  "TITLE"
+    }
+
 }

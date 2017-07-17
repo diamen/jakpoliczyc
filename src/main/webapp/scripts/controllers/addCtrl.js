@@ -3,6 +3,8 @@ angular.module('jakPoliczycControllers')
 
         menuService.getMenus().then(function success(response) {
             $scope.menu = response.data;
+        }, function error() {
+            $scope.menu = [];
         });
 
         $scope.saveToStorage = function (args) {
