@@ -17,6 +17,7 @@ import pl.jakpoliczyc.web.IntegrationWebTestConfig;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +28,7 @@ import java.util.List;
         "smtp.username=any",
         "smtp.password=any"
 })
-@ContextConfiguration(classes = { EmailServiceTestIntegration.Config.class})
+@ContextConfiguration(classes = {EmailServiceTestIntegration.Config.class})
 public class EmailServiceTestIntegration extends IntegrationWebTestConfig {
 
     @Autowired
@@ -50,20 +51,20 @@ public class EmailServiceTestIntegration extends IntegrationWebTestConfig {
     }
 
     @Test
-    public void shouldEmailBeSentCorrectly() throws MessagingException {
+    public void shouldEmailBeSentCorrectly() throws MessagingException, IOException {
         // given
         List<String> receivers = Arrays.asList("mstopa23@gmail.com", "stopa23@interia.eu");
         final String title = "TEST TITLE";
         final String content = "TEST CONTENT";
 
         // when
-        emailService.sendEmail(null, receivers, title, content);
+        emailService.sendMultiEmail(receivers, title, content);
 
         // then
         Message[] messages = testSmtp.getReceivedMessages();
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(messages[0].getAllRecipients().length).isEqualTo(receivers.size());
-        softly.assertThat(messages[0].getSubject()).isEqualTo(title);
+        softly.assertThat(messages[0].getSubject()).contains(title);
         softly.assertAll();
     }
 

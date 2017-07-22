@@ -15,6 +15,7 @@ import pl.jakpoliczyc.web.dto.EmailDto;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 public class BroadcasterController {
@@ -24,7 +25,7 @@ public class BroadcasterController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/broadcaster", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> broadcast(@Valid @RequestBody EmailContentDto wrapper) throws MessagingException {
+    public ResponseEntity<?> broadcast(@Valid @RequestBody EmailContentDto wrapper) throws MessagingException, IOException {
         broadcastService.broadcast(wrapper.getTitle(), wrapper.getContent());
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }

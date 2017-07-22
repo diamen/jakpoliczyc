@@ -82,6 +82,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpMenu.js',
         'scripts/directives/jpNode.js',
         'scripts/directives/jpPagination.js',
+        'scripts/directives/jpPendingButton.js',
         'scripts/directives/jpPostarea.js',
         'scripts/directives/jpTimer.js',
         'scripts/directives/jpToggle.js',
@@ -103,6 +104,7 @@ module.exports = function (grunt) {
         /* Factories */
         'scripts/factories/factory.js',
         'scripts/factories/jpGenerator.js',
+        'scripts/factories/jpNotifier.js',
         'scripts/factories/jpPagingSorting.js',
         'scripts/factories/jpStorage.js',
         'scripts/factories/jpTokenInterceptor.js',
@@ -113,6 +115,7 @@ module.exports = function (grunt) {
         'scripts/services/broadcasterService.js',
         'scripts/services/jpArtfilter.js',
         'scripts/services/jpAuth.js',
+        'scripts/services/jpLabelService.js',
         'scripts/services/menuService.js',
         'scripts/services/modalService.js',
         'scripts/services/storageService.js',

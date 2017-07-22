@@ -3,12 +3,13 @@ package pl.jakpoliczyc.infrastructure.email.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import pl.jakpoliczyc.dao.entities.Subscriber;
 import pl.jakpoliczyc.dao.services.SubscriberService;
 import pl.jakpoliczyc.infrastructure.email.service.BroadcastService;
 import pl.jakpoliczyc.infrastructure.email.service.EmailService;
 
 import javax.mail.MessagingException;
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,13 +25,14 @@ public class BroadcastServiceImpl implements BroadcastService {
     private String receiver;
 
     @Override
-    public void broadcast(String title, String content) throws MessagingException {
-        List<String> emailAddressesTo = subscriberService.findAll().stream().map(e -> e.getEmail()).collect(Collectors.toList());
-        emailService.sendEmail(null, emailAddressesTo, title, content);
+    public void broadcast(String title, String content) throws MessagingException, IOException {
+        List<String> emailAddressesTo = subscriberService.findAll().stream().map(Subscriber::getEmail)
+                .collect(Collectors.toList());
+        emailService.sendMultiEmail(emailAddressesTo, title, content);
     }
 
     @Override
     public void contact(String address, String title, String content) throws MessagingException {
-        emailService.sendEmail(address, Arrays.asList(receiver), title, content);
+        emailService.sendFromToEmail(address, title, content);
     }
 }

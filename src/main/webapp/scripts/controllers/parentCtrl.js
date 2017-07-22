@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('parentCtrl', function ($scope, $state, $timeout, $window, menuService, jpPagingSorting) {
+    .controller('parentCtrl', function ($scope, $rootScope, $state, $timeout, $window, menuService, jpPagingSorting) {
 
         $scope.isAdmin = false;
         $scope.isMenuOpened = false;
@@ -97,16 +97,16 @@ angular.module('jakPoliczycControllers')
         };
 
         /* Alerts */
-        $scope.alerts = [];
+        $rootScope.alerts = [];
         $scope.alerts.SUCCESS = 'success';
         $scope.alerts.DANGER = 'danger';
         $scope.alerts.WARNING = 'warning';
 
-        $scope.addAlert = function (alert) {
+        $rootScope.addAlert = function (alert) {
             $scope.alerts.push(alert);
         };
 
-        $scope.closeAlert = function (index) {
+        $rootScope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
         };
 

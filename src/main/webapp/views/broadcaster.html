@@ -5,25 +5,38 @@
     <div>
         <div class="form-group">
             <label for="broad-title">{{$root.language.emailTitle}}</label>
-            <input ng-model="title" name="title" class="form-control" id="broad-title" aria-describedby="title" placeholder="{{$root.language.insertTitle}}" required>
+            <input ng-model="title" name="title" class="form-control" id="broad-title" aria-describedby="title"
+                   placeholder="{{$root.language.insertTitle}}" required>
             <div>
                 <small class="form-text text-muted">{{$root.language.emailPre}}</small>
             </div>
-            <small ng-show="broadForm.title.$error.required && broadForm.title.$dirty" class="form-text jperror smerr">{{$root.language.errReq}}</small>
+            <small ng-show="broadForm.title.$error.required && broadForm.title.$dirty" class="form-text jperror smerr">
+                {{$root.language.errReq}}
+            </small>
         </div>
 
         <div class="form-group">
             <label for="broad-content">{{$root.language.emailContent}}</label>
-            <trix-editor angular-trix id="broad-content" spellcheck="false" class="trix-content" ng-model="content" angular-trix trix-initialize="trixInitialize(e, editor);"
-                         ng-model="content" name="content" placeholder="{{$root.language.insertEmail}}" required></trix-editor>
+            <trix-editor angular-trix id="broad-content" spellcheck="false" class="trix-content" ng-model="content"
+                         angular-trix trix-initialize="trixInitialize(e, editor);"
+                         ng-model="content" name="content" placeholder="{{$root.language.insertEmail}}"
+                         required></trix-editor>
             <div>
                 <small id="content" class="form-text text-muted">{{$root.language.errMax}} 1000</small>
             </div>
-            <small ng-show="broadForm.content.$error.required && broadForm.content.$dirty" class="form-text jperror">{{$root.language.errReq}}</small>
+            <small ng-show="broadForm.content.$error.required && broadForm.content.$dirty" class="form-text jperror">
+                {{$root.language.errReq}}
+            </small>
         </div>
 
         <div class="form-group send">
-            <button ng-click="broadcast(title, content)" ng-disabled="broadForm.$invalid" type="submit" class="btn btn-primary">{{$root.language.send}}</button>
+            <jp-pending-button ng-click="broadcast(title, content)"
+                               jp-disabled="broadForm.$invalid"
+                               jp-pending="sending"
+                               jp-type="submit"
+                               jp-class="btn btn-primary">
+            </jp-pending-button>
+            </button>
         </div>
     </div>
 

@@ -1,34 +1,49 @@
 <section class="contact">
-    <form name="contact">
+    <form name="vm.contact">
         <h2>{{$root.language.contact}}</h2>
 
         <div class="col-md-6">
             <div class="form-group">
                 <label for="foot-email">{{$root.language.emailAddress}}</label>
-                <input type="email" ng-model="email" name="email" class="form-control" id="foot-email" aria-describedby="email" placeholder="{{$root.language.insertEmail}}" required>
+                <input type="email" ng-model="vm.email" name="email" class="form-control" id="foot-email"
+                       aria-describedby="email" placeholder="{{$root.language.insertEmail}}" required>
                 <small id="emailHelp" class="form-text text-muted">{{$root.language.emailOrg}}</small>
-                <small ng-show="contact.email.$error.email && contact.email.$dirty" class="form-text jperror smerr">{{$root.language.errEmail}}</small>
-                <small ng-show="contact.email.$error.required && contact.email.$dirty" class="form-text jperror smerr">{{$root.language.errReq}}</small>
+                <small ng-show="vm.contact.email.$error.email && vm.contact.email.$dirty"
+                       class="form-text jperror smerr">{{$root.language.errEmail}}
+                </small>
+                <small ng-show="vm.contact.email.$error.required && vm.contact.email.$dirty"
+                       class="form-text jperror smerr">{{$root.language.errReq}}
+                </small>
             </div>
 
             <div class="form-group">
                 <label for="foot-title">{{$root.language.emailTitle}}</label>
-                <input maxlength="100" type="text" name="title" ng-model="title" class="form-control" id="foot-title" aria-describedby="title" placeholder="{{$root.language.emailTitle}}" required jpalphanumeric>
+                <input maxlength="100" type="text" name="title" ng-model="vm.title" class="form-control" id="foot-title"
+                       aria-describedby="title" placeholder="{{$root.language.emailTitle}}" required jpalphanumeric>
                 <small id="title" class="form-text text-muted">{{$root.language.errMax}} 100</small>
-                <small ng-show="contact.title.$error.required && contact.title.$dirty" class="form-text jperror smerr">{{$root.language.errReq}}</small>
-                <small ng-show="contact.title.$error.jpalphanumeric && contact.title.$dirty" class="form-text jperror smerr">{{$root.language.errAlphanum}}</small>
+                <small ng-show="vm.contact.title.$error.required && vm.contact.title.$dirty"
+                       class="form-text jperror smerr">{{$root.language.errReq}}
+                </small>
+                <small ng-show="vm.contact.title.$error.jpalphanumeric && vm.contact.title.$dirty"
+                       class="form-text jperror smerr">{{$root.language.errAlphanum}}
+                </small>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
                 <label for="foot-content">{{$root.language.emailContent}}</label>
-                <textarea maxlength="1000" class="form-control" ng-model="content" id="foot-content" aria-describedby="content" rows="6"></textarea>
+                <textarea maxlength="1000" class="form-control" ng-model="vm.content" id="foot-content"
+                          aria-describedby="content" rows="6" required></textarea>
                 <small id="content" class="form-text text-muted">{{$root.language.errMax}} 1000</small>
             </div>
 
             <div class="form-group send">
-                <button ng-click="vm.send(email, title, content)" ng-disabled="contact.$invalid" type="submit" class="btn btn-primary">{{$root.language.send}}</button>
+                <jp-pending-button ng-click="vm.openModal(vm.email, vm.title, vm.content)"
+                                   jp-disabled="vm.contact.$invalid"
+                                   jp-pending="vm.sending"
+                                   jp-type="submit" jp-class="btn btn-primary">
+                </jp-pending-button>
             </div>
         </div>
     </form>
