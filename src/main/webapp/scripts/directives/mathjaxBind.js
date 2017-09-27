@@ -4,7 +4,6 @@ angular.module('jakPoliczycDirectives')
             priority: -1,
             restrict: "A",
             link: function ($scope, $element, $attrs) {
-                var parser = new DOMParser();
                 var shouldProcess = $attrs.process || true;
                 var temp = $element.clone({widthDataAndEvents: true, deepWithDataAndEvents: true});
 
@@ -22,14 +21,14 @@ angular.module('jakPoliczycDirectives')
                 });
 
                 $scope.invokeParse = function (input) {
-                    input = input.replace(/\[latex]/, "<latex>").replace(/\[\/latex]/, "<\/latex>").replace(/\[photo]/, "<photo>").replace(/\[\/photo]/, "<\/photo>");
-                    var htmlDoc = parser.parseFromString(input, "text/html");
+                    input = input.replace(/\[latex]/g, "<latex>").replace(/\[\/latex]/g, "<\/latex>").replace(/\[photo]/g, "<photo>").replace(/\[\/photo]/g, "<\/photo>");
+                    var htmlDoc = new DOMParser().parseFromString(input, "text/html");
                     var latexTags = htmlDoc.getElementsByTagName("latex");
                     var photoTags = htmlDoc.getElementsByTagName("photo");
 
                     for (var i = 0; i < latexTags.length; i++) {
                         var latexExpression = angular.element("<script type='math/tex'>").html(latexTags[i].innerHTML ? latexTags[i].innerHTML : "")[0];
-                        input = input.replace(/<latex>(.*?)<\/latex>/, latexExpression.outerHTML);
+                        input = input.replace(/<latex>[\s\S]*?<\/latex>/, latexExpression.outerHTML);
                     }
 
                     for (i = 0; i < photoTags.length; i++) {

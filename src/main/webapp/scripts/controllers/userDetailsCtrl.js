@@ -20,12 +20,17 @@ angular.module('jakPoliczycControllers')
 
         $scope.$on('logout-down', function () {
             $scope.expirationTime = undefined;
+            $scope.logout();
         });
 
         $scope.timerLogout = function () {
             $scope.$emit('logout-up');
             $scope.addAlert({'type': 'warning', 'msg': $scope.language.warnTimeout});
         };
+
+        $scope.$on('refresh-token-down', function () {
+            $scope.refreshToken();
+        });
 
         $scope.refreshToken = function () {
             jpAuth.refreshToken().then(function success(response) {

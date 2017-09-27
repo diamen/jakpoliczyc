@@ -18,8 +18,8 @@
         <div class="form-group">
             <label for="broad-content">{{$root.language.emailContent}}</label>
             <trix-editor angular-trix id="broad-content" spellcheck="false" class="trix-content" ng-model="content"
-                         angular-trix trix-initialize="trixInitialize(e, editor);"
-                         ng-model="content" name="content" placeholder="{{$root.language.insertEmail}}"
+                         trix-initialize="trixInitialize(e, editor);"
+                         name="content" placeholder="{{$root.language.insertEmail}}"
                          required></trix-editor>
             <div>
                 <small id="content" class="form-text text-muted">{{$root.language.errMax}} 1000</small>

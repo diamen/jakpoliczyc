@@ -20,10 +20,11 @@
                     <a href jp-is-login jp-logout>{{$root.language.logout2}}</a>
                     <a href jp-is-not-login ng-click="goLogin()">{{$root.language.login2}}</a>
                     <ul jp-is-login id="dropdown" jp-click-outside="#caret">
-                        <li><strong>{{$root.language.actions}}</strong></li>
+                        <li role="actions"><strong>{{$root.language.actions}}</strong></li>
                         <li ng-click="goAdd()" jp-has-roles="ROLE_ADMIN">{{$root.language.artAdd}}</li>
                         <li ng-click="goStorage()" jp-has-roles="ROLE_ADMIN">{{$root.language.stoReview}}</li>
                         <li ng-click="goBroadcast()" jp-has-roles="ROLE_ADMIN">{{$root.language.broad}}</li>
+                        <li ng-click="goConfig()" jp-has-roles="ROLE_ADMIN">{{$root.language.config}}</li>
                     </ul>
                 </div>
             </div>

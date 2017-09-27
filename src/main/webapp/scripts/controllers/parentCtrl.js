@@ -1,5 +1,5 @@
 angular.module('jakPoliczycControllers')
-    .controller('parentCtrl', function ($scope, $rootScope, $state, $timeout, $window, menuService, jpPagingSorting) {
+    .controller('parentCtrl', function ($scope, $rootScope, $state, $timeout, $document, $window, jpAuth, jpPagingSorting, menuService) {
 
         $scope.isAdmin = false;
         $scope.isMenuOpened = false;
@@ -39,6 +39,12 @@ angular.module('jakPoliczycControllers')
             $scope.$broadcast('login-down');
         });
 
+        $document[0].body.addEventListener('click', function () {
+            if (jpAuth.isLogin()) {
+                $scope.$broadcast('refresh-token-down');
+            }
+        }, true);
+
         $scope.$on('logout-up', function () {
             $scope.$broadcast('logout-down');
         });
@@ -72,6 +78,10 @@ angular.module('jakPoliczycControllers')
 
         $scope.goBroadcast = function () {
             $state.go("broadcast");
+        };
+
+        $scope.goConfig = function () {
+            $state.go("config");
         };
 
         $scope.goSingleStorage = function (id) {

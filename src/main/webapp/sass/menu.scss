@@ -1,11 +1,14 @@
 $menu-background-color: #fff;
 $menu-border-bottom-color: transparentize(#fff, .75);
-$menu-border-color: #dae2ea;
-$menu-button-color: #008000;
+$menu-border-color: #155ba0;
+$menu-button-color: #ffa84f;
 $menu-selected-color-s: #1d2c33;
-$menu-selected-color-xl: #000;
+$menu-selected-color-xl: #3a3a3a;
+$menu-selected-color-xl-hover: #000;
 $menu-text-color-s: transparentize(#fff, .25);
-$menu-text-color-xl: #7c9eb2;
+$menu-text-color-xl: #ffffff;
+$node-background-color: #3d9cef;
+$node-background-color-hover: #2d81ff;
 
 jp-menu {
   display: block;
@@ -69,10 +72,15 @@ jp-menu {
   }
 
   jp-menu .node {
+    background-color: $node-background-color;
     border: 1px solid $menu-border-color;
     color: $menu-text-color-xl;
     margin: 5px 0;
     padding: 5px;
+
+    &:hover {
+      background-color: $node-background-color-hover;
+    }
   }
 
   jp-menu .hidden {
@@ -91,6 +99,10 @@ jp-menu {
 
   jp-menu .selected {
     background-color: $menu-selected-color-xl;
+
+    &:hover {
+      background-color: $menu-selected-color-xl-hover;
+    }
   }
 }
 

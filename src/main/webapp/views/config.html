@@ -1,0 +1,27 @@
+<form class="form-inline">
+
+    <div class="config-container">
+        <div ng-class-even="'config-even'" class="config-element" ng-repeat="config in configs">
+
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-readonly="!config.editable"
+                   ng-model="config.keyy" required>
+
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-readonly="!config.editable"
+                       ng-model="config.value" required>
+            </div>
+
+            <button class="btn btn-primary" ng-click="edit($index)">{{config.editable ? $root.language.cancel : $root.language.edit}}</button>
+            <button class="btn btn-primary" ng-click="delete($index)">{{$root.language.remove}}</button>
+
+        </div>
+    </div>
+
+    <div class="config-buttons">
+        <button class="btn btn-primary" ng-click="add()">{{$root.language.add}}</button>
+        <button class="btn btn-primary" ng-disabled="disabled" type="submit"
+                ng-click="openModal()">{{$root.language.submit}}
+        </button>
+    </div>
+
+</form>

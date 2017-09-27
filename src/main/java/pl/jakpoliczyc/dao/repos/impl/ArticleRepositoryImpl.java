@@ -40,6 +40,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
         return entityManager.find(Article.class, id);
     }
 
+    @Override
     public void insertArticle(Article article) {
         entityManager.persist(article);
     }

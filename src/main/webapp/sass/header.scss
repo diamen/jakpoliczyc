@@ -1,7 +1,12 @@
-$header-color: #fff;
-$header-shadow-color: #bbb;
-$header-userdetails-border-color: #d6d7d8;
-$header-userdetails-color: #f7f7f7;
+$header-color: #fd9c49;
+$header-dropdown-background-color: #ffb05f;
+$header-dropdown-background-color-hover: #ff6c16;
+$header-dropdown-border-color: #545454;
+$header-shadow-color: #f32121;
+$header-userdetails-background-color: #44c3ff;
+$header-userdetails-border-color: #020202;
+$header-userdetails-color: #fff;
+$header-userdetails-fa-color: $header-userdetails-border-color;
 
 header[role="banner"] {
   background-color: $header-color;
@@ -23,8 +28,8 @@ header[role="banner"] {
   }
 
   ul {
-    background-color: white;
-    border: 1px solid $header-userdetails-border-color;
+    background-color: $header-dropdown-background-color;
+    border: 1px solid $header-dropdown-border-color;
     border-radius: 2px;
     display: none;
     font-size: .85em;
@@ -46,16 +51,20 @@ header[role="banner"] {
     }
 
     &:before, &::before {
-      border-bottom-color: #d6d7d8;
+      border-bottom-color: $header-dropdown-border-color;
       border-width: 9px;
       right: 9px;
     }
 
     &:after, &::after {
-      border-bottom-color: white;
+      border-bottom-color: $header-dropdown-background-color;
       border-width: 8px;
       right: 10px;
     }
+  }
+
+  li[role="actions"]:hover {
+    background-color: $header-dropdown-background-color;
   }
 
   li {
@@ -63,6 +72,10 @@ header[role="banner"] {
     cursor: pointer;
     margin: 1px 2px;
     padding: 0 8px;
+
+    &:hover {
+      background-color: $header-dropdown-background-color-hover;
+    }
 
     &:first-child {
       cursor: auto;
@@ -80,12 +93,13 @@ header[role="banner"] {
 }
 
 .user-details {
+  color: $header-userdetails-color;
   float: right;
   margin-right: 8px;
   margin-top: 2px;
 
   > div:not(.tooltip) {
-    background-color: $header-userdetails-color;
+    background-color: $header-userdetails-background-color;
     border: 1px solid $header-userdetails-border-color;
     padding: 5px !important;
   }
@@ -102,14 +116,19 @@ header[role="banner"] {
   }
 
   a {
-    color: gray;
+    color: $header-userdetails-color;
     cursor: pointer;
     display: block;
     font-size: .75em;
     width: 100%;
   }
 
+  i.fa-user {
+    color: $header-userdetails-fa-color;
+  }
+
   i.fa-caret-down {
+    color: $header-userdetails-fa-color;
     cursor: pointer;
   }
 }

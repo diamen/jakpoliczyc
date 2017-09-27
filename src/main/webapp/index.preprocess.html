@@ -44,10 +44,14 @@
             <ui-view></ui-view>
         </main>
         <jp-contact></jp-contact>
-        <div class="social">
+        <div class="social" ng-controller="linkCtrl">
             <span>
-                <a href="https://www.youtube.com"><i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybRedirect}}"></i></a>
-                <a href="https://www.facebook.com"><i class="fa fa-facebook fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.fbRedirect}}"></i></a>
+                <a ng-if="youtubeUrl" ng-href="{{youtubeUrl}}" target="_blank">
+                    <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybRedirect}}"></i>
+                </a>
+                <a ng-if="facebookUrl" ng-href="{{facebookUrl}}" target="_blank">
+                    <i class="fa fa-facebook fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.fbRedirect}}"></i>
+                </a>
             </span>
 
             <img ng-click="goHome()"

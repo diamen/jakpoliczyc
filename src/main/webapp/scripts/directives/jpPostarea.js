@@ -2,11 +2,11 @@ angular.module('jakPoliczycDirectives')
     .directive('jpPostarea', ['$rootScope', function ($rootScope) {
         return {
             restrict: 'E',
-            scope: false,
+            scope: {
+                model: '='
+            },
             templateUrl: 'views/templates/jp-postarea.html',
             link: function(scope) {
-                scope.add = {};
-                scope.add.content = "";
 
                 scope.appendLatex = function() {
                     append("[latex]" + $rootScope.language.codeLatex + "[/latex]");
@@ -20,12 +20,12 @@ angular.module('jakPoliczycDirectives')
                     scope.show = true;
 
                     if(scope.show)
-                        scope.invokeParse(scope.add.content);
+                        scope.invokeParse(scope.model);
                 };
 
                 function append(value) {
-                    scope.add.content = scope.add.content || "";
-                    scope.add.content += value;
+                    scope.model = scope.model || "";
+                    scope.model += value;
                 }
 
             }

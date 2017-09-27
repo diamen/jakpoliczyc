@@ -14,7 +14,9 @@ angular.module('jakPoliczycServices')
         var logout = function (callback) {
             _roles = [];
             $cookieStore.remove("TOKEN");
-            callback();
+            if (callback) {
+                callback();
+            }
         };
 
         var refreshToken = function () {

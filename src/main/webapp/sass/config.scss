@@ -1,0 +1,28 @@
+$config-background-color: #ffe2b8;
+$config-buttons-height: 40px;
+$config-container-height: 610px;
+
+.config {
+
+  &-container {
+    min-height: $config-container-height;
+  }
+
+  &-buttons {
+    height: $config-buttons-height;
+    text-align: center;
+
+    & > button {
+      height: 100%;
+    }
+  }
+
+  &-element {
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  &-even {
+    background-color: $config-background-color;
+  }
+}

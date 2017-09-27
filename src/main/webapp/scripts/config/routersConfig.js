@@ -86,6 +86,17 @@ angular.module('jakPoliczycRouters', [])
                 templateUrl: "views/login.html"
             })
 
+            /* ADMIN SECTION */
+            .state("config", {
+                url: "/config",
+                controller: "configCtrl",
+                templateUrl: "views/config.html",
+
+                data: {
+                    roles: ['ROLE_ADMIN']
+                }
+            })
+
             /* ERROR SECTION */
             .state("error", {
                 url: "/error/{no:[0-9]{1,9}}",

@@ -2,9 +2,11 @@ package pl.jakpoliczyc.dao.repos.impl;
 
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Configuration;
 import pl.jakpoliczyc.dao.repos.ConfigurationRepository;
+import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,13 +22,27 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
 
     @Transactional(readOnly = true)
     public Optional<Configuration> find(String key) {
-        List<Configuration> configs = entityManager.createQuery("SELECT e FROM Configuration e WHERE e.keyy = :keyy", Configuration.class)
-                .setParameter("keyy", key).getResultList();
-        return Optional.ofNullable(configs.isEmpty() ? null: configs.get(0));
+        final Configuration config = entityManager.createQuery("SELECT e FROM Configuration e WHERE e.keyy = :keyy", Configuration.class)
+                .setParameter("keyy", key).getSingleResult();
+        return Optional.ofNullable(config);
     }
 
     @Transactional(readOnly = true)
     public List<Configuration> findAll() {
-        return entityManager.createQuery("SELECT e FROM Configuration e", Configuration.class).getResultList();
+        return entityManager.createQuery("SELECT e FROM Configuration e", Configuration.class)
+                .getResultList();
+    }
+
+    @Override
+    public void insert(List<Configuration> configurations) {
+        configurations.forEach(configuration -> entityManager.persist(configuration));
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void deleteAll() {
+        entityManager.clear();
+        entityManager.createQuery("DELETE FROM Configuration e", Configuration.class)
+                .executeUpdate();
     }
 }

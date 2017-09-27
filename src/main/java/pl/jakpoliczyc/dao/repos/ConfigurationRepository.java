@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface ConfigurationRepository {
     Optional<Configuration> find(String key);
     List<Configuration> findAll();
+    void insert(final List<Configuration> configurations);
+    void deleteAll();
 }

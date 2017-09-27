@@ -1,5 +1,5 @@
 <form name="singleForm">
-    <article class="jparticle" ng-if="single">
+    <article class="jparticle">
         <header>
             <h2 id="title" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTit}}" data-jp-content-editable ng-model="single.story.title" required></h2>
             <div>
@@ -19,7 +19,9 @@
             </div>
         </div>
         <p id="intro" ng-class="isEditable ? 'jpeditable' : ''" class="intro" contenteditable="false" placeholder="{{$root.language.artPlcInt}}" data-jp-content-editable ng-model="single.story.intro" required></p>
-        <p id="content" ng-class="isEditable ? 'jpeditable' : ''" class="content" mathjax-bind process="{{!isEditable}}" content="{{single.story.content}}" contenteditable="false" placeholder="{{$root.language.artPlcCon}}" data-jp-content-editable ng-model="single.story.content" required></p>
+        <p id="content" ng-class="isEditable ? 'jpeditable' : ''" class="content" mathjax-bind process="{{!isEditable}}" content="{{single.story.content}}" ng-model="single.story.content" required></p>
+
+        <jp-postarea ng-show="isEditable" form="singleForm" model="single.story.content"></jp-postarea>
         <div class="footer">
             <i ng-click="redirect(prepareYoutubeUrl(single.url))" ng-show="url" class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>
         </div>
