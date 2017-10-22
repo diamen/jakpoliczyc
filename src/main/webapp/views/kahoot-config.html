@@ -1,0 +1,31 @@
+<form class="form-inline">
+
+    <div class="config-container">
+        <div ng-class-even="'config-even'" class="config-element" ng-repeat="kahoot in kahoots">
+
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-readonly="!kahoot.editable"
+                   ng-model="kahoot.title" required>
+
+            <select class="form-control"
+                    ng-model="kahoot.languageKey" ng-disabled="!kahoot.editable"
+                    ng-options="lang as $root.language[lang] for lang in langKeys track by lang">
+            </select>
+
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" ng-readonly="!kahoot.editable"
+                       ng-model="kahoot.url" required>
+            </div>
+
+            <button class="btn btn-primary" ng-click="editRow($index)">{{kahoot.editable ? $root.language.cancel : $root.language.edit}}</button>
+            <button class="btn btn-primary" ng-click="delete($index)">{{$root.language.remove}}</button>
+            <button class="btn btn-primary" ng-show="kahoot.editable" ng-click="postConfig($index, kahoot)"
+                    ng-disabled="disabled">{{kahoot.id ? $root.language.save : $root.language.add}}</button>
+
+        </div>
+    </div>
+
+    <div class="config-buttons">
+        <button class="btn btn-primary" ng-click="addRow()">{{$root.language.add}}</button>
+    </div>
+
+</form>

@@ -1,10 +1,12 @@
 angular.module('jakPoliczycControllers')
-    .controller('parentCtrl', function ($scope, $rootScope, $state, $timeout, $document, $window, jpAuth, jpPagingSorting, menuService) {
+    .controller('parentCtrl', function ($scope, $rootScope, $controller, $timeout, $state, $document, $window, jpAuth, jpPagingSorting, menuService) {
 
         $scope.isAdmin = false;
         $scope.isMenuOpened = false;
         $scope.isTagsOpened = false;
         $scope.smallScreen = isSmallScreen();
+
+        $controller('stateCtrl', {$scope: $scope});
 
         menuService.getMenus().then(function success(response) {
             $scope.menu = response.data;
@@ -17,14 +19,14 @@ angular.module('jakPoliczycControllers')
             if (angular.isDefined(args)) {
                 args.$name = 'tags';
             }
-            passDown('filter-down', args);
+            $scope.passDown('filter-down', args);
         });
 
         $scope.$on('menu-up', function (event, args) {
             if (angular.isDefined(args)) {
                 args.$name = 'menu';
             }
-            passDown('filter-down', args);
+            $scope.passDown('filter-down', args);
         });
 
         $scope.$on('close-up', function () {
@@ -48,45 +50,6 @@ angular.module('jakPoliczycControllers')
         $scope.$on('logout-up', function () {
             $scope.$broadcast('logout-down');
         });
-
-        /* States */
-        $scope.goHome = function () {
-            $timeout(function () {
-                passDown('menu-down');
-                passDown('tags-down');
-                $scope.$broadcast('unselect-down');
-            }, 0);
-
-            $state.go("articles");
-        };
-
-        $scope.goAdd = function () {
-            $state.go("articles.add");
-        };
-
-        $scope.goArticle = function (id) {
-            $state.go("articles.id", {id: id});
-        };
-
-        $scope.goLogin = function () {
-            $state.go("login");
-        };
-
-        $scope.goStorage = function () {
-            $state.go("articles.storage");
-        };
-
-        $scope.goBroadcast = function () {
-            $state.go("broadcast");
-        };
-
-        $scope.goConfig = function () {
-            $state.go("config");
-        };
-
-        $scope.goSingleStorage = function (id) {
-            $state.go("articles.storage.id", {id: id});
-        };
 
         $scope.redirect = function (url) {
             $window.open(url, '_blank');
@@ -129,7 +92,7 @@ angular.module('jakPoliczycControllers')
             return $window.innerWidth <= 768;
         }
 
-        function passDown(eventName, args) {
+        $scope.passDown = function(eventName, args) {
             if (eventName === 'filter-down') {
                 jpPagingSorting.clear();
             }
@@ -141,7 +104,7 @@ angular.module('jakPoliczycControllers')
             $timeout(function () {
                 $scope.$broadcast(eventName, args);
             }, 50);
-        }
+        };
 
         function isHome(url) {
             return url === '/articles';

@@ -31,7 +31,8 @@ angular.module('jakPoliczycDirectives')
                             },
                             menus: jpStorage.retrieve('menus'),
                             tags: tags,
-                            url: scope.add.youtube
+                            url: scope.add.youtube,
+                            kahoot: scope.add.kahoot
                         };
                         scope.openModalSubmit(request);
                     }

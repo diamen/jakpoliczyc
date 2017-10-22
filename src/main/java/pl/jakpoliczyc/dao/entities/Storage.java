@@ -26,6 +26,9 @@ public class Storage {
     private Collection<Stag> stags;
     @Convert(converter = UrlToStringConverter.class)
     private URL url;
+    @ManyToOne
+    @JoinColumn(name = "KAHOOT_ID")
+    private Kahoot kahoot;
 
     public long getId() {
         return id;
@@ -65,5 +68,13 @@ public class Storage {
 
     public void setUrl(URL url) {
         this.url = url;
+    }
+
+    public Kahoot getKahoot() {
+        return kahoot;
+    }
+
+    public void setKahoot(Kahoot kahoot) {
+        this.kahoot = kahoot;
     }
 }

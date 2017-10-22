@@ -45,7 +45,8 @@ angular.module('jakPoliczycControllers')
                 },
                 menus: jpStorage.retrieve('menus'),
                 tags: tags,
-                url: $scope.article.url
+                url: $scope.article.url,
+                kahoot: $scope.article.kahoot
             };
             modalService.execute(function (data) {
                 articleService.updateArticle(data.id, data.request).then(function success() {

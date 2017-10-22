@@ -32,7 +32,8 @@ angular.module('jakPoliczycControllers')
                     content: $scope.single.story.content
                 },
                 stags: stags,
-                url: $scope.single.url
+                url: $scope.single.url,
+                kahoot: $scope.single.kahoot
             };
             modalService.execute(function (data) {
                 storageService.updateStorage(data.id, data.request).then(function success() {

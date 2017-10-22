@@ -2,6 +2,7 @@ package pl.jakpoliczyc.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.URL;
+import pl.jakpoliczyc.dao.entities.Kahoot;
 import pl.jakpoliczyc.dao.entities.Story;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public class StorageDto implements Serializable {
     private List<String> stags;
     @URL
     private String url;
+    private Kahoot kahoot;
 
     public Story getStory() {
         return story;
@@ -39,13 +41,11 @@ public class StorageDto implements Serializable {
         this.url = url;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("StorageDto{");
-        sb.append("story=").append(story);
-        sb.append(", stags=").append(stags);
-        sb.append(", url='").append(url).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public Kahoot getKahoot() {
+        return kahoot;
+    }
+
+    public void setKahoot(Kahoot kahoot) {
+        this.kahoot = kahoot;
     }
 }

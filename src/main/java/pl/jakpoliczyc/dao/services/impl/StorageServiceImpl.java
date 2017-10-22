@@ -45,6 +45,7 @@ public class StorageServiceImpl implements StorageService {
         storage.setStags(wrapper.getStags() != null ? prepareStags(wrapper.getStags()) : null);
         storage.setStory(wrapper.getStory());
         storage.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
+        storage.setKahoot(wrapper.getKahoot());
         storageRepository.insert(storage);
     }
 
@@ -56,6 +57,7 @@ public class StorageServiceImpl implements StorageService {
         storage.setStags(wrapper.getStags() != null ? prepareStags(wrapper.getStags()) : null);
         storage.setAddedDate(new Date());
         storage.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
+        storage.setKahoot(wrapper.getKahoot());
         storageRepository.insert(storage);
     }
 
@@ -85,7 +87,8 @@ public class StorageServiceImpl implements StorageService {
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
         storyMenuTagDto.setStory(storage.getStory());
         storyMenuTagDto.setMenus(menus);
-        storyMenuTagDto.setTags(storage.getStags().stream().map(e -> e.getName()).collect(Collectors.toList()));
+        storyMenuTagDto.setTags(storage.getStags().stream().map(Stag::getName).collect(Collectors.toList()));
+        storyMenuTagDto.setKahoot(storage.getKahoot());
         storageRepository.delete(storageId);
         articleService.save(storyMenuTagDto);
     }

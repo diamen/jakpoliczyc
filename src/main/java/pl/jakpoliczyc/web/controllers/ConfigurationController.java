@@ -5,6 +5,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.jakpoliczyc.dao.entities.Configuration;
 import pl.jakpoliczyc.dao.services.ConfigurationService;
@@ -29,9 +30,11 @@ public class ConfigurationController {
         return new ResponseEntity<>(configs, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/configuration", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> postConfiguration(@Valid @RequestBody final List<ConfigurationDto> configurationDtos) {
         configurationService.insert(configurationDtos);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
+
 }

@@ -27,16 +27,19 @@ public class Article {
     @JoinColumn(name = "MENU_ID", nullable = false)
     private Menu menu;
     @JsonManagedReference
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Collection<Comment> comments;
     @JsonView(View.Compress.class)
     @ManyToMany
     @JoinTable(name = "ART_TAG",
-        joinColumns = @JoinColumn(name = "ART_ID", referencedColumnName = "ID"),
-        inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID"))
+            joinColumns = @JoinColumn(name = "ART_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID"))
     private Collection<Tag> tags;
     @Convert(converter = UrlToStringConverter.class)
     private URL url;
+    @ManyToOne
+    @JoinColumn(name = "KAHOOT_ID")
+    private Kahoot kahoot;
 
     public long getId() {
         return id;
@@ -92,5 +95,13 @@ public class Article {
 
     public void setUrl(URL url) {
         this.url = url;
+    }
+
+    public Kahoot getKahoot() {
+        return kahoot;
+    }
+
+    public void setKahoot(Kahoot kahoot) {
+        this.kahoot = kahoot;
     }
 }

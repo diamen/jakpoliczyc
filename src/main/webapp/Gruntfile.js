@@ -50,6 +50,9 @@ module.exports = function (grunt) {
         /* Dane testowe */
         'scripts/mockdata.js',
 
+        /* Constants */
+        'scripts/constants/constants.js',
+
         /* Controllers */
         'scripts/controllers/controller.js',
         'scripts/controllers/parentCtrl.js',
@@ -58,10 +61,13 @@ module.exports = function (grunt) {
         'scripts/controllers/articlesCtrl.js',
         'scripts/controllers/broadcasterCtrl.js',
         'scripts/controllers/configCtrl.js',
+        'scripts/controllers/kahootConfigCtrl.js',
+        'scripts/controllers/kahootCtrl.js',
         'scripts/controllers/linkCtrl.js',
         'scripts/controllers/loginCtrl.js',
         'scripts/controllers/modalCtrl.js',
         'scripts/controllers/singleStorageCtrl.js',
+        'scripts/controllers/stateCtrl.js',
         'scripts/controllers/storageCtrl.js',
         'scripts/controllers/subscribeCtrl.js',
         'scripts/controllers/tagCtrl.js',
@@ -79,6 +85,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpHasRoles.js',
         'scripts/directives/jpIsLogin.js',
         'scripts/directives/jpIsNotLogin.js',
+        'scripts/directives/jpKahootForm.js',
         'scripts/directives/jpListHeader.js',
         'scripts/directives/jpLogout.js',
         'scripts/directives/jpMenu.js',
@@ -119,6 +126,7 @@ module.exports = function (grunt) {
         'scripts/services/jpArtfilter.js',
         'scripts/services/jpAuth.js',
         'scripts/services/jpLabelService.js',
+        'scripts/services/kahootService.js',
         'scripts/services/menuService.js',
         'scripts/services/modalService.js',
         'scripts/services/storageService.js',

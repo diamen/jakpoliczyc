@@ -50,6 +50,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setTags(wrapper.getTags() != null ? prepareTags(wrapper.getTags()) : null);
         article.setAddedDate(new Date());
         article.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
+        article.setKahoot(wrapper.getKahoot());
         articleRepository.insertArticle(article);
     }
 
@@ -64,6 +65,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setMenu(menu);
         article.setTags(wrapper.getTags() != null ? prepareTags(wrapper.getTags()) : null);
         article.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
+        article.setKahoot(wrapper.getKahoot());
         articleRepository.insertArticle(article);
     }
 

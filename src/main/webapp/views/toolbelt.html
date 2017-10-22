@@ -1,7 +1,10 @@
 <div class="toolbelt">
     <table>
         <tr>
-            <td class="fa fa-home fa-3x" uib-tooltip="Home" ng-click="goHome()"></td>
+            <td class="fa fa-home fa-3x clickable" uib-tooltip="Home" ng-click="goHome()"></td>
+            <td class="kahoot clickable" uib-tooltip="{{$root.language.quizes}}" ng-click="goKahoot()">
+                <img src="../resources/gfx/Kahoot_logo_purple50h.png"/>
+            </td>
         </tr>
     </table>
 </div>

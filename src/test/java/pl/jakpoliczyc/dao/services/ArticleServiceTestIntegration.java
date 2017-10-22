@@ -5,6 +5,7 @@ import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 import com.github.springtestdbunit.dataset.AbstractDataSetLoader;
+import com.google.common.collect.Lists;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.dbunit.dataset.DataSetException;
@@ -29,6 +30,7 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+import pl.jakpoliczyc.dao.entities.Kahoot;
 import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Story;
 import pl.jakpoliczyc.dao.repos.MenuRepository;
@@ -111,6 +113,8 @@ public class ArticleServiceTestIntegration {
                 .newRow("art_tag").with("art_id", 1).with("tag_id", 1).add()
                 .newRow("art_tag").with("art_id", 1).with("tag_id", 2).add()
 
+                .newRow("kahoot").with("id", 1).with("kahootdifficulties", 2).with("title", "title").with("url", "https://www.youtube.com/watch?v=7yENwWsB3uE").add()
+
                 .build();
     }
 
@@ -123,6 +127,9 @@ public class ArticleServiceTestIntegration {
 
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private KahootService kahootService;
 
     private final Pageable pageable = new Pageable() {
         @Override
@@ -188,7 +195,7 @@ public class ArticleServiceTestIntegration {
     }
 
     private List<MenuDto> getShouldInsertToMenuWorkWithTestData4() {
-        return Arrays.asList(new MenuDto(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"));
+        return Lists.newArrayList(new MenuDto(1, "Podstawowe własności figur geometrycznych na płaszczyźnie"));
     }
 
     @Rollback
@@ -201,7 +208,7 @@ public class ArticleServiceTestIntegration {
         int noOfElementsWithIdEqualedToZero = param.stream().filter(e -> e.getId() == 0).collect(Collectors.toList()).size();
 
         // when
-        Method method = ((Advised) articleService).getTargetSource().getTarget().getClass().getDeclaredMethod("prepareMenu", new Class[]{List.class});
+        Method method = ((Advised) articleService).getTargetSource().getTarget().getClass().getDeclaredMethod("prepareMenu", List.class);
         method.setAccessible(true);
         Menu menu = (Menu) method.invoke(((Advised) articleService).getTargetSource().getTarget(), param);
         method.setAccessible(false);
@@ -229,11 +236,8 @@ public class ArticleServiceTestIntegration {
     public void shouldNotInsertPresentMenu() {
         // given
         List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();
-        Story story = new Story();
-        story.setTitle("any title");
-        story.setIntro("any intro");
-        story.setContent("any content");
-        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, Arrays.asList("Not"), existingMenus);
+        Story story = getStory("any title", "any intro", "any content");
+        StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, Lists.newArrayList("Not"), existingMenus);
 
         int sizeBefore = menuRepository.findAll().size();
 
@@ -253,12 +257,9 @@ public class ArticleServiceTestIntegration {
         MenuDto menuDto = new MenuDto();
         menuDto.setId(0);
         menuDto.setName("I do not exist already");
-        Story story = new Story();
-        story.setTitle("any title");
-        story.setContent("any content");
-        story.setIntro("any intro");
+        Story story = getStory("any title", "any intro", "any content");
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
-        storyMenuTagDto.setMenus(Arrays.asList(menuDto));
+        storyMenuTagDto.setMenus(Lists.newArrayList(menuDto));
         storyMenuTagDto.setStory(story);
 
         int sizeBefore = articleService.findAll(pageable).getContent().size();
@@ -276,10 +277,7 @@ public class ArticleServiceTestIntegration {
     public void shouldInsertOnlyNotPresentTags() {
         // given
         List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();
-        Story story = new Story();
-        story.setTitle("any title");
-        story.setIntro("any intro");
-        story.setContent("any content");
+        Story story = getStory("any title", "any intro", "any content");
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, Arrays.asList("Not", "Exists"), existingMenus);
 
         int tagsBefore = tagService.findAll().size();
@@ -298,10 +296,7 @@ public class ArticleServiceTestIntegration {
     public void shouldInsertCorrectlyWhenTagsAreNull() {
         // given
         List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();
-        Story story = new Story();
-        story.setTitle("any title");
-        story.setIntro("any intro");
-        story.setContent("any content");
+        Story story = getStory("any title", "any intro", "any content");
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, null, existingMenus);
 
         int sizeBefore = articleService.findAll(pageable).getContent().size();
@@ -320,11 +315,8 @@ public class ArticleServiceTestIntegration {
     public void shouldInsertedArticleHasReferenceToAlreadyExistingTag() {
         // given
         List<MenuDto> existingMenus = getShouldInsertToMenuWorkWithTestData3();
-        Story story = new Story();
-        story.setTitle("any title");
-        story.setIntro("any intro");
-        story.setContent("any content");
-        List<String> tags = Arrays.asList("Exists");
+        Story story = getStory("any title", "any intro", "any content");
+        List<String> tags = Lists.newArrayList("Exists");
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto(story, tags, existingMenus);
 
         // when
@@ -356,7 +348,6 @@ public class ArticleServiceTestIntegration {
     @Test
     public void shouldListOfArticlesWithCommentsDecreaseAfterRemove() {
         // given
-        List<ArticleCompressedDto> articles = articleService.findAll(pageable).getContent();
         CommentDto commentDto = new CommentDto();
         commentDto.setContent("blabla");
         commentDto.setAuthor("author");
@@ -380,10 +371,43 @@ public class ArticleServiceTestIntegration {
         int expectedSize = 2;
 
         // when
-        int returnedSize = articleService.findByMenuId(pageable, 2l).getContent().size();
+        int returnedSize = articleService.findByMenuId(pageable, 2L).getContent().size();
 
         // then
         assertThat(expectedSize).isEqualTo(returnedSize);
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    public void shouldDeletingKahootNotDeleteRelatedArticle() {
+        // given
+        final Kahoot kahoot = kahootService.findAll().get(0);
+        final StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
+        final List<MenuDto> menus = getShouldInsertToMenuWorkWithTestData3();
+        final Story story = getStory("kahootTitle", "intro", "content");
+        storyMenuTagDto.setMenus(menus);
+        storyMenuTagDto.setStory(story);
+        storyMenuTagDto.setKahoot(kahoot);
+
+        articleService.save(storyMenuTagDto);
+
+        final long sizeBefore = articleService.findAll(pageable).getSize();
+
+        // when
+        kahootService.delete(1);
+
+        // then
+        final long sizeAfter = articleService.findAll(pageable).getSize();
+        assertThat(sizeBefore).isEqualTo(sizeAfter);
+    }
+
+    private Story getStory(final String title, final String intro, final String content) {
+        final Story story = new Story();
+        story.setContent(content);
+        story.setIntro(intro);
+        story.setTitle(title);
+        return story;
     }
 
 }

@@ -68,6 +68,12 @@ angular.module('jakPoliczycRouters', [])
                 }
             })
 
+            .state('kahoot', {
+                url: "/kahoot",
+                controller: "kahootCtrl",
+                templateUrl: "views/kahoot.html"
+            })
+
             /* BROADCAST SECTION */
             .state("broadcast", {
                 url: "/broadcast",
@@ -91,6 +97,16 @@ angular.module('jakPoliczycRouters', [])
                 url: "/config",
                 controller: "configCtrl",
                 templateUrl: "views/config.html",
+
+                data: {
+                    roles: ['ROLE_ADMIN']
+                }
+            })
+
+            .state("kahoot-config", {
+                url: "/kahootconfig",
+                controller: "kahootConfigCtrl",
+                templateUrl: "views/kahoot-config.html",
 
                 data: {
                     roles: ['ROLE_ADMIN']

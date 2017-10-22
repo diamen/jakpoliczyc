@@ -5,6 +5,21 @@ angular.module('jakPoliczycDirectives')
             scope: {
                 ngModel: '='
             },
+            link: function (scope) {
+
+                scope.$watch('youtubeEnabled', function (value) {
+                    if (!value) {
+                        scope.ngModel = undefined;
+                    }
+                });
+
+                var clearWatch = scope.$watch('ngModel', function (value) {
+                    if (value && value.length > 1) {
+                        scope.youtubeEnabled = true;
+                        clearWatch();
+                    }
+                });
+            },
             template:
 
             '<div ng-form name="ytForm" class="input-group add-youtube">' +

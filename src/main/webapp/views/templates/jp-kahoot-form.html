@@ -1,0 +1,9 @@
+<div ng-form name="kahootForm" class="input-group">
+    <span class="input-group-addon">
+        <input ng-model="kahootEnabled" type="checkbox" aria-label="kahoot checkbox">
+    </span>
+    <span class="input-group-addon" id="sizing-addon1">kahoot</span>
+    <select class="form-control" ng-model="ngModel" ng-disabled="!kahootEnabled"
+            ng-options="kahoot as kahoot.title for kahoot in kahoots track by kahoot.id">
+    </select>
+</div>

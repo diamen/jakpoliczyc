@@ -10,6 +10,7 @@ angular.module('jakPoliczycApp',
         'ui.router',
         'ui.tree',
 
+        'jakPoliczycConstants',
         'jakPoliczycControllers',
         'jakPoliczycDirectives',
         'jakPoliczycFactories',

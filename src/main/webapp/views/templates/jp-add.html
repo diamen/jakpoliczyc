@@ -37,7 +37,8 @@
 
     <jp-postarea form="addForm" model="add.content"></jp-postarea>
 
-    <jp-youtube-form ng-model="add.youtube"></jp-youtube-form>
+    <jp-youtube-form ng-model="add.youtube" class="add-link-form"></jp-youtube-form>
+    <jp-kahoot-form ng-model="add.kahoot" class="add-link-form"></jp-kahoot-form>
 
     <div class="add-submit">
         <button ng-click="openModalSaveToStorage(add.title, add.intro, add.content, add.tags)"

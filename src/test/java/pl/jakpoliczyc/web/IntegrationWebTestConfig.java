@@ -24,11 +24,7 @@ import pl.jakpoliczyc.dao.IntegrationDbTestConfig;
 public class IntegrationWebTestConfig extends IntegrationDbTestConfig {
 
     public String generateRequest(Object object) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
-        String requestJson = objectWriter.writeValueAsString(object);
-        return requestJson;
+        return WebTestUtils.generateRequest(object);
     }
 
 }

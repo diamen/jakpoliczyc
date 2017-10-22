@@ -1,5 +1,6 @@
 package pl.jakpoliczyc.web.controllers;
 
+import com.google.common.collect.Lists;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,6 @@ import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
 import javax.servlet.ServletContext;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
@@ -74,7 +74,7 @@ public class ArticleControllerTestIntegration extends IntegrationWebTestConfig {
     @Test
     public void shouldReturnOkStatusWhenListIsNotEmpty() throws Exception {
         // given
-        doReturn(new PageImpl<>(Arrays.asList(new Article()))).when(articleService).findAll(any());
+        doReturn(new PageImpl<>(Lists.newArrayList(new Article()))).when(articleService).findAll(any());
 
         // when - then
         mockMvc.perform(get("/articles?page=1&size=100"))
@@ -125,7 +125,7 @@ public class ArticleControllerTestIntegration extends IntegrationWebTestConfig {
     public void shouldReturnCreatedStatusWhenSentArticleIsValidObject() throws Exception {
         // given
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
-        storyMenuTagDto.setMenus(Arrays.asList(new MenuDto()));
+        storyMenuTagDto.setMenus(Lists.newArrayList(new MenuDto()));
         storyMenuTagDto.setStory(new Story());
         String requestJson = generateRequest(storyMenuTagDto);
         doNothing().when(articleService).save(anyObject());
@@ -141,7 +141,7 @@ public class ArticleControllerTestIntegration extends IntegrationWebTestConfig {
     public void shouldReturnBadRequestWhenValidationOfArticleNotPass() throws Exception {
         // given
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
-        storyMenuTagDto.setMenus(Arrays.asList(new MenuDto()));
+        storyMenuTagDto.setMenus(Lists.newArrayList(new MenuDto()));
         storyMenuTagDto.setStory(null);
         String requestJson = generateRequest(storyMenuTagDto);
 
@@ -203,7 +203,7 @@ public class ArticleControllerTestIntegration extends IntegrationWebTestConfig {
         // given
         final ArticleCompressedDto articleCompressedDto = new ArticleCompressedDto(1L, "title", "intro",
                 new Date(), Collections.emptyList(), null);
-        doReturn(new PageImpl<>(Arrays.asList(articleCompressedDto))).when(articleService).findAll(any());
+        doReturn(new PageImpl<>(Lists.newArrayList(articleCompressedDto))).when(articleService).findAll(any());
 
         // when - then
         mockMvc.perform(get("/articles?page=1&size=100")

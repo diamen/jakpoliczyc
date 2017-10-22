@@ -29,7 +29,8 @@
         <div ng-if="url" ng-hide="isEditable" class="video">
             <iframe width="420" height="315" ng-src="{{url}}" allowfullscreen></iframe>
         </div>
-        <jp-youtube-form ng-show="isEditable" ng-model="single.url"></jp-youtube-form>
+        <jp-youtube-form ng-show="isEditable" ng-model="single.url" class="add-link-form"></jp-youtube-form>
+        <jp-kahoot-form ng-show="isEditable" ng-model="single.kahoot" class="add-link-form"></jp-kahoot-form>
 
         <div class="add-submit">
             <button ng-click="publish()" ng-disabled="isEditable || singleForm.$invalid" class="btn btn-primary">{{language.publish}}</button>
