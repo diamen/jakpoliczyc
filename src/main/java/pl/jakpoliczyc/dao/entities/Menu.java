@@ -3,12 +3,13 @@ package pl.jakpoliczyc.dao.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-@PersistenceUnit(name = "JakPoliczyc")
+@PersistenceUnit(name = RepositoryUtils.PERSISTENCE_UNIT_NAME)
 @Entity
 public class Menu {
 

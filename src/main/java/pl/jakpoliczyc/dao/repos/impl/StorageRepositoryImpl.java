@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @Repository
 public class StorageRepositoryImpl implements StorageRepository {
 
@@ -21,11 +22,13 @@ public class StorageRepositoryImpl implements StorageRepository {
     private EntityManager entityManager;
 
     @Transactional(readOnly = true)
+    @Override
     public Optional<Storage> find(long id) {
         return Optional.ofNullable(entityManager.find(Storage.class, id));
     }
 
     @Transactional(readOnly = true)
+    @Override
     public Page<Storage> findAll(final Pageable pageable) {
         final String query = String.format("SELECT e FROM STORAGES e %s", RepositoryUtils.sortToStringQuery(pageable.getSort(), Storage.class));
         final List<Storage> storages = entityManager.createQuery(query, Storage.class)
@@ -36,10 +39,12 @@ public class StorageRepositoryImpl implements StorageRepository {
         return new PageImpl<>(storages, pageable, total);
     }
 
+    @Override
     public void insert(Storage storage) {
         entityManager.persist(storage);
     }
 
+    @Override
     public void delete(long id) {
         Storage storage = entityManager.find(Storage.class, id);
         entityManager.remove(storage);

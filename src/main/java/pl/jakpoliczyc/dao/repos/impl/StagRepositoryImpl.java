@@ -22,17 +22,20 @@ public class StagRepositoryImpl implements StagRepository {
         return entityManager.createQuery("SELECT e FROM STAGS e", Stag.class).getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Stag> in(List<String> names) {
         return entityManager.createQuery("SELECT e FROM STAGS e where e.name IN :names")
                 .setParameter("names", names).getResultList();
     }
 
+    @Transactional(readOnly = true)
+    @Override
     public Optional<Stag> findByName(String name) {
         List<Stag> stags = entityManager.createQuery("SELECT e FROM STAGS e where e.name = :name", Stag.class)
                 .setParameter("name", name).getResultList();
         if (stags.isEmpty()) {
-            return Optional.ofNullable(null);
+            return Optional.empty();
         }
         return Optional.of(stags.get(0));
     }

@@ -1,5 +1,6 @@
 package pl.jakpoliczyc.dao.services.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,12 +33,11 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     }
 
     @Override
-    public void insert(final List<ConfigurationDto> configurationDtos) {
+    public void replace(final List<ConfigurationDto> configurationDtos) {
         configurationRepository.deleteAll();
-        configurationRepository.insert(configurationDtos.stream().map(config -> {
+        configurationRepository.insert(configurationDtos.stream().map(configDto -> {
             final Configuration configuration = new Configuration();
-            configuration.setKeyy(config.getKeyy());
-            configuration.setValue(config.getValue());
+            BeanUtils.copyProperties(configDto, configuration);
             return configuration;
         }).collect(Collectors.toList()));
     }

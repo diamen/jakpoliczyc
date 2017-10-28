@@ -1,11 +1,11 @@
 angular.module('jakPoliczycServices')
-    .service("jpAuth", ['$http', '$cookieStore', 'jwtHelper', function($http, $cookieStore, jwtHelper) {
+    .service("jpAuth", ['$http', '$cookieStore', 'jwtHelper', function ($http, $cookieStore, jwtHelper) {
 
         var _roles = [];
 
         var login = function (username, password) {
             return $http({
-                data: { username: username, password: password },
+                data: {username: username, password: password},
                 method: 'POST',
                 url: '/login'
             });
@@ -43,7 +43,7 @@ angular.module('jakPoliczycServices')
             return _roles;
         };
 
-        var hasRoles = function(roles) {
+        var hasRoles = function (roles) {
             if (_roles.length === 0 && $cookieStore.get("TOKEN")) {
                 initRoles();
             }

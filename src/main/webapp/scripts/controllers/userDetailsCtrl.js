@@ -20,7 +20,7 @@ angular.module('jakPoliczycControllers')
 
         $scope.$on('logout-down', function () {
             $scope.expirationTime = undefined;
-            $scope.logout();
+            jpAuth.logout();
         });
 
         $scope.timerLogout = function () {

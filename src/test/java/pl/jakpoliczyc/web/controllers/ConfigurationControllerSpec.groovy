@@ -58,7 +58,7 @@ class ConfigurationControllerSpec extends Specification {
     }
 
     def "Should controller return 201 status when configuration is inserted"() {
-        given: "Data to insert"
+        given: "Data to replace"
         ConfigurationDto configurationDto = new ConfigurationDto()
         configurationDto.setKeyy("keyy")
         configurationDto.setValue("value")

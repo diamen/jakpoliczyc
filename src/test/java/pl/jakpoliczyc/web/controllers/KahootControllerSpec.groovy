@@ -56,7 +56,7 @@ class KahootControllerSpec extends Specification {
     }
 
     def "Should controller return 201 status when kahoot is inserted"() {
-        given: "Data to insert"
+        given: "Data to replace"
         Kahoot kahoot = new Kahoot()
         kahoot.setTitle("title")
         kahoot.setKahootDifficulties(KahootDifficulties.VERY_DIFFICULT)

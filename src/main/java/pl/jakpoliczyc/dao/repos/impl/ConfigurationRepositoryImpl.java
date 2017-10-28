@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakpoliczyc.dao.entities.Configuration;
 import pl.jakpoliczyc.dao.repos.ConfigurationRepository;
-import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

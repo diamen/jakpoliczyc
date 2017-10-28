@@ -1,6 +1,9 @@
-package pl.jakpoliczyc.config;
+package pl.jakpoliczyc.config.web;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import pl.jakpoliczyc.config.Profiles;
+import pl.jakpoliczyc.config.RootConfig;
+import pl.jakpoliczyc.config.security.DefaultWebSecurityConfigurerAdapter;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -10,21 +13,21 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
-        servletContext.setInitParameter("spring.profiles.active", "DEV");
+        servletContext.setInitParameter("spring.profiles.active", Profiles.DEV);
     }
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { RootConfig.class, SecurityConfig.class };
+        return new Class[]{RootConfig.class, DefaultWebSecurityConfigurerAdapter.class};
     }
 
     @Override
-    protected Class<?>[] getServletConfigClasses()  {
-        return new Class[] { WebConfiguration.class };
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class[]{WebConfiguration.class};
     }
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] { "/" };
+        return new String[]{"/"};
     }
 }

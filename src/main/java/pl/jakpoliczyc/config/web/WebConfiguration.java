@@ -1,4 +1,4 @@
-package pl.jakpoliczyc.config;
+package pl.jakpoliczyc.config.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -1,10 +1,13 @@
 package pl.jakpoliczyc.dao.repos.impl;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.jakpoliczyc.config.Caches;
 import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Comment;
 import pl.jakpoliczyc.dao.repos.ArticleRepository;
@@ -14,7 +17,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Transactional
 @Repository
@@ -23,6 +25,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Cacheable(value = Caches.ARTICLE_CACHE)
     @Override
     @Transactional(readOnly = true)
     public Page<Article> findAll(final Pageable pageable) {
@@ -40,11 +43,13 @@ public class ArticleRepositoryImpl implements ArticleRepository {
         return entityManager.find(Article.class, id);
     }
 
+    @CacheEvict(value = {Caches.ARTICLE_CACHE, Caches.MENU_CACHE}, allEntries = true)
     @Override
     public void insertArticle(Article article) {
         entityManager.persist(article);
     }
 
+    @CacheEvict(value = {Caches.ARTICLE_CACHE, Caches.MENU_CACHE}, allEntries = true)
     @Override
     public void removeArticle(long id) {
         Article article = entityManager.find(Article.class, id);
@@ -52,7 +57,6 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     }
 
     @Override
-    @Transactional
     public void removeComment(long articleId, long commentId) {
         Article article = entityManager.find(Article.class, articleId);
         Comment comment = article.getComments().stream().filter(e -> e.getId() == commentId).findFirst().get();

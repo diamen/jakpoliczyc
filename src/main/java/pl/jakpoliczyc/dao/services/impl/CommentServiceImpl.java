@@ -9,7 +9,7 @@ import pl.jakpoliczyc.dao.services.CommentService;
 
 import java.util.List;
 
-@Service("commentServiceImpl")
+@Service
 @Transactional
 public class CommentServiceImpl implements CommentService {
 

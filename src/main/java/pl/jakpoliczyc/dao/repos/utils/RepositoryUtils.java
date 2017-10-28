@@ -10,7 +10,6 @@ import javax.persistence.Embedded;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -30,8 +29,8 @@ public class RepositoryUtils {
 
         final String attributes = StringUtils.collectionToCommaDelimitedString(
                 StreamSupport.stream(sort.spliterator(), false)
-                    .map(e -> e.getProperty() + " " + e.getDirection())
-                .collect(Collectors.toList())
+                        .map(e -> e.getProperty() + " " + e.getDirection())
+                        .collect(Collectors.toList())
         );
 
         return String.format("ORDER BY %s", attributes);

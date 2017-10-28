@@ -1,10 +1,8 @@
 package pl.jakpoliczyc.dao.services;
 
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseOperation;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 import com.github.springtestdbunit.dataset.AbstractDataSetLoader;
+import com.google.common.collect.Lists;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.assertj.core.api.SoftAssertions;
@@ -20,33 +18,21 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+import pl.jakpoliczyc.dao.JakPoliczycDbTest;
 import pl.jakpoliczyc.dao.entities.Storage;
 import pl.jakpoliczyc.dao.entities.Story;
 import pl.jakpoliczyc.web.dto.MenuDto;
 import pl.jakpoliczyc.web.dto.StorageDto;
 
-import java.util.Arrays;
-
 import static junitparams.JUnitParamsRunner.$;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("TEST")
 @RunWith(JUnitParamsRunner.class)
-@ContextConfiguration(locations = {"classpath:test-db-config.xml"})
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class})
-@DatabaseSetup(value = "/fake.xml", type = DatabaseOperation.CLEAN_INSERT)
 @DbUnitConfiguration(dataSetLoader = StorageServiceTestIntegration.Loader.class)
-public class StorageServiceTestIntegration {
+public class StorageServiceTestIntegration extends JakPoliczycDbTest {
 
     @ClassRule
     public static final SpringClassRule SCR = new SpringClassRule();
@@ -129,14 +115,14 @@ public class StorageServiceTestIntegration {
         story1.setTitle("title");
         story1.setContent("content");
         story1.setIntro("intro");
-        storage1.setStags(Arrays.asList("ok"));
+        storage1.setStags(Lists.newArrayList("ok"));
         storage1.setStory(story1);
 
         StorageDto storage2 = new StorageDto();
         Story story2 = new Story();
         story2.setContent("content");
         storage2.setStory(story2);
-        storage2.setStags(Arrays.asList("name"));
+        storage2.setStags(Lists.newArrayList("name"));
 
         return $(
                 $(new StorageDto()),
@@ -180,7 +166,6 @@ public class StorageServiceTestIntegration {
     public void shouldUpdateCorrectlyStorageObject() throws Exception {
         // given
         long id = 1;
-        Storage storageBefore = storageService.find(id);
         StorageDto update = new StorageDto();
         Story story = new Story();
         final String contentAfter = "new content";
@@ -212,7 +197,7 @@ public class StorageServiceTestIntegration {
         menuDto.setName("Funkcje");
 
         // when
-        storageService.publish(id, Arrays.asList(menuDto));
+        storageService.publish(id, Lists.newArrayList(menuDto));
 
         // then
         int sizeOfStoragesAfter = storageService.findAll(pageable).getContent().size();

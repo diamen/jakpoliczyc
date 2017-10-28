@@ -1,31 +1,28 @@
-package pl.jakpoliczyc.config;
+package pl.jakpoliczyc.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import pl.jakpoliczyc.dao.repos.UserService;
-import pl.jakpoliczyc.security.JakPoliczycUserDetailsService;
 import pl.jakpoliczyc.security.JwtAuthenticationTokenFilter;
 import pl.jakpoliczyc.security.RestAccessDeniedHandler;
 import pl.jakpoliczyc.security.RestUnauthorizedEntryPoint;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = { "pl.jakpoliczyc.security.*" })
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private UserService userService;
+@ComponentScan(basePackages = {"pl.jakpoliczyc.security.*"})
+@Import({SecurityBeanConfigurer.class})
+public class DefaultWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private RestUnauthorizedEntryPoint entryPoint;
@@ -33,15 +30,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RestAccessDeniedHandler accessDeniedHandler;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    @Autowired
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
-    @Bean
-    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationTokenFilter();
-    }
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
@@ -51,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(new JakPoliczycUserDetailsService(userService))
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
@@ -60,13 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .exceptionHandling()
-                 .authenticationEntryPoint(entryPoint)
-                 .accessDeniedHandler(accessDeniedHandler)
+                .authenticationEntryPoint(entryPoint)
+                .accessDeniedHandler(accessDeniedHandler)
                 .and()
                 .authorizeRequests()
-                 .anyRequest()
-                 .permitAll();
+                .anyRequest()
+                .permitAll();
 
-        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

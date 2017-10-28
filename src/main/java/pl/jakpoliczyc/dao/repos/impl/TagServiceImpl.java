@@ -22,12 +22,15 @@ public class TagServiceImpl implements TagService {
         return entityManager.createQuery("SELECT e FROM TAGS e", Tag.class).getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Tag> in(List<String> names) {
         return entityManager.createQuery("SELECT e FROM TAGS e where e.name IN :names")
                 .setParameter("names", names).getResultList();
     }
 
+    @Transactional(readOnly = true)
+    @Override
     public Optional<Tag> findByName(String name) {
         List<Tag> tags = entityManager.createQuery("SELECT e FROM TAGS e where e.name = :name", Tag.class)
                 .setParameter("name", name).getResultList();

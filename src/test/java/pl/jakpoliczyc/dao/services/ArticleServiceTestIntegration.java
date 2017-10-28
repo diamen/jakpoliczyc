@@ -1,8 +1,5 @@
 package pl.jakpoliczyc.dao.services;
 
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseOperation;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 import com.github.springtestdbunit.dataset.AbstractDataSetLoader;
 import com.google.common.collect.Lists;
@@ -22,14 +19,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+import pl.jakpoliczyc.dao.JakPoliczycDbTest;
 import pl.jakpoliczyc.dao.entities.Kahoot;
 import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.entities.Story;
@@ -49,15 +42,9 @@ import java.util.stream.Collectors;
 import static junitparams.JUnitParamsRunner.$;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("TEST")
 @RunWith(JUnitParamsRunner.class)
-@ContextConfiguration(locations = {"classpath:test-db-config.xml"})
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class})
-@DatabaseSetup(value = "/fake.xml", type = DatabaseOperation.CLEAN_INSERT)
 @DbUnitConfiguration(dataSetLoader = ArticleServiceTestIntegration.Loader.class)
-public class ArticleServiceTestIntegration {
+public class ArticleServiceTestIntegration extends JakPoliczycDbTest {
 
     @ClassRule
     public static final SpringClassRule SCR = new SpringClassRule();

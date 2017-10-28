@@ -1,11 +1,12 @@
 package pl.jakpoliczyc.dao.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
 
 import javax.persistence.*;
 import java.util.Collection;
 
-@PersistenceUnit(name = "JakPoliczyc")
+@PersistenceUnit(name = RepositoryUtils.PERSISTENCE_UNIT_NAME)
 @Entity(name = "STAGS")
 public class Stag {
 

@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
     @PropertySource("classpath:security.properties"),
     @PropertySource("classpath:smtp.properties")
 })
-@ImportResource("classpath:*-db-config.xml")
 @ComponentScan(basePackages = {"pl.jakpoliczyc"},
                 excludeFilters = {
                     @ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)

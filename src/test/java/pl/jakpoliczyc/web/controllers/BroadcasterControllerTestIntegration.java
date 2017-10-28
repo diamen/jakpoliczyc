@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.jakpoliczyc.config.RootConfig;
-import pl.jakpoliczyc.config.WebConfiguration;
+import pl.jakpoliczyc.config.web.WebConfiguration;
 import pl.jakpoliczyc.infrastructure.email.service.BroadcastService;
 import pl.jakpoliczyc.web.IntegrationWebTestConfig;
 import pl.jakpoliczyc.web.dto.EmailContentDto;
@@ -34,7 +34,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(JUnitParamsRunner.class)
 @ContextConfiguration(classes = { WebConfiguration.class, RootConfig.class })
-@ImportResource("classpath:test-db-config.xml")
 @Configuration
 @WebAppConfiguration
 public class BroadcasterControllerTestIntegration extends IntegrationWebTestConfig {

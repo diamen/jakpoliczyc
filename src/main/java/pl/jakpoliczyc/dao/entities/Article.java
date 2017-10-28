@@ -1,16 +1,15 @@
 package pl.jakpoliczyc.dao.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
 import pl.jakpoliczyc.dao.converters.UrlToStringConverter;
-import pl.jakpoliczyc.web.common.View;
+import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
 
 import javax.persistence.*;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
 
-@PersistenceUnit(name = "JakPoliczyc")
+@PersistenceUnit(name = RepositoryUtils.PERSISTENCE_UNIT_NAME)
 @Entity(name = "ARTICLES")
 @Cacheable
 public class Article {
@@ -29,7 +28,6 @@ public class Article {
     @JsonManagedReference
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Collection<Comment> comments;
-    @JsonView(View.Compress.class)
     @ManyToMany
     @JoinTable(name = "ART_TAG",
             joinColumns = @JoinColumn(name = "ART_ID", referencedColumnName = "ID"),

@@ -1,5 +1,5 @@
 package pl.jakpoliczyc.dao.repos.utils;
 
-public class UnknownPropertyForEntityClassException extends Exception {
+public class UnknownPropertyForEntityClassException extends RuntimeException {
 
 }

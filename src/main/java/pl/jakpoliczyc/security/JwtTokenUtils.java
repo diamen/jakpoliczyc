@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +17,9 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenUtils {
 
-    static final String CLAIM_KEY_AUTHORITIES = "authorities";
-    static final String CLAIM_KEY_AUDIENCE = "audience";
-    static final String CLAIM_KEY_CREATED = "created";
+    private static final String CLAIM_KEY_AUTHORITIES = "authorities";
+    private static final String CLAIM_KEY_AUDIENCE = "audience";
+    private static final String CLAIM_KEY_CREATED = "created";
 
     private static final String AUDIENCE_UNKNOWN = "unknown";
     private static final String AUDIENCE_WEB = "web";
@@ -156,7 +157,8 @@ public class JwtTokenUtils {
                 .setExpiration(generateExpirationDate())
                 .setSubject(userDetails.getUsername())
                 .signWith(signatureAlgorithm, secret)
-                .claim(CLAIM_KEY_AUTHORITIES, userDetails.getAuthorities().stream().map(e -> e.getAuthority()).collect(Collectors.joining(",")))
+                .claim(CLAIM_KEY_AUTHORITIES, userDetails.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
                 .claim(CLAIM_KEY_AUDIENCE, generateAudience(device))
                 .compact();
     }

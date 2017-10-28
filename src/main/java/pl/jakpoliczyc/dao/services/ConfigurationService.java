@@ -12,6 +12,6 @@ public interface ConfigurationService {
 
     Optional<Configuration> find(final String key);
 
-    void insert(final List<ConfigurationDto> configurations);
+    void replace(final List<ConfigurationDto> configurations);
 
 }

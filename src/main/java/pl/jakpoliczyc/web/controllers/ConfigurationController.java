@@ -33,7 +33,7 @@ public class ConfigurationController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/configuration", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> postConfiguration(@Valid @RequestBody final List<ConfigurationDto> configurationDtos) {
-        configurationService.insert(configurationDtos);
+        configurationService.replace(configurationDtos);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 

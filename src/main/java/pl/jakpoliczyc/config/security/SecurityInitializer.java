@@ -1,4 +1,4 @@
-package pl.jakpoliczyc.config;
+package pl.jakpoliczyc.config.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

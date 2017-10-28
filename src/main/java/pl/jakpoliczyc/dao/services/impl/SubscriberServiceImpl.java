@@ -10,12 +10,13 @@ import pl.jakpoliczyc.dao.services.SubscriberService;
 import java.util.List;
 
 @Transactional
-@Service("subscriberServiceImpl")
+@Service
 public class SubscriberServiceImpl implements SubscriberService {
 
     @Autowired
     private SubscriberRepository subscriberRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public List<Subscriber> findAll() {
         return subscriberRepository.findAll();

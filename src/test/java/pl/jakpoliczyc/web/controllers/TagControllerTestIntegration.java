@@ -8,9 +8,11 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockServletContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import pl.jakpoliczyc.config.Profiles;
 import pl.jakpoliczyc.dao.entities.Tag;
 import pl.jakpoliczyc.dao.repos.impl.TagServiceImpl;
 import pl.jakpoliczyc.web.IntegrationWebTestConfig;
@@ -22,6 +24,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles(Profiles.TEST)
 public class TagControllerTestIntegration extends IntegrationWebTestConfig {
 
     @Spy
