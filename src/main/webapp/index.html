@@ -4,8 +4,16 @@
     <meta charset="UTF-8">
     <title>JakPoliczyc</title>
 
+    <meta name="Description" content="JakPoliczyc zawiera artykuly zwiazane z fizyka i matematyka">
+    <meta name="Keywords" content="liczyc, jakpoliczyc, edukacja, szkola, matematyka, fizyka, matma, fiza, gimnazjum, liceum">
+
     <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+        TeX: {
+            extensions: ["cancel.js"]
+        }
+        });
     </script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
@@ -34,19 +42,7 @@
             <ui-view></ui-view>
         </main>
         <jp-contact></jp-contact>
-        <div class="social" ng-controller="linkCtrl">
-            <span>
-                <a ng-if="youtubeUrl" ng-href="{{youtubeUrl}}" target="_blank">
-                    <i class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybRedirect}}"></i>
-                </a>
-                <a ng-if="facebookUrl" ng-href="{{facebookUrl}}" target="_blank">
-                    <i class="fa fa-facebook fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.fbRedirect}}"></i>
-                </a>
-            </span>
-
-            <img ng-click="goHome()"
-                 alt="logo"/>
-        </div>
+        <div class="social" ng-controller="linkCtrl" ng-include="'views/links.html'"></div>
         <footer>{{language.webAuthor}}: <strong>Michał Stobiński</strong></footer>
     </div>
 

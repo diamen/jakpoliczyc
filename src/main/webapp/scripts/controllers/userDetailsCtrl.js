@@ -28,10 +28,6 @@ angular.module('jakPoliczycControllers')
             $scope.addAlert({'type': 'warning', 'msg': $scope.language.warnTimeout});
         };
 
-        $scope.$on('refresh-token-down', function () {
-            $scope.refreshToken();
-        });
-
         $scope.refreshToken = function () {
             jpAuth.refreshToken().then(function success(response) {
                  $cookieStore.put("TOKEN", response.data.token);

@@ -1,12 +1,13 @@
 <div ng-controller="tagCtrl" class="tagparent">
     <div class="tagger">
         <span>
-            <label for="tag">Wyszukiwanie po tagach</label>
-            <input class="form-control" typeahead-on-select="unfocus()" ng-focus="focus = true" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag as tag.name for tag in tags | filter:$viewValue | limitTo: 5" type="text" id="tag">
+            <label for="tag">{{$root.language.tagSearch}}</label>
+            <input class="form-control" typeahead-on-select="unfocus()" ng-focus="focus = true; opened = true" ng-blur="unfocus()" ng-model="ngModelOptionsSelected" ng-model-options="modelOptions" uib-typeahead="tag as tag.name for tag in tags | filter:$viewValue | limitTo: 5" type="text" id="tag">
         </span>
     </div>
-    <ul ng-if="tags" ng-show="selectedTags.indexOf(true) != -1 || focus" tabindex="-1" ng-focus="focusUL = true" ng-blur="focusUL = false; unfocus()" class="tagger">
-        <li class="x hide-s" ng-click="untickAll()" uib-tooltip="Odznacz tagi" tooltip-placement="bottom">X</li>
+    <ul ng-if="tags" ng-show="selectedTags.indexOf(true) != -1 && opened || focus" tabindex="-1" ng-focus="focusUL = true" ng-blur="focusUL = false; unfocus()" class="tagger">
+        <li class="x" ng-click="untickAll()" uib-tooltip="{{$root.language.tagUnselect}}" tooltip-placement="bottom">X</li>
         <li ng-class="selectedTags[$index] ? 'selected' : 'unselected'" class="selected" ng-click="tick($index, tag.id)" ng-init="render()" ng-repeat="tag in tags">{{tag.name}}</li>
+        <li class="show-s tag-close" style="display: none;" ng-click="close()">{{$root.language.close}}</li>
     </ul>
 </div>

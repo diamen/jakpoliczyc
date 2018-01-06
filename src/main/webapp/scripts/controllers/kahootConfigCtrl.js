@@ -21,6 +21,8 @@ angular.module('jakPoliczycControllers')
                     return e;
                 });
             }
+        }, function error() {
+            $scope.kahoots = [];
         });
 
         $scope.$watch('kahoots', function () {

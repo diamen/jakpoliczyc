@@ -17,6 +17,11 @@ $tag-unselected-color: #a6e1ec;
   margin: -10px -5px;
 }
 
+@mixin tag-color($bg-color: $tag-unselected-color, $text-color: $tag-text-color) {
+  background-color: $bg-color;
+  color: $tag-text-color;
+}
+
 .tagger {
   background-color: $tag-background-color;
   border-bottom: 1px solid $tag-border-color;
@@ -48,16 +53,25 @@ $tag-unselected-color: #a6e1ec;
   }
 
   .x {
-    background-color: $tag-unselected-color;
+    @include tag-color;
     border-radius: .25em;
-    color: $tag-text-color;
     left: -.5em;
     padding: .25em .5em;
   }
 
+  .tag-close {
+    @include tag-color;
+    border-radius: .3em;
+    bottom: 0;
+    font-size: 1.2em;
+    left: 0;
+    margin: 5px 5%;
+    position: fixed;
+    width: 90%;
+  }
+
   .selected {
-    background-color: $tag-selected-background-color;
-    color: $tag-selected-color;
+    @include tag-color($tag-selected-background-color, $tag-selected-color);
   }
 
   .selected:before,
@@ -66,8 +80,7 @@ $tag-unselected-color: #a6e1ec;
   }
 
   .unselected {
-    background-color: $tag-unselected-color;
-    color: $tag-text-color;
+    @include tag-color;
   }
 
   .unselected:before,

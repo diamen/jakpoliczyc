@@ -47,9 +47,6 @@ module.exports = function (grunt) {
         'scripts/config/securityConfig.js',
         'scripts/config/treeConfig.js',
 
-        /* Dane testowe */
-        'scripts/mockdata.js',
-
         /* Constants */
         'scripts/constants/constants.js',
 
@@ -135,8 +132,6 @@ module.exports = function (grunt) {
     ];
 
     grunt.config.init({
-
-       // pkg: grunt.file.readJSON('package.json'),
 
        clean: ['src/main/webapp/sass/build.scss', 'src/main/webapp/styles/main.css', 'src/main/webapp/styles/main.css.map'],
 

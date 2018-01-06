@@ -32,7 +32,6 @@ angular.module('jakPoliczycDirectives')
                     var menus = jpStorage.retrieve("menus") || [];
                     menus.push(menu);
                     jpStorage.put("menus", menus);
-                    console.log("id = " + id + " | name = " + name);
                     scope.$emit('publish-up');
                 };
 

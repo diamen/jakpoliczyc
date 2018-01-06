@@ -41,12 +41,6 @@ angular.module('jakPoliczycControllers')
             $scope.$broadcast('login-down');
         });
 
-        $document[0].body.addEventListener('click', function () {
-            if (jpAuth.isLogin()) {
-                $scope.$broadcast('refresh-token-down');
-            }
-        }, true);
-
         $scope.$on('logout-up', function () {
             $scope.$broadcast('logout-down');
         });

@@ -9,7 +9,7 @@ $header-userdetails-color: #fff;
 $header-userdetails-fa-color: $header-userdetails-border-color;
 
 header[role="banner"] {
-  background-color: $header-color;
+  background-color: rgba(57, 115, 220, 0.95);
   box-shadow: 0 0 .3125em $header-shadow-color inset;
   overflow: hidden;
   z-index: 2;
@@ -23,7 +23,6 @@ header[role="banner"] {
 
   img {
     cursor: pointer;
-    max-height: 6.5em;
     max-width: 100%;
   }
 

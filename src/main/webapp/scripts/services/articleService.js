@@ -118,7 +118,7 @@ angular.module('jakPoliczycServices')
                 })
             },
             prepareTags: function (input) {
-                return input.trim().split(" ").map(function(tag) {
+                return angular.isUndefined(input) ? input : input.trim().split(" ").map(function(tag) {
                     tag = tag.trim();
                     return tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase();
                 });

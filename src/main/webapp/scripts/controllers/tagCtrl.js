@@ -6,6 +6,7 @@ angular.module('jakPoliczycControllers')
 
         var eventTargetName = "tags";
 
+        $scope.opened = false;
         $scope.tags = [];
         $scope.selectedTags = [];
 
@@ -15,6 +16,10 @@ angular.module('jakPoliczycControllers')
                 fireEvent($scope.tags, $scope.selectedTags);
             }
         });
+
+        $scope.close = function() {
+            $scope.opened = false;
+        };
 
         $scope.ngModelOptionsSelected = function(value) {
             if (arguments.length) {

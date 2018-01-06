@@ -3,6 +3,7 @@ angular.module('jakPoliczycControllers')
 
         var facebook = 'FACEBOOK',
             youtube = 'YOUTUBE',
+            instagram = 'INSTAGRAM',
             keyProperty = 'keyy';
 
         configurationService.getConfigs().then(function success(response) {
@@ -14,6 +15,10 @@ angular.module('jakPoliczycControllers')
 
                     if (e[keyProperty] === youtube) {
                         $scope.youtubeUrl = e.value;
+                    }
+
+                    if (e[keyProperty] === instagram) {
+                        $scope.instagramUrl = e.value;
                     }
                 });
             }

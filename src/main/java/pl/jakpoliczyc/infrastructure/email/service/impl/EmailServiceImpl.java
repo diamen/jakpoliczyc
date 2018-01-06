@@ -9,6 +9,7 @@ import pl.jakpoliczyc.infrastructure.email.service.EmailService;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Properties;
 
@@ -27,6 +28,7 @@ public class EmailServiceImpl implements EmailService {
     private Logger log = LoggerFactory.getLogger(EmailService.class);
 
     private static final String protocol = "smtp";
+    private static final String encoding = "UTF-8";
 
     @Override
     public void sendFromToEmail(final String from, final String subject, String content) throws MessagingException {
@@ -63,8 +65,8 @@ public class EmailServiceImpl implements EmailService {
         mailMessage.setFrom(new InternetAddress(smtpUsername));
         mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(smtpUsername));
 
-        mailMessage.setSubject("[Klient JakPoliczyć] " + subject);
-        content = String.format("[Wiadomość wysłana przez %s]\n\n%s", from, content);
+        mailMessage.setSubject("[Klient JakPoliczyc] " + subject);
+        content = String.format("[Email nadawcy: %s]\n\n%s", from, content);
 
         mailMessage.setText(content);
         mailMessage.setHeader("Content-Type", "text/plain; charset=UTF-8");
@@ -85,7 +87,8 @@ public class EmailServiceImpl implements EmailService {
                     }
                     return null;
                 }).toArray(Address[]::new));
-        mailMessage.setSubject("[JakPoliczyć] " + subject);
+
+        mailMessage.setSubject("[JakPoliczyc] " + subject, encoding);
 
         MimeMultipart mimeMultipart = new MimeMultipart();
         final MimeBodyPart htmlPart = new MimeBodyPart();
@@ -98,14 +101,14 @@ public class EmailServiceImpl implements EmailService {
                         "<img src=\"cid:" + cidImage + "\"/>" +
                         "</div>" +
                         "<div style=\"width: 354px; display: inline-block; text-align: center;\">" +
-                        "Zespół <strong>JakPoliczyć</strong>" +
-                        "<br><a href=\"http://www.JakPoliczyc.pl\">http://www.JakPoliczyc.pl</a>" +
+                        "<br><a href=\"http://JakPoliczyc.pl\">http://JakPoliczyc.pl</a>" +
                         "</div>" +
                         "</html>";
-        htmlPart.setText(content, "UTF-8", "html");
+
+        htmlPart.setText(content, encoding, "html");
 
         final MimeBodyPart imagePart = new MimeBodyPart();
-        imagePart.attachFile(getClass().getResource("/logo320w.png").getFile());
+        imagePart.attachFile(getClass().getResource("/email/logo320w.png").getFile());
 
         imagePart.setContentID("<" + cidImage + ">");
         imagePart.setDisposition(MimeBodyPart.INLINE);
