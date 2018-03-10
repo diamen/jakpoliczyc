@@ -2,22 +2,17 @@ package pl.jakpoliczyc.config.db;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import pl.jakpoliczyc.config.Caches;
 import pl.jakpoliczyc.config.Profiles;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.function.UnaryOperator;
 
 @Configuration
-@EnableCaching
 @EnableTransactionManagement
 @ComponentScan("pl.jakpoliczyc.dao")
 @Import({DevDbConfig.class, ProdDbConfig.class, TestDbConfig.class})
@@ -52,11 +47,6 @@ public class DbConfig {
         final JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
         return jpaTransactionManager;
-    }
-
-    @Bean
-    public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager(Caches.ARTICLE_CACHE, Caches.MENU_CACHE);
     }
 
 }

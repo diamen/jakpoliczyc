@@ -26,7 +26,7 @@ public class Menu {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.PERSIST)
     private List<Menu> submenus;
     @JsonIgnore
-    @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "menu")
     private Collection<Article> articles;
 
     public long getId() { return id; }

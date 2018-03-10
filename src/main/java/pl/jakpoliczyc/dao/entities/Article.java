@@ -11,7 +11,6 @@ import java.util.Date;
 
 @PersistenceUnit(name = RepositoryUtils.PERSISTENCE_UNIT_NAME)
 @Entity(name = "ARTICLES")
-@Cacheable
 public class Article {
 
     @Id
