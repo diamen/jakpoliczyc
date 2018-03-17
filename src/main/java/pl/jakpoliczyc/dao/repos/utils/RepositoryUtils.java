@@ -17,7 +17,7 @@ public class RepositoryUtils {
 
     private static final Logger log = LoggerFactory.getLogger(EmailService.class);
 
-    public static final String PERSISTENCE_UNIT_NAME = "JakPoliczyc";
+    public static final String PERSISTENCE_UNIT_NAME = "jakpoliczyc";
 
     private RepositoryUtils() {
     }

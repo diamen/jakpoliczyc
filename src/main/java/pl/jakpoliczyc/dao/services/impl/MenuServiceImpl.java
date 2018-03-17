@@ -10,6 +10,7 @@ import pl.jakpoliczyc.dao.services.MenuConsumer;
 import pl.jakpoliczyc.dao.services.MenuService;
 import pl.jakpoliczyc.dao.services.MenuTreeTraverser;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,9 @@ public class MenuServiceImpl implements MenuService {
     @Transactional(readOnly = true)
     @Override
     public List<Menu> findAll() {
-        return menuRepository.findAll();
+        List<Menu> menus = menuRepository.findAll();
+        treeTraverser.sortEachLevel(menus, Comparator.comparing(Menu::getName));
+        return menus;
     }
 
     protected void deleteNode(final Menu menu) {

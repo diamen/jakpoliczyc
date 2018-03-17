@@ -27,8 +27,10 @@ class MenuTreeTraverserSpec extends Specification {
          */
         def m1 = new Menu()
         def m1_1 = new Menu()
+        m1_1.setName("Z")
         def m1_1_1 = new Menu()
         def m1_2 = new Menu()
+        m1_2.setName("A")
         m1_1_1.setSubmenus([])
         m1_2.setSubmenus([])
         m1_1.setSubmenus([m1_1_1])
@@ -75,6 +77,21 @@ class MenuTreeTraverserSpec extends Specification {
 
         then: "Callback should be called 1 time"
         counter == 1
+    }
+
+    def "Should submenus be sorted correctly"() {
+        given: "Unsorted menu"
+        def menu = Menu()
+
+        and: "A comparator"
+        def comparator = { m1, m2 -> m1.name <=> m2.name }
+
+        when: "Collection of Menu is passed to #sortEachLevel"
+        menuTreeTraverser.sortEachLevel([menu], comparator)
+
+        then: "Submenus should be sorted alphabetically"
+        menu.getSubmenus()[0].name == 'A'
+        menu.getSubmenus()[1].name == 'Z'
     }
 
 }

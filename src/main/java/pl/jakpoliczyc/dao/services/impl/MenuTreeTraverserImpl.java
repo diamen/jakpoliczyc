@@ -5,6 +5,7 @@ import pl.jakpoliczyc.dao.entities.Menu;
 import pl.jakpoliczyc.dao.services.MenuConsumer;
 import pl.jakpoliczyc.dao.services.MenuTreeTraverser;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,6 +30,12 @@ public class MenuTreeTraverserImpl implements MenuTreeTraverser {
         for (int i = 0; i < menu.getSubmenus().size(); i++) {
             menuConsumer.accept(menu.getSubmenus().get(i));
         }
+    }
+
+    @Override
+    public void sortEachLevel(final List<Menu> menus, Comparator<Menu> comparator) {
+        menus.sort(comparator);
+        menus.forEach(menu -> sortEachLevel(menu.getSubmenus(), comparator));
     }
 
     protected Stream<Menu> flattened(final Menu menu) {

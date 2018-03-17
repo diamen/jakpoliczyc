@@ -2,6 +2,7 @@ package pl.jakpoliczyc.dao.services;
 
 import pl.jakpoliczyc.dao.entities.Menu;
 
+import java.util.Comparator;
 import java.util.List;
 
 public interface MenuTreeTraverser {
@@ -11,5 +12,7 @@ public interface MenuTreeTraverser {
     void siblingCallback(final Menu menu, MenuConsumer menuConsumer);
 
     void childCallback(final Menu menu, MenuConsumer menuConsumer);
+
+    void sortEachLevel(final List<Menu> menus, Comparator<Menu> comparator);
 
 }
