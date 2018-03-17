@@ -10,5 +10,6 @@
             <td class="col-md-2">{{article.addedDate | date: 'HH:mm dd/MM/yyyy'}}</td>
         </tr>
     </table>
-    <jp-pagination class="jplist-pagination" get-data="getData()" success="httpSuccess(data)" failure="httpFailure(response)"></jp-pagination>
+    <jp-pagination class="jplist-pagination" get-data="getData()" success="httpSuccess(data, totalElements)"
+                   failure="httpFailure(response)"></jp-pagination>
 </div>

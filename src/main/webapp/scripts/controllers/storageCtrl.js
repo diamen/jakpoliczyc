@@ -7,8 +7,9 @@ angular.module('jakPoliczycControllers')
             return storageService.getStorages();
         };
 
-        $scope.httpSuccess = function (data) {
+        $scope.httpSuccess = function (data, totalElements) {
             $scope.storage = data;
+            $scope.totalElements = totalElements;
         };
 
         $scope.httpFailure = function (response) {

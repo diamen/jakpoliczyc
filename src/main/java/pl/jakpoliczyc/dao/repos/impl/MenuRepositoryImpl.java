@@ -10,6 +10,7 @@ import pl.jakpoliczyc.dao.repos.MenuRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Primary
@@ -32,13 +33,16 @@ public class MenuRepositoryImpl implements MenuRepository {
     }
 
     @Transactional(readOnly = true)
-    public Menu find(long id) {
-        return entityManager.find(Menu.class, id);
+    public Optional<Menu> find(long id) {
+        return Optional.ofNullable(entityManager.find(Menu.class, id));
     }
 
     @Override
     public void remove(Menu menu) {
-        entityManager.remove(menu);
+        if (entityManager.find(Menu.class, menu.getId()) != null) {
+            entityManager.remove(entityManager.contains(menu) ? menu : entityManager.merge(menu));
+            entityManager.flush();
+        }
     }
 
     @Override

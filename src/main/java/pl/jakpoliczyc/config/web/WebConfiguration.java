@@ -57,8 +57,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(deviceResolverHandlerInterceptor());
     }
 
-    @Bean(name ="validator")
-    public LocalValidatorFactoryBean validator(){
+    @Bean(name = "validator")
+    public LocalValidatorFactoryBean validator() {
         return new LocalValidatorFactoryBean();
     }
 

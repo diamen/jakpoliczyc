@@ -1,5 +1,6 @@
 package pl.jakpoliczyc.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import pl.jakpoliczyc.dao.converters.UrlToStringConverter;
 import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
@@ -21,6 +22,7 @@ public class Article {
     @Temporal(TemporalType.DATE)
     @Column(name = "ADDED_DATE")
     private Date addedDate;
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MENU_ID", nullable = false)
     private Menu menu;

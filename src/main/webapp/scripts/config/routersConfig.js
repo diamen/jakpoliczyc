@@ -113,6 +113,16 @@ angular.module('jakPoliczycRouters', [])
                 }
             })
 
+            .state("menu-config", {
+                url: "/menuconfig",
+                controller: "menuConfigCtrl",
+                templateUrl: "views/menu-config.html",
+
+                data: {
+                    roles: ['ROLE_ADMIN']
+                }
+            })
+
             /* ERROR SECTION */
             .state("error", {
                 url: "/error/{no:[0-9]{1,9}}",

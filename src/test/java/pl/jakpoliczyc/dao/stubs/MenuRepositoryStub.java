@@ -8,6 +8,7 @@ import pl.jakpoliczyc.dao.repos.MenuRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -18,8 +19,8 @@ public class MenuRepositoryStub implements MenuRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Menu find(long id) {
-        return entityManager.find(Menu.class, id);
+    public Optional<Menu> find(long id) {
+        return Optional.ofNullable(entityManager.find(Menu.class, id));
     }
 
     @Override

@@ -6,14 +6,22 @@ import pl.jakpoliczyc.dao.entities.Article;
 import pl.jakpoliczyc.dao.entities.Comment;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ArticleRepository {
     Page<Article> findAll(final Pageable pageable);
+
     Article find(long id);
+
     void insertArticle(Article article);
+
     void removeArticle(long id);
+
     void removeComment(long articleId, long commentId);
+
     void insertComment(long articleId, Comment comment);
-    Page<Article> findByMenuId(final Pageable pageable, final long menuId);
+
+    Page<Article> findByMenuId(final Pageable pageable, final Set<Long> menus);
+
     Page<Article> findByTagId(final Pageable pageable, final List<Long> ids);
 }

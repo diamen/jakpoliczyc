@@ -77,7 +77,7 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public Page<StorageCompressedDto> findAll(final Pageable pageable) {
         final Page<Storage> storages = storageRepository.findAll(pageable);
-        return new PageImpl<>(convertToCompressedList(storages.getContent()), pageable, storages.getTotalPages());
+        return new PageImpl<>(convertToCompressedList(storages.getContent()), pageable, storages.getTotalElements());
     }
 
     @Transactional

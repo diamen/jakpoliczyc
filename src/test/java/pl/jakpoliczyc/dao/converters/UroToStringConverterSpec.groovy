@@ -39,10 +39,10 @@ class UroToStringConverterSpec extends Specification {
 
     def "Should an exception be thrown when given String is malformed"() {
         given: "A malformed URL"
-        String uncorrectString = "wwwjpg.pl"
+        String incorrectString = "wwwjpg.pl"
 
         when: "String is converted to an URL object"
-        converter.convertToEntityAttribute(uncorrectString)
+        converter.convertToEntityAttribute(incorrectString)
 
         then: "an exception will be thrown"
         thrown(RuntimeException)

@@ -1,6 +1,6 @@
 package pl.jakpoliczyc.dao.services.impl;
 
-import org.apache.commons.collections.CollectionUtils;
+import com.google.common.collect.Sets;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +17,7 @@ import pl.jakpoliczyc.dao.repos.ArticleRepository;
 import pl.jakpoliczyc.dao.repos.MenuRepository;
 import pl.jakpoliczyc.dao.repos.TagService;
 import pl.jakpoliczyc.dao.services.ArticleService;
+import pl.jakpoliczyc.dao.services.MenuTreeTraverser;
 import pl.jakpoliczyc.web.dto.ArticleCompressedDto;
 import pl.jakpoliczyc.web.dto.CommentDto;
 import pl.jakpoliczyc.web.dto.MenuDto;
@@ -39,6 +40,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private MenuTreeTraverser treeTraverser;
+
     private UrlToStringConverter converter = new UrlToStringConverter();
 
     @Override
@@ -56,8 +60,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void update(long articleId, StoryMenuTagDto wrapper) {
-        cleanMenu();
-
         Article article = articleRepository.find(articleId);
         Menu menu = prepareMenu(wrapper.getMenus());
         article.setStory(wrapper.getStory());
@@ -71,7 +73,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void delete(long articleId) {
         articleRepository.removeArticle(articleId);
-        cleanMenu();
     }
 
     @Override
@@ -102,7 +103,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Page<ArticleCompressedDto> findByMenuId(final Pageable pageable, final long menuId) {
-        final Page<Article> articles = articleRepository.findByMenuId(pageable, menuId);
+        final Set<Long> menuIds = menuRepository.find(menuId).map(
+                menu -> treeTraverser.findDescendants(menu).stream()
+                        .map(Menu::getId)
+                        .collect(Collectors.toSet())
+        ).orElse(Sets.newHashSet());
+
+        final Page<Article> articles = articleRepository.findByMenuId(pageable, menuIds);
         return new PageImpl<>(convertToCompressedList(articles.getContent()), pageable, articles.getTotalElements());
     }
 
@@ -110,10 +117,6 @@ public class ArticleServiceImpl implements ArticleService {
     public Page<ArticleCompressedDto> findByTagId(final Pageable pageable, final List<Long> ids) {
         final Page<Article> articles = articleRepository.findByTagId(pageable, ids);
         return new PageImpl<>(convertToCompressedList(articles.getContent()), pageable, articles.getTotalElements());
-    }
-
-    private void cleanMenu() {
-        menuRepository.findAllUnparsed().stream().filter(e -> CollectionUtils.isEmpty(e.getSubmenus())).forEach(this::clearMenu);
     }
 
     private List<Tag> prepareTags(List<String> names) {
@@ -134,8 +137,8 @@ public class ArticleServiceImpl implements ArticleService {
         if (wrappers.get(0).getId() == 0) {
             return prepareMenuToInsert(wrappers, null);
         }
-        MenuDto lastNotZero = wrappers.stream().filter(e -> e.id > 0).max((e1, e2) -> wrappers.indexOf(e1) - wrappers.indexOf(e2)).get();
-        Menu lastExist = menuRepository.find(lastNotZero.getId());
+        final MenuDto lastNotZero = wrappers.stream().filter(e -> e.id > 0).max((e1, e2) -> wrappers.indexOf(e1) - wrappers.indexOf(e2)).get();
+        final Menu lastExist = menuRepository.find(lastNotZero.getId()).get();
 
         List<MenuDto> menuToInsertDto = wrappers.stream().filter(e -> e.getId() == 0).collect(Collectors.toList());
         if (menuToInsertDto.size() == 0) {
@@ -173,32 +176,10 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     private List<ArticleCompressedDto> convertToCompressedList(List<Article> articles) {
-        return articles.stream().map(article -> {
-            return new ArticleCompressedDto(article.getId(), article.getStory().getTitle(), article.getStory().getIntro(),
-                    article.getAddedDate(), article.getTags(), new MenuDto(article.getMenu().getId(), article.getMenu().getName()));
-        }).collect(Collectors.toList());
+        return articles.stream().map(article ->
+                new ArticleCompressedDto(article.getId(), article.getStory().getTitle(), article.getStory().getIntro(),
+                        article.getAddedDate(), article.getTags(), new MenuDto(article.getMenu().getId(), article.getMenu().getName()))
+        ).collect(Collectors.toList());
     }
 
-    private synchronized void clearMenu(Menu menu) {
-        if (CollectionUtils.isEmpty(menu.getSubmenus()) && CollectionUtils.isEmpty(menu.getArticles())) {
-            if (menu.getParent() != null) {
-                for (int i = 0; i < menu.getParent().getSubmenus().size(); i++) {
-                    if (menu.getParent().getSubmenus().get(i).equals(menu)) {
-                        menu.getParent().getSubmenus().remove(i);
-                    }
-                }
-            }
-
-            menuRepository.remove(menu);
-            if (menu.getParent() != null) {
-                if (CollectionUtils.isEmpty(menu.getParent().getSubmenus())) {
-                    menu.getParent().setSubmenus(null);
-                    menuRepository.remove(menu.getParent());
-                }
-            }
-        }
-        if (menu.getParent() != null) {
-            clearMenu(menu.getParent());
-        }
-    }
 }

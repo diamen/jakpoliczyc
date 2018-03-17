@@ -51,6 +51,9 @@ angular.module('jakPoliczycControllers')
             modalService.execute(function (data) {
                 articleService.updateArticle(data.id, data.request).then(function success() {
                     $scope.goHome();
+                    $scope.addAlert({'type': $scope.alerts.SUCCESS, 'msg': $scope.language.alertUptArtSuc});
+                }, function error() {
+                    $scope.addAlert({'type': $scope.alerts.DANGER, 'msg': $scope.language.alertUptArtErr});
                 });
             }, $scope.language.msgArtUpt, {'id': $scope.id, 'request': request});
         };
@@ -76,6 +79,9 @@ angular.module('jakPoliczycControllers')
             modalService.execute(function (id) {
                 articleService.deleteArticle(id).then(function success() {
                     $scope.goHome();
+                    $scope.addAlert({'type': $scope.alerts.SUCCESS, 'msg': $scope.language.alertRemArtSuc});
+                }, function error() {
+                    $scope.addAlert({'type': $scope.alerts.DANGER, 'msg': $scope.language.alertRemArtSuc});
                 });
             }, $scope.language.msgArtRem, $scope.id);
         };

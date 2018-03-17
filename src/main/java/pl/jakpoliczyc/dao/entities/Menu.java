@@ -1,14 +1,16 @@
 package pl.jakpoliczyc.dao.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
+import pl.jakpoliczyc.web.serialization.Filters;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+@JsonFilter(Filters.FILTER_MENU)
 @PersistenceUnit(name = RepositoryUtils.PERSISTENCE_UNIT_NAME)
 @Entity
 public class Menu {
@@ -19,25 +21,31 @@ public class Menu {
     @Column(nullable = false)
     private String name;
     @JsonBackReference
-    @JoinColumn(nullable = true)
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Menu parent;
     @JsonManagedReference
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     private List<Menu> submenus;
-    @JsonIgnore
-    @OneToMany(mappedBy = "menu")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "menu", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     private Collection<Article> articles;
 
-    public long getId() { return id; }
+    public long getId() {
+        return id;
+    }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Menu getParent() {
         return parent;

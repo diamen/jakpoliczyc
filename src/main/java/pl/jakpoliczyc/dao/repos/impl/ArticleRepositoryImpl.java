@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Repository
@@ -66,15 +67,15 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     }
 
     @Override
-    public Page<Article> findByMenuId(final Pageable pageable, final long menuId) {
-        final String query = String.format("SELECT e FROM ARTICLES e WHERE e.menu.id = :id %s", RepositoryUtils.sortToStringQuery(pageable.getSort(), Article.class));
+    public Page<Article> findByMenuId(final Pageable pageable, final Set<Long> menus) {
+        final String query = String.format("SELECT e FROM ARTICLES e WHERE e.menu.id IN :ids %s", RepositoryUtils.sortToStringQuery(pageable.getSort(), Article.class));
         final List<Article> articles = entityManager.createQuery(query, Article.class)
-                .setParameter("id", menuId)
+                .setParameter("ids", menus)
                 .setFirstResult(pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
-        final long total = entityManager.createQuery("SELECT COUNT(e.articles) FROM Menu e WHERE e.id = :id", Long.class)
-                .setParameter("id", menuId)
+        final long total = entityManager.createQuery("SELECT COUNT(e.articles) FROM Menu e WHERE e.id IN :ids", Long.class)
+                .setParameter("ids", menus)
                 .getSingleResult();
         return new PageImpl<>(articles, pageable, total);
     }

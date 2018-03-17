@@ -136,3 +136,31 @@ jp-menu {
     background-color: $menu-selected-color-s;
   }
 }
+
+@mixin tree($color) {
+  background-color: $color;
+  border: 1px solid #565656;
+  border-radius: 3px;
+  color: white;
+  margin: 2px;
+  padding: 2px 5px;
+}
+
+.tree {
+  &-remove {
+    background-color: red;
+    margin-left: 10px;
+  }
+
+  &-menu {
+    @include tree(#35a6e8);
+  }
+
+  &-article {
+    @include tree(#e83535);
+  }
+
+  &-top {
+    @include tree(#2ccc4e);
+  }
+}

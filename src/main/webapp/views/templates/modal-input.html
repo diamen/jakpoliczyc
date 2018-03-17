@@ -1,0 +1,10 @@
+<form name="modalForm">
+    <div class="modal-body">
+        <div class="modal-title">{{msg}}</div>
+        <input type="text" class="form-control" ng-model="input" required>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="modalForm.$invalid" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">{{language.cancel}}</button>
+    </div>
+</form>

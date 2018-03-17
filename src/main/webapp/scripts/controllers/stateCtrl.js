@@ -44,6 +44,10 @@ angular.module('jakPoliczycControllers')
             $state.go("kahoot-config");
         };
 
+        $scope.goMenuConfig = function () {
+            $state.go("menu-config");
+        };
+
         $scope.goSingleStorage = function (id) {
             $state.go("articles.storage.id", {id: id});
         };

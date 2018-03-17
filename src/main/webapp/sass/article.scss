@@ -54,11 +54,15 @@ $article-youtube-color: #c72929;
   .intro,
   .content {
     text-align: justify;
+    word-break: keep-all;
   }
 
   .content {
     white-space: pre-line;
-    word-break: break-all;
+
+    div {
+      word-break: keep-all;
+    }
   }
 
   .footer {
