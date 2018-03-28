@@ -2,17 +2,15 @@ angular.module('jakPoliczycDirectives')
     .directive('jpMenuTree', ['$compile', '$rootScope', 'modalService', 'jpTemplateService', function ($compile, $rootScope, modalService, jpTemplateService) {
         return {
             restrict: 'E',
-            scope: {
-                model: '='
-            },
+            scope: true,
             link: function (scope, element) {
 
                 var source,
                     drawId = "draw-id";
 
-                if (angular.isDefined(scope.model)) {
+                if (angular.isDefined(scope.menuWithArticle)) {
                     drawTop();
-                    drawMenu(scope.model, 0);
+                    drawMenu(scope.menuWithArticle, 0);
                 }
 
                 function drawTop() {
@@ -54,7 +52,7 @@ angular.module('jakPoliczycDirectives')
                 }
 
                 scope.dbClick = function (event) {
-                    var menu = getMenu(scope.model, getId(event.srcElement));
+                    var menu = getMenu(scope.menuWithArticle, getId(event.srcElement));
                     modalService.inputExecute(function (input, menu) {
                         menu.name = input;
                         redraw();
@@ -84,7 +82,7 @@ angular.module('jakPoliczycDirectives')
                     }
 
                     if (isMenu(newEl)) {
-                        var menu = getMenu(scope.model, getId(newEl));
+                        var menu = getMenu(scope.menuWithArticle, getId(newEl));
                         if (menu.articles.length === 0 && menu.submenus.length === 0) {
                             var button = getRemoveButtonElement(getId(newEl));
                             newEl.append(button);
@@ -112,7 +110,7 @@ angular.module('jakPoliczycDirectives')
 
                 scope.removeClick = function (event) {
                     modalService.execute(function () {
-                        removeMenu(undefined, scope.model, getId(event.srcElement), undefined, false);
+                        removeMenu(undefined, scope.menuWithArticle, getId(event.srcElement), undefined, false);
                         redraw();
                     }, $rootScope.language.msgRemove);
                 };
@@ -124,7 +122,7 @@ angular.module('jakPoliczycDirectives')
                 scope.move = function (event) {
                     var target = event.target;
                     var getName = function (elem) {
-                        var menu = getMenu(scope.model, getId(elem));
+                        var menu = getMenu(scope.menuWithArticle, getId(elem));
                         return (menu && menu.name) || 'Top';
                     };
                     var msg = isMenu(source) ? jpTemplateService($rootScope.language.msgMenuMove)(getName(source), getName(target))
@@ -141,12 +139,12 @@ angular.module('jakPoliczycDirectives')
                 }
 
                 function moveMenu(sourceId, targetId) {
-                    removeMenu(undefined, scope.model, sourceId, targetId, true);
+                    removeMenu(undefined, scope.menuWithArticle, sourceId, targetId, true);
                 }
 
                 function pasteMenu(menus, targetId, _menu) {
                     if (targetId === 0) {
-                        scope.model.push(_menu);
+                        scope.menuWithArticle.push(_menu);
                         return;
                     }
 
@@ -166,10 +164,10 @@ angular.module('jakPoliczycDirectives')
                             if (angular.isDefined(parent)) {
                                 parent.submenus = newMenu;
                             } else {
-                                scope.model = newMenu;
+                                scope.menuWithArticle = newMenu;
                             }
                             if (shouldPast) {
-                                pasteMenu(scope.model, targetId, menu);
+                                pasteMenu(scope.menuWithArticle, targetId, menu);
                             }
                         }
                         removeMenu(menu, menu.submenus, sourceId, targetId, shouldPast);
@@ -194,14 +192,14 @@ angular.module('jakPoliczycDirectives')
                             articles.forEach(function (article) {
                                 if (article.id === articleId) {
                                     menu.articles = _.without(articles, article);
-                                    pasteArticle(scope.model, menuId, article);
+                                    pasteArticle(scope.menuWithArticle, menuId, article);
                                 }
                             });
                             removeArticle(menu.submenus, menuId, articleId);
                         });
                     };
 
-                    removeArticle(scope.model, targetId, sourceId);
+                    removeArticle(scope.menuWithArticle, targetId, sourceId);
                 }
 
                 function isMenu(elem) {
@@ -219,7 +217,7 @@ angular.module('jakPoliczycDirectives')
                 function isChild(sourceId, targetId) {
 
                     var foundChild;
-                    var foundMenu = getMenu(scope.model, sourceId);
+                    var foundMenu = getMenu(scope.menuWithArticle, sourceId);
 
                     var child = function (menu, childId) {
                         var submenus = menu.submenus;
@@ -254,9 +252,10 @@ angular.module('jakPoliczycDirectives')
                 }
 
                 function redraw() {
+                    scope.$emit('redraw-up', scope.menuWithArticle);
                     element.children().remove();
                     drawTop();
-                    drawMenu(scope.model, 0);
+                    drawMenu(scope.menuWithArticle, 0);
                 }
 
             }

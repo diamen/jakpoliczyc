@@ -12,7 +12,9 @@ public interface MenuRepository {
 
     List<Menu> findAllUnparsed();
 
+    void resetIdSequence();
+
     void remove(Menu menu);
 
-    void save(Menu menu);
+    void update(Menu menu);
 }

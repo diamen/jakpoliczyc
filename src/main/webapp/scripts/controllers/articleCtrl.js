@@ -43,7 +43,7 @@ angular.module('jakPoliczycControllers')
                     intro: $scope.article.story.intro,
                     content: $scope.article.ncontent
                 },
-                menus: jpStorage.retrieve('menus'),
+                menus: jpStorage.retrieve('menus') || $scope.article.menu,
                 tags: tags,
                 url: $scope.article.url,
                 kahoot: $scope.article.kahoot

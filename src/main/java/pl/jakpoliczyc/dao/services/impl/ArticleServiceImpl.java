@@ -1,6 +1,7 @@
 package pl.jakpoliczyc.dao.services.impl;
 
 import com.google.common.collect.Sets;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -61,7 +62,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void update(long articleId, StoryMenuTagDto wrapper) {
         Article article = articleRepository.find(articleId);
-        Menu menu = prepareMenu(wrapper.getMenus());
+        final Menu menu = CollectionUtils.isEmpty(wrapper.getMenus()) ? article.getMenu() : prepareMenu(wrapper.getMenus());
         article.setStory(wrapper.getStory());
         article.setMenu(menu);
         article.setTags(wrapper.getTags() != null ? prepareTags(wrapper.getTags()) : null);

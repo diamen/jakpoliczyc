@@ -23,8 +23,12 @@ public class MenuRepositoryImpl implements MenuRepository {
 
     @Transactional(readOnly = true)
     public List<Menu> findAll() {
-        return entityManager.createQuery("SELECT e FROM Menu e", Menu.class).getResultList()
-                .stream().filter(e -> e.getParent() == null).collect(Collectors.toList());
+        return entityManager.createQuery("SELECT e FROM Menu e", Menu.class)
+                .setHint(QueryHints.REFRESH, true)
+                .getResultList()
+                .stream()
+                .filter(e -> e.getParent() == null)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -46,7 +50,19 @@ public class MenuRepositoryImpl implements MenuRepository {
     }
 
     @Override
-    public void save(Menu menu) {
-        entityManager.persist(menu);
+    public void resetIdSequence() {
+        entityManager.createNativeQuery("ALTER TABLE MENU AUTO_INCREMENT = 1").executeUpdate();
+        entityManager.createNativeQuery("ALTER TABLE ARTICLES AUTO_INCREMENT = 1").executeUpdate();
+    }
+
+    @Override
+    public void update(Menu menu) {
+        if (!findAllUnparsed().contains(menu)) {
+            entityManager.persist(menu);
+            return;
+        }
+        if (!entityManager.contains(menu)) {
+            entityManager.merge(menu);
+        }
     }
 }

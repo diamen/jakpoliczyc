@@ -14,7 +14,14 @@
                 </div>
             </header>
 
-            <jp-category ng-if="menu" ng-show="isEditable" items="{{menu}}"></jp-category>
+            <div ng-show="isEditable" class="checkbox">
+                <label style="font-style: italic">
+                    <input ng-model="checked" type="checkbox" data-toggle="toggle">
+                    {{$root.language.menuOption}}
+                </label>
+            </div>
+
+            <jp-category ng-if="menu && checked" ng-show="isEditable" items="{{menu}}"></jp-category>
 
             <div class="tags">
                 <span>{{$root.language.tagsS}}</span><span ng-hide="(angular.isUndefined(article.tags) || article.tags.length === 0) && !isEditable" name="tags" id="tags" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTag}}" data-jp-content-editable ng-model="article.tags" jpcharacters></span>

@@ -38,7 +38,8 @@ public class MenuTreeTraverserImpl implements MenuTreeTraverser {
         menus.forEach(menu -> sortEachLevel(menu.getSubmenus(), comparator));
     }
 
-    protected Stream<Menu> flattened(final Menu menu) {
+    @Override
+    public Stream<Menu> flattened(final Menu menu) {
         return Stream.concat(Stream.of(menu), menu.getSubmenus().stream().flatMap(this::flattened));
     }
 

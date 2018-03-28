@@ -37,6 +37,10 @@ angular.module('jakPoliczycControllers')
             $scope.$broadcast('unselect-down');
         });
 
+        $scope.$on('redraw-up', function (event, args) {
+            $scope.$broadcast('redraw-down', args);
+        });
+
         $scope.$on('login-up', function () {
             $scope.$broadcast('login-down');
         });

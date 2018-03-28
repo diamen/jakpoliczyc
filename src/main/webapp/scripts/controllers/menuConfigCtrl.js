@@ -5,12 +5,9 @@ angular.module('jakPoliczycControllers')
             $scope.menuWithArticle = response.data;
         });
 
-        var menuDrawer = function (menus, space) {
-            menus.forEach(function (menu) {
-                var submenus = menu.submenus;
-                menuDrawer(submenus, space + "-");
-            });
-        };
+        $scope.$on('redraw-down', function (event, args) {
+            $scope.menuWithArticle = args;
+        });
 
         $scope.done = function () {
             modalService.execute(function () {

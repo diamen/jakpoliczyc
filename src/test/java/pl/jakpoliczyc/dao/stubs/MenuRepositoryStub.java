@@ -40,7 +40,12 @@ public class MenuRepositoryStub implements MenuRepository {
     }
 
     @Override
-    public void save(Menu menu) {
+    public void resetIdSequence() {
+
+    }
+
+    @Override
+    public void update(Menu menu) {
         entityManager.persist(menu);
     }
 }

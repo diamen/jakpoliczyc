@@ -15,7 +15,6 @@ public class StoryMenuTagDto implements Serializable {
     @NotNull
     private Story story;
     private List<String> tags;
-    @NotNull
     private List<MenuDto> menus;
     @URL
     private String url;

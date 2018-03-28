@@ -4,6 +4,7 @@ import pl.jakpoliczyc.dao.entities.Menu;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface MenuTreeTraverser {
 
@@ -14,5 +15,7 @@ public interface MenuTreeTraverser {
     void childCallback(final Menu menu, MenuConsumer menuConsumer);
 
     void sortEachLevel(final List<Menu> menus, Comparator<Menu> comparator);
+
+    Stream<Menu> flattened(final Menu menu);
 
 }

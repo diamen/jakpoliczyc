@@ -200,7 +200,7 @@ public class ArticleServiceTestIntegration extends JakPoliczycDbTest {
         Menu menu = (Menu) method.invoke(((Advised) articleService).getTargetSource().getTarget(), param);
         method.setAccessible(false);
         if (menu.getId() == 0) {
-            menuRepository.save(menu);
+            menuRepository.update(menu);
         }
 
         // then

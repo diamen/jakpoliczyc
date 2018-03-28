@@ -10,9 +10,11 @@ import pl.jakpoliczyc.dao.services.MenuConsumer;
 import pl.jakpoliczyc.dao.services.MenuService;
 import pl.jakpoliczyc.dao.services.MenuTreeTraverser;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -26,14 +28,13 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public void clearAndSaveMenu(List<Menu> menusToAdd) {
-        final List<Menu> menus = menuRepository.findAll();
 
-        menus.forEach(menu -> {
-            deleteNode(menu);
-            menuRepository.remove(menu);
-        });
+        final Collection<Menu> flatMenus = menusToAdd.stream().flatMap(treeTraverser::flattened).collect(Collectors.toList());
+        final Collection<Menu> allAvailableMenus = menuRepository.findAllUnparsed();
+        final Collection<Menu> menusToDelete = CollectionUtils.removeAll(allAvailableMenus, flatMenus);
+        menusToDelete.forEach(menuRepository::remove);
 
-        menusToAdd.forEach(menuRepository::save);
+        menusToAdd.forEach(menuRepository::update);
     }
 
     @Transactional(readOnly = true)
