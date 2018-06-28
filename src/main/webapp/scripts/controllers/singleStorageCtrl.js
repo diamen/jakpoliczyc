@@ -32,6 +32,7 @@ angular.module('jakPoliczycControllers')
                     content: $scope.single.story.content
                 },
                 stags: stags,
+                pdf: $scope.single.pdf,
                 url: $scope.single.url,
                 kahoot: $scope.single.kahoot
             };

@@ -19,9 +19,11 @@ import pl.jakpoliczyc.web.dto.StorageCompressedDto;
 import pl.jakpoliczyc.web.dto.StorageDto;
 import pl.jakpoliczyc.web.dto.StoryMenuTagDto;
 
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -45,6 +47,7 @@ public class StorageServiceImpl implements StorageService {
         storage.setStags(wrapper.getStags() != null ? prepareStags(wrapper.getStags()) : null);
         storage.setStory(wrapper.getStory());
         storage.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
+        storage.setPdf(converter.convertToEntityAttribute(wrapper.getPdf()));
         storage.setKahoot(wrapper.getKahoot());
         storageRepository.insert(storage);
     }
@@ -57,6 +60,7 @@ public class StorageServiceImpl implements StorageService {
         storage.setStags(wrapper.getStags() != null ? prepareStags(wrapper.getStags()) : null);
         storage.setAddedDate(new Date());
         storage.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
+        storage.setPdf(converter.convertToEntityAttribute(wrapper.getPdf()));
         storage.setKahoot(wrapper.getKahoot());
         storageRepository.insert(storage);
     }
@@ -83,12 +87,15 @@ public class StorageServiceImpl implements StorageService {
     @Transactional
     @Override
     public void publish(long storageId, List<MenuDto> menus) {
-        Storage storage = find(storageId);
+        final Function<URL, String> toDB = url -> converter.convertToDatabaseColumn(url);
+        final Storage storage = find(storageId);
         StoryMenuTagDto storyMenuTagDto = new StoryMenuTagDto();
         storyMenuTagDto.setStory(storage.getStory());
         storyMenuTagDto.setMenus(menus);
         storyMenuTagDto.setTags(storage.getStags().stream().map(Stag::getName).collect(Collectors.toList()));
         storyMenuTagDto.setKahoot(storage.getKahoot());
+        storyMenuTagDto.setYoutube(toDB.apply(storage.getUrl()));
+        storyMenuTagDto.setPdf(toDB.apply(storage.getPdf()));
         storageRepository.delete(storageId);
         articleService.save(storyMenuTagDto);
     }
@@ -108,9 +115,9 @@ public class StorageServiceImpl implements StorageService {
     }
 
     private List<StorageCompressedDto> convertToCompressedList(List<Storage> storages) {
-        return storages.stream().map(storage -> {
-            return new StorageCompressedDto(storage.getId(), storage.getStory() != null ? storage.getStory().getTitle() : null,
-                    storage.getAddedDate(), storage.getStags());
-        }).collect(Collectors.toList());
+        return storages.stream().map(storage ->
+                new StorageCompressedDto(storage.getId(), storage.getStory() != null ? storage.getStory().getTitle() : null,
+                        storage.getAddedDate(), storage.getStags())
+        ).collect(Collectors.toList());
     }
 }

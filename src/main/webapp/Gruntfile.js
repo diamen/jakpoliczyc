@@ -90,6 +90,7 @@ module.exports = function (grunt) {
         'scripts/directives/jpMenuTree.js',
         'scripts/directives/jpNode.js',
         'scripts/directives/jpPagination.js',
+        'scripts/directives/jpPdfForm.js',
         'scripts/directives/jpPendingButton.js',
         'scripts/directives/jpPostarea.js',
         'scripts/directives/jpTimer.js',
@@ -102,6 +103,7 @@ module.exports = function (grunt) {
          -----Validators*/
         'scripts/directives/validators/jpalphanumeric.js',
         'scripts/directives/validators/jpcharacters.js',
+        'scripts/directives/validators/jppdf.js',
         'scripts/directives/validators/jpsingle.js',
         'scripts/directives/validators/jpurls.js',
         'scripts/directives/validators/jpyoutube.js',

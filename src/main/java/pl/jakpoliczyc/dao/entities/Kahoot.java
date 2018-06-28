@@ -1,8 +1,8 @@
 package pl.jakpoliczyc.dao.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import pl.jakpoliczyc.dao.common.KahootDifficulties;
-import pl.jakpoliczyc.dao.converters.KahootEnumToIntConverter;
+import pl.jakpoliczyc.dao.common.Difficulty;
+import pl.jakpoliczyc.dao.converters.DifficultyToIntConverter;
 import pl.jakpoliczyc.dao.converters.UrlToStringConverter;
 import pl.jakpoliczyc.dao.repos.utils.RepositoryUtils;
 
@@ -20,8 +20,9 @@ public class Kahoot {
     private String title;
     @Convert(converter = UrlToStringConverter.class)
     private URL url;
-    @Convert(converter = KahootEnumToIntConverter.class)
-    private KahootDifficulties kahootDifficulties;
+    @Column
+    @Convert(converter = DifficultyToIntConverter.class)
+    private Difficulty difficulty;
     @JsonIgnore
     @OneToMany(mappedBy = "kahoot", fetch = FetchType.LAZY)
     private List<Article> articles;
@@ -59,12 +60,12 @@ public class Kahoot {
         this.url = url;
     }
 
-    public KahootDifficulties getKahootDifficulties() {
-        return kahootDifficulties;
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
-    public void setKahootDifficulties(KahootDifficulties kahootDifficulties) {
-        this.kahootDifficulties = kahootDifficulties;
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
     public List<Article> getArticles() {

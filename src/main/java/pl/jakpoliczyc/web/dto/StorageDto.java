@@ -15,6 +15,8 @@ public class StorageDto implements Serializable {
     private List<String> stags;
     @URL
     private String url;
+    @URL
+    private String pdf;
     private Kahoot kahoot;
 
     public Story getStory() {
@@ -47,5 +49,13 @@ public class StorageDto implements Serializable {
 
     public void setKahoot(Kahoot kahoot) {
         this.kahoot = kahoot;
+    }
+
+    public String getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
     }
 }

@@ -28,7 +28,7 @@ public class KahootRepositoryImpl implements KahootRepository {
         kahoots.forEach(kahoot -> {
             final Kahoot existingKahoot = entityManager.find(Kahoot.class, kahoot.getId());
             if (existingKahoot != null) {
-                existingKahoot.setKahootDifficulties(kahoot.getKahootDifficulties());
+                existingKahoot.setDifficulty(kahoot.getDifficulty());
                 existingKahoot.setTitle(kahoot.getTitle());
                 entityManager.persist(existingKahoot);
             } else {

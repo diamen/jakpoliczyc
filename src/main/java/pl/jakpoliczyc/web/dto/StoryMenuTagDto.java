@@ -17,7 +17,9 @@ public class StoryMenuTagDto implements Serializable {
     private List<String> tags;
     private List<MenuDto> menus;
     @URL
-    private String url;
+    private String youtube;
+    @URL
+    private String pdf;
     private Kahoot kahoot;
 
     public StoryMenuTagDto() {
@@ -54,12 +56,20 @@ public class StoryMenuTagDto implements Serializable {
         this.menus = menus;
     }
 
-    public String getUrl() {
-        return url;
+    public String getYoutube() {
+        return youtube;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setYoutube(String youtube) {
+        this.youtube = youtube;
+    }
+
+    public String getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
     }
 
     public Kahoot getKahoot() {

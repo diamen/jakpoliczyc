@@ -1,73 +1,106 @@
 <form name="artForm">
     <article class="jparticle">
-            <header>
-                <div>
-                    <span class="date">{{article.addedDate | date: 'HH:mm dd/MM/yyyy'}}</span>
-                </div>
-                <h2 id="title" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTit}}"
-                    data-jp-content-editable ng-model="article.story.title" required></h2>
-                <div>
-                    <button ng-show="isEditable" ng-disabled="artForm.$invalid" class="btn btn-default" ng-click="submit()">{{$root.language.submit}}</button>
-                    <button ng-hide="isEditable" class="btn btn-default" jp-has-roles="ROLE_ADMIN" ng-click="edit()">{{$root.language.edit}}</button>
-                    <button ng-hide="isEditable" class="btn btn-default" jp-has-roles="ROLE_ADMIN" ng-click="delete()">{{$root.language.remove}}</button>
-                    <button ng-show="isEditable" class="btn btn-default" ng-click="cancel()">{{$root.language.cancel}}</button>
-                </div>
-            </header>
-
-            <div ng-show="isEditable" class="checkbox">
-                <label style="font-style: italic">
-                    <input ng-model="checked" type="checkbox" data-toggle="toggle">
-                    {{$root.language.menuOption}}
-                </label>
+        <header>
+            <div>
+                <span class="date">{{article.addedDate | date: 'HH:mm dd/MM/yyyy'}}</span>
             </div>
-
-            <jp-category ng-if="menu && checked" ng-show="isEditable" items="{{menu}}"></jp-category>
-
-            <div class="tags">
-                <span>{{$root.language.tagsS}}</span><span ng-hide="(angular.isUndefined(article.tags) || article.tags.length === 0) && !isEditable" name="tags" id="tags" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false" placeholder="{{$root.language.artPlcTag}}" data-jp-content-editable ng-model="article.tags" jpcharacters></span>
-                <div ng-show="artForm.tags.$error.jpcharacters">
-                    <span class="jperror">{{language.errChars}}</span>
-                </div>
+            <h2 id="title" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false"
+                placeholder="{{$root.language.artPlcTit}}"
+                data-jp-content-editable ng-model="article.story.title" required></h2>
+            <div>
+                <button ng-show="isEditable" ng-disabled="artForm.$invalid" class="btn btn-default" ng-click="submit()">
+                    {{$root.language.submit}}
+                </button>
+                <button ng-hide="isEditable" class="btn btn-default" jp-has-roles="ROLE_ADMIN" ng-click="edit()">
+                    {{$root.language.edit}}
+                </button>
+                <button ng-hide="isEditable" class="btn btn-default" jp-has-roles="ROLE_ADMIN" ng-click="delete()">
+                    {{$root.language.remove}}
+                </button>
+                <button ng-show="isEditable" class="btn btn-default" ng-click="cancel()">{{$root.language.cancel}}
+                </button>
             </div>
-            <p id="intro" ng-class="isEditable ? 'jpeditable' : ''" class="intro" contenteditable="false" placeholder="{{$root.language.artPlcInt}}" data-jp-content-editable ng-model="article.story.intro" required></p>
-            <jp-postarea ng-show="isEditable" form="artForm" model="article.ncontent"></jp-postarea>
-            <p id="content" class="content"  mathjax-bind process="{{!isEditable}}" content="{{article.ncontent}}" ng-model="article.ncontent" required></p>
+        </header>
 
-            <div ng-if="url" ng-hide="isEditable" class="video">
-                <iframe width="420" height="315" ng-src="{{url}}" allowfullscreen></iframe>
-            </div>
-            <jp-youtube-form ng-show="isEditable" ng-model="article.url" class="add-link-form"></jp-youtube-form>
-            <jp-kahoot-form ng-show="isEditable" ng-model="article.kahoot" class="add-link-form"></jp-kahoot-form>
+        <div ng-show="isEditable" class="checkbox">
+            <label style="font-style: italic">
+                <input ng-model="checked" type="checkbox" data-toggle="toggle">
+                {{$root.language.menuOption}}
+            </label>
+        </div>
 
-            <div class="footer">
-                <span>{{$root.language.comments}} [{{article.comments.length}}]</span>
-                <img ng-click="redirect(article.kahoot.url)" src="../resources/gfx/K_logo_purple35h.png" ng-show="article.kahoot" class="fa" uib-tooltip="{{$root.language.kahootRed}}"/>
-                <i ng-click="redirect(prepareYoutubeUrl(article.url))" ng-show="url" class="fa fa-youtube fa-2x" aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>
+        <jp-category ng-if="menu && checked" ng-show="isEditable" items="{{menu}}"></jp-category>
+
+        <div class="tags">
+            <span>{{$root.language.tagsS}}</span><span
+                ng-hide="(angular.isUndefined(article.tags) || article.tags.length === 0) && !isEditable" name="tags"
+                id="tags" ng-class="isEditable ? 'jpeditable' : ''" contenteditable="false"
+                placeholder="{{$root.language.artPlcTag}}" data-jp-content-editable ng-model="article.tags"
+                jpcharacters></span>
+            <div ng-show="artForm.tags.$error.jpcharacters">
+                <span class="jperror">{{language.errChars}}</span>
             </div>
-            <ng-form novalidate isolate-form ng-submit="nadd(usercom.author, usercom.content)" name="form" class="add">
-                <div class="form-group">
-                    <label for="commentcontent">{{$root.language.addComment}}</label>
-                    <textarea name="content" ng-class="form.content.$error.jpurls || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.content"
-                              class="form-control" id="commentcontent" placeholder="{{$root.language.commentContent}}" rows="3"
-                              ng-minlength="3" ng-maxlength="500" ng-trim="true" required jpurls></textarea>
-                    <div ng-show="form.content.$error.jpurls" class="jperror">{{$root.language.urlPrevent}}</div>
-                    <div ng-show="form.content.$error.maxlength" class="jperror">{{$root.language.commentLimit}}</div>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">{{$root.language.username}}</span>
-                    <input name="username" ng-class="form.content.$error.pattern || form.content.$error.maxlength ? 'jperror' : ''" ng-model="usercom.author"
-                           class="form-control" placeholder="{{$root.language.username}}"
-                           aria-describedby="basic-addon1" ng-minlength="3" ng-maxlength="15" ng-trim="true" required jpalphanumeric>
-                    <span class="input-group-btn">
-                        <input ng-click="addComment(usercom.author, usercom.content)" ng-disabled="form.username.$invalid || form.username.$error.jpalphanumeric || form.content.$invalid" id="submit" class="btn btn-secondary" type="submit">{{$root.language.add}}</input>
+        </div>
+        <p id="intro" ng-class="isEditable ? 'jpeditable' : ''" class="intro" contenteditable="false"
+           placeholder="{{$root.language.artPlcInt}}" data-jp-content-editable ng-model="article.story.intro"
+           required></p>
+        <jp-postarea ng-show="isEditable" form="artForm" model="article.ncontent"></jp-postarea>
+        <p id="content" class="content" mathjax-bind process="{{!isEditable}}" content="{{article.ncontent}}"
+           ng-model="article.ncontent" required></p>
+
+        <div ng-if="url" ng-hide="isEditable" class="video">
+            <iframe width="420" height="315" ng-src="{{url}}" allowfullscreen></iframe>
+        </div>
+        <jp-youtube-form ng-show="isEditable" ng-model="article.url" class="add-link-form"></jp-youtube-form>
+        <jp-pdf-form ng-show="isEditable" ng-model="article.pdf" class="add-link-form"></jp-pdf-form>
+        <jp-kahoot-form ng-show="isEditable" ng-model="article.kahoot" class="add-link-form"></jp-kahoot-form>
+
+        <div class="footer">
+            <span>{{$root.language.comments}} [{{article.comments.length}}]</span>
+            <img ng-click="redirect(article.kahoot.url)" src="../resources/gfx/K_logo_purple35h.png"
+                 ng-show="article.kahoot" class="fa" uib-tooltip="{{$root.language.kahootRed}}"/>
+            <i ng-click="redirect(prepareYoutubeUrl(article.url))" ng-show="url" class="fa fa-youtube fa-2x"
+               aria-hidden="true" uib-tooltip="{{$root.language.ybWatch}}"></i>
+            <i ng-click="redirect(article.pdf)" ng-show="article.pdf" class="fa fa-file-pdf-o fa-2x"
+               aria-hidden="true" uib-tooltip="{{$root.language.pdfDownload}}"></i>
+        </div>
+        <ng-form novalidate isolate-form ng-submit="nadd(usercom.author, usercom.content)" name="form" class="add">
+            <div class="form-group">
+                <label for="commentcontent">{{$root.language.addComment}}</label>
+                <textarea name="content"
+                          ng-class="form.content.$error.jpurls || form.content.$error.maxlength ? 'jperror' : ''"
+                          ng-model="usercom.content"
+                          class="form-control" id="commentcontent" placeholder="{{$root.language.commentContent}}"
+                          rows="3"
+                          ng-minlength="3" ng-maxlength="500" ng-trim="true" required jpurls></textarea>
+                <div ng-show="form.content.$error.jpurls" class="jperror">{{$root.language.urlPrevent}}</div>
+                <div ng-show="form.content.$error.maxlength" class="jperror">{{$root.language.commentLimit}}</div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">{{$root.language.username}}</span>
+                <input name="username"
+                       ng-class="form.content.$error.pattern || form.content.$error.maxlength ? 'jperror' : ''"
+                       ng-model="usercom.author"
+                       class="form-control" placeholder="{{$root.language.username}}"
+                       aria-describedby="basic-addon1" ng-minlength="3" ng-maxlength="15" ng-trim="true" required
+                       jpalphanumeric>
+                <span class="input-group-btn">
+                        <input ng-click="addComment(usercom.author, usercom.content)"
+                               ng-disabled="form.username.$invalid || form.username.$error.jpalphanumeric || form.content.$invalid"
+                               id="submit" class="btn btn-secondary" type="submit">{{$root.language.add}}</input>
                     </span>
-                </div>
-                <div ng-show="form.username.$error.jpalphanumeric" class="jperror">{{$root.language.errSings}}</div>
-                <div ng-show="form.username.$error.maxlength" class="jperror">{{$root.language.errExceed}}</div>
-            </ng-form>
-            <div class="comment" ng-repeat="comment in article.comments">
-                <div><span>#{{$index + 1}}</span><strong>{{comment.author}}</strong> {{$root.language.wrote}} {{comment.addedDate | date: 'HH:mm dd/MM/yyyy'}}:</div>
-                <button jp-has-roles="ROLE_ADMIN" ng-click="deleteComment(comment.id)" class="btn btn-default">{{$root.language.remove}}</button>{{comment.content}}
             </div>
+            <div ng-show="form.username.$error.jpalphanumeric" class="jperror">{{$root.language.errSings}}</div>
+            <div ng-show="form.username.$error.maxlength" class="jperror">{{$root.language.errExceed}}</div>
+        </ng-form>
+        <div class="comment" ng-repeat="comment in article.comments">
+            <div><span>#{{$index + 1}}</span><strong>{{comment.author}}</strong> {{$root.language.wrote}}
+                {{comment.addedDate | date: 'HH:mm dd/MM/yyyy'}}:
+            </div>
+            <button jp-has-roles="ROLE_ADMIN" ng-click="deleteComment(comment.id)" class="btn btn-default">
+                {{$root.language.remove}}
+            </button>
+            {{comment.content}}
+        </div>
     </article>
 </form>

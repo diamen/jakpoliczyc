@@ -7,7 +7,7 @@ import org.dbunit.dataset.builder.DataSetBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
 import pl.jakpoliczyc.dao.JakPoliczycDbSpec
-import pl.jakpoliczyc.dao.common.KahootDifficulties
+import pl.jakpoliczyc.dao.common.Difficulty
 import pl.jakpoliczyc.dao.entities.Kahoot
 import spock.lang.Subject
 import spock.lang.Title
@@ -70,13 +70,13 @@ class KahootServiceSpec extends JakPoliczycDbSpec {
         kahootService.findAll().size() == sizeBefore + 1
     }
 
-    Kahoot createKahoot(long id = 1, String title = "title", KahootDifficulties diff = KahootDifficulties.VERY_DIFFICULT,
+    Kahoot createKahoot(long id = 1, String title = "title", Difficulty diff = Difficulty.VERY_DIFFICULT,
                         URL url = new URL(sampleUrl)) {
         Kahoot kahoot = new Kahoot();
         kahoot.setTitle title
         kahoot.setId id
         kahoot.setUrl url
-        kahoot.setKahootDifficulties diff
+        kahoot.setDifficulty diff
         return kahoot
     }
 

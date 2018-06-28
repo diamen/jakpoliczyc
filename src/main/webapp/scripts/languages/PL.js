@@ -73,6 +73,7 @@ PL = {
     errMax:         "Maksymalna liczba znaków to",
     errParam:       "Nie podano jednego z parametrów",
     errPassword:    "Wymagane podanie hasła",
+    errPdf:         "Niepoprawny format odnośnika do pliku PDF",
     errReq:         "Pole jest wymagane",
     errSingle:      "Słowa na liście muszą być unikalne",
     errSings:       "Zakaz używania znaków specjalnych!",

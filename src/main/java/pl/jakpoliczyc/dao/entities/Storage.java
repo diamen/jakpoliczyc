@@ -30,6 +30,8 @@ public class Storage {
     @ManyToOne
     @JoinColumn(name = "KAHOOT_ID")
     private Kahoot kahoot;
+    @Convert(converter = UrlToStringConverter.class)
+    private URL pdf;
 
     public long getId() {
         return id;
@@ -77,5 +79,13 @@ public class Storage {
 
     public void setKahoot(Kahoot kahoot) {
         this.kahoot = kahoot;
+    }
+
+    public URL getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(URL pdf) {
+        this.pdf = pdf;
     }
 }

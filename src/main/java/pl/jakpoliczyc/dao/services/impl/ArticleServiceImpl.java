@@ -54,7 +54,8 @@ public class ArticleServiceImpl implements ArticleService {
         article.setMenu(menu);
         article.setTags(wrapper.getTags() != null ? prepareTags(wrapper.getTags()) : null);
         article.setAddedDate(new Date());
-        article.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
+        article.setUrl(converter.convertToEntityAttribute(wrapper.getYoutube()));
+        article.setPdf(converter.convertToEntityAttribute(wrapper.getPdf()));
         article.setKahoot(wrapper.getKahoot());
         articleRepository.insertArticle(article);
     }
@@ -66,7 +67,8 @@ public class ArticleServiceImpl implements ArticleService {
         article.setStory(wrapper.getStory());
         article.setMenu(menu);
         article.setTags(wrapper.getTags() != null ? prepareTags(wrapper.getTags()) : null);
-        article.setUrl(converter.convertToEntityAttribute(wrapper.getUrl()));
+        article.setUrl(converter.convertToEntityAttribute(wrapper.getYoutube()));
+        article.setPdf(converter.convertToEntityAttribute(wrapper.getPdf()));
         article.setKahoot(wrapper.getKahoot());
         articleRepository.insertArticle(article);
     }
@@ -138,7 +140,7 @@ public class ArticleServiceImpl implements ArticleService {
         if (wrappers.get(0).getId() == 0) {
             return prepareMenuToInsert(wrappers, null);
         }
-        final MenuDto lastNotZero = wrappers.stream().filter(e -> e.id > 0).max((e1, e2) -> wrappers.indexOf(e1) - wrappers.indexOf(e2)).get();
+        final MenuDto lastNotZero = wrappers.stream().filter(e -> e.id > 0).max(Comparator.comparingInt(wrappers::indexOf)).get();
         final Menu lastExist = menuRepository.find(lastNotZero.getId()).get();
 
         List<MenuDto> menuToInsertDto = wrappers.stream().filter(e -> e.getId() == 0).collect(Collectors.toList());

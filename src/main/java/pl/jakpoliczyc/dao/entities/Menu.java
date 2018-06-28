@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-@JsonFilter(Filters.FILTER_MENU)
+@JsonFilter(Filters.MENU)
 @PersistenceUnit(name = RepositoryUtils.PERSISTENCE_UNIT_NAME)
 @Entity
 public class Menu {

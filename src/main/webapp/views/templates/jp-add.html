@@ -38,10 +38,11 @@
     <jp-postarea form="addForm" model="add.content"></jp-postarea>
 
     <jp-youtube-form ng-model="add.youtube" class="add-link-form"></jp-youtube-form>
+    <jp-pdf-form ng-model="add.pdf" class="add-link-form"></jp-pdf-form>
     <jp-kahoot-form ng-model="add.kahoot" class="add-link-form"></jp-kahoot-form>
 
     <div class="add-submit">
-        <button ng-click="openModalSaveToStorage(add.title, add.intro, add.content, add.tags)"
+        <button ng-click="openModalSaveToStorage(add.title, add.intro, add.content, add.tags, add.youtube, add.pdf, add.kahoot)"
                 ng-disabled="addForm.addTags.$error.jpsingle" class="btn btn-primary">
             {{language.stoSave}}
         </button>

@@ -1,6 +1,6 @@
 package pl.jakpoliczyc.dao.common;
 
-public enum KahootDifficulties {
+public enum Difficulty {
     VERY_EASY(0),
     EASY(1),
     MIDDLE(2),
@@ -9,7 +9,7 @@ public enum KahootDifficulties {
 
     private int dbCounterpart;
 
-    KahootDifficulties(final int dbCounterpart) {
+    Difficulty(final int dbCounterpart) {
         this.dbCounterpart = dbCounterpart;
     }
 

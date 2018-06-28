@@ -27,13 +27,16 @@ angular.module('jakPoliczycControllers')
             });
         };
 
-        $scope.openModalSaveToStorage = function (title, intro, content, stags) {
+        $scope.openModalSaveToStorage = function (title, intro, content, stags, url, pdf, kahoot) {
             var request = {
                 'story': {
                     'title': title,
                     'intro': intro,
                     'content': content
                 },
+                'url': url,
+                'pdf': pdf,
+                'kahoot': kahoot,
                 'stags': articleService.prepareTags(stags)
             };
             modalService.execute($scope.saveToStorage, $scope.language.msgSaveSto, request);

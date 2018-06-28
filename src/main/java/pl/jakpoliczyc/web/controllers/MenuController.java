@@ -29,7 +29,7 @@ public class MenuController {
         }
 
         final String json = new FilterBuilder()
-                .filterName(Filters.FILTER_MENU)
+                .filterName(Filters.MENU)
                 .objectToSerialize(menus)
                 .excludedProperties("articles")
                 .buildJson()
@@ -46,7 +46,7 @@ public class MenuController {
         }
 
         final String json = new FilterBuilder()
-                .filterName(Filters.FILTER_MENU)
+                .filterName(Filters.MENU)
                 .objectToSerialize(menus)
                 .buildJson()
                 .orElse(StringUtils.EMPTY);

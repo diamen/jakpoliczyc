@@ -3,7 +3,7 @@ package pl.jakpoliczyc.web.controllers
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import pl.jakpoliczyc.dao.common.KahootDifficulties
+import pl.jakpoliczyc.dao.common.Difficulty
 import pl.jakpoliczyc.dao.entities.Kahoot
 import pl.jakpoliczyc.dao.services.KahootService
 import pl.jakpoliczyc.web.WebTestUtils
@@ -59,7 +59,7 @@ class KahootControllerSpec extends Specification {
         given: "Data to replace"
         Kahoot kahoot = new Kahoot()
         kahoot.setTitle("title")
-        kahoot.setKahootDifficulties(KahootDifficulties.VERY_DIFFICULT)
+        kahoot.setDifficulty(Difficulty.VERY_DIFFICULT)
         kahoot.setUrl(new URL("https://www.google.pl"))
         String request = WebTestUtils.generateRequest(kahoot)
 
